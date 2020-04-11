@@ -177,6 +177,7 @@ es_MX:
   docs: Documentación
   email: Cuenta de correo
   email_sent: "Tu email de %{email_type} ha sido enviado. (Revisa tu carpeta de Spam sí no lo has recibido)"
+  empresa_desarrollo: Mindsit S.A.S.
   enter_your_name: Introduce tu nombre
   errors:
     bigbluebutton:
@@ -229,7 +230,7 @@ es_MX:
     designs: Diseño personalizado
     authentication: Autentificación de usuario
   footer:
-    powered_by: "Funciona con %{href}"
+    powered_by: "AulaParaTodos es un servicio %{href}"
   forgot_password:
     subtitle: Olvidé la contraseña
     email: Cuenta de correo
