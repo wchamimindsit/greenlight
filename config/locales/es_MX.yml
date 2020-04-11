@@ -224,11 +224,11 @@ es_MX:
       help: "Sí tu crees que este es un error, contacta al administrador del sistema"
   expired_reset_token: El enlace para reiniciar la contraseña ha expirado
   features:
-    title: Funciones
-    rooms: Salas personalizadas
-    recordings: Administración de grabaciones
-    designs: Diseño personalizado
-    authentication: Autentificación de usuario
+    title: Algunas Funcionalidades
+    rooms: Salas de clase personalizadas para cada grupo
+    recordings: Registro de grabaciones, chat y asistencias
+    designs: Herramientas optimizadas para enseñar
+    authentication: Acceso seguro con conexión privada
   footer:
     powered_by: "AulaParaTodos es un servicio %{href}"
   forgot_password:
@@ -260,9 +260,9 @@ es_MX:
     search:
       start: Iniciar busqueda...
   landing:
-    about: "Greenlight es una interface web para tu servidor %{href}de conferencias de fuentes libres. Puedes crear tus propias salas y ser anfitrión de sesiones o ingresar a las de otros utilizando un corto y conveniente enlace."
-    welcome: Bienvenido a <span class="green-grad">Greenlight</span>.
-    video: Ve nuestro tutorial de como utilizar Greenlight
+    about: "%{href} es un servicio para conectar comunidades educativas. Ayuda a gestionar educadores, estudiantes y clases en un solo lugar. El acceso a cada sesión puede ser un link o un número pin. <br/> Todas las sesiones pueden ser grabadas y consultadas posteriormente."
+    welcome: Comunidad <span class="green-grad">AulaParaTodos</span>.
+    video: Vea más información aquí
     upgrade: Muestrame como actualizar a versión 2.0
     version: Hemos publicado una nueva version de Greenlight pero tu base de datos no es compatible.
   language_default: Por omisión (idioma del navegador)
