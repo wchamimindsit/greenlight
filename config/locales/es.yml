@@ -66,7 +66,7 @@ es:
       rooms:
         info: Establece el límite de salas que un usuario puede tener (incluyendo la sala principal). Esta configuración no aplica para administradores.
         title: Número de salas por usuario
-      subtitle: Personalizar Greenlight
+      subtitle: Personalizar AulaParaTodos
       title: Configuración del sitio web
     flash:
       approved: El usuario ha sido autorizado
@@ -179,7 +179,7 @@ es:
       inclusion: no está incluido en la lista
     no_provider:
       message: El sitio al que está intentando acceder no se encuentra activo
-      help: "Por favor, contacte con el administrador del sistema para configurar Greenlight"
+      help: "Por favor, contacte con el administrador del sistema para configurar AulaParaTodos"
     not_found:
       message: "Lo sentimos, la página que está buscando no existe."
       help: "¿Es posible que haya sido eliminada?"
@@ -207,7 +207,7 @@ es:
     email: Cuenta de correo
     submit: Enviar
   go_back: Atrás
-  greenlight: Greenlight
+  greenlight: AulaParaTodos
   header:
     all_recordings: Todas las grabaciones
     dropdown:

@@ -83,7 +83,7 @@ es_MX:
       shared_access:
         info: "Al deshabilitar esta opción se eliminara el botón de la lista de opciones para la sala, con lo cual los usuarios no podrán compartir salas"
         title: Permitir a los usuarios compartir salas
-      subtitle: Personalizar Greenlight
+      subtitle: Personalizar AulaParaTodos
       title: Configuración del sitio web
     flash:
       approved: El usuario ha sido autorizado
@@ -208,7 +208,7 @@ es_MX:
       inclusion: no está incluido en la lista
     no_provider:
       message: El sitio al cual estas intentando acceder no se encuentra activo
-      help: Contacta al administrador del sistema para configurar Greenlight
+      help: Contacta al administrador del sistema para configurar AulaParaTodos
     not_found:
       message: "Lo sentimos, la página que estas buscando no existe."
       help: "¿Puede ser que haya sido eliminada?"
@@ -236,7 +236,7 @@ es_MX:
     email: Cuenta de correo
     submit: Enviar
   go_back: Atrás
-  greenlight: Greenlight
+  greenlight: AulaParaTodos
   header:
     all_recordings: Todas las grabaciones
     dropdown:
