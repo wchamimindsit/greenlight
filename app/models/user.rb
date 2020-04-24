@@ -223,6 +223,15 @@ class User < ApplicationRecord
     false
   end
 
+  # Validar si la ultima parte del nombre del rol coincide con el parametro
+  def has_role_org?(role)
+    roles.each do |single_role|
+      return true if single_role.name.end_with?(role.to_s)
+    end
+
+    false
+  end
+
   def self.with_role(role)
     User.all_users_with_roles.where(roles: { name: role })
   end

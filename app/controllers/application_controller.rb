@@ -41,7 +41,19 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   def bbb_server
-    @bbb_server ||= Rails.configuration.loadbalanced_configuration ? bbb(@user_domain) : bbb("greenlight")
+    apt_domain_name = apt_domain
+    logger.info "Dominio del rol de usuario: #{apt_domain_name}"
+    @bbb_server ||= Rails.configuration.loadbalanced_configuration ? bbb(@user_domain, apt_domain_name) : bbb("greenlight", apt_domain_name)
+  end
+
+  def apt_domain
+    if current_user&.has_role_org?(:_claro)
+      apt_domain_name = "claro"
+    elsif current_user&.has_role_org?(:_gobval)
+      apt_domain_name = "gobval"
+    else
+      apt_domain_name = "apt"
+    end
   end
 
   # Force SSL
