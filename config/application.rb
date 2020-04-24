@@ -63,6 +63,18 @@ module Greenlight
       config.bigbluebutton_secret_default
     end
 
+    config.bigbluebutton_secret_claro = if ENV["BIGBLUEBUTTON_SECRET_CLARO"].present?
+      ENV["BIGBLUEBUTTON_SECRET_CLARO"]
+    else
+      config.bigbluebutton_secret_default
+    end
+
+    config.bigbluebutton_secret_gobval = if ENV["BIGBLUEBUTTON_SECRET_GOBVAL"].present?
+      ENV["BIGBLUEBUTTON_SECRET_GOBVAL"]
+    else
+      config.bigbluebutton_secret_default
+    end
+
     # Fix endpoint format if required.
     config.bigbluebutton_endpoint += "/" unless config.bigbluebutton_endpoint.ends_with?('/')
     config.bigbluebutton_endpoint += "api/" if config.bigbluebutton_endpoint.ends_with?('bigbluebutton/')
