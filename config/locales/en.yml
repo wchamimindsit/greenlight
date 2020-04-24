@@ -224,13 +224,13 @@ en:
       help: If you believe this is a mistake, please contact your system administrator.
   expired_reset_token: Password reset link has expired!
   features:
-    title: Features
-    rooms: Personalized Rooms
-    recordings: Recording Management
-    designs: Custom Designs
-    authentication: User Authentication
+    title: Some Features
+    rooms: Personalized classrooms for each group
+    recordings: Recordings recordings, chat and assists
+    designs: Tools optimized for teaching
+    authentication: Secure access with private connection
   footer:
-    powered_by: Powered by %{href}.
+    powered_by: "AulaParaTodos is a service %{href}"
   forgot_password:
     subtitle: Forgot Password
     email: Email
@@ -262,7 +262,7 @@ en:
   landing:
     about: "%{href} it is a service to connect educational communities. It helps to manage educators, students and classes in one place. Access to each session can be a link or a pin number. <br/> All sessions can be recordings and subsequent consultations."
     welcome: Welcome to AulaParaTodos.
-    video: Watch our tutorial on using Greenlight
+    video: See more information here
     upgrade: Show me how to upgrade to 2.0!
     version: We've released a new version of Greenlight, but your database isn't compatible.
   language_default: Default (browser language)

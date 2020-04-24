@@ -447,7 +447,7 @@ es:
     update_settings_success: La configuración de la sala fue actualizada exitósamente
     wait:
       message: La sesión todavía no ha comenzado.
-      auto: Serás enviado a la sala automáticamente cuando empiece ls sesión
+      auto: Serás enviado a la sala automáticamente cuando empiece la sesión
   settings:
     account:
       fullname: Nombre completo
