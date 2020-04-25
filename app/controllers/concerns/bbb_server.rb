@@ -34,6 +34,11 @@ module BbbServer
     bbb_server.get_meetings
   end
 
+  # Returns a list of all running meetings
+  def room_running_by_role?(bbb_id, role_user_room)
+    bbb_server_by_role(role_user_room).is_meeting_running?(bbb_id)
+  end
+
   def get_recordings(meeting_id)
     bbb_server.get_recordings(meetingID: meeting_id)
   end
