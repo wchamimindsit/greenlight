@@ -61,6 +61,11 @@ class Room < ApplicationRecord
     user_id == user&.id
   end
 
+  # Cargar a un usuario sus roles
+  def user_by_owned
+    @user_by_owned ||= User.includes(:roles, :main_room).find_by(id: user_id)
+  end
+
   def shared_users
     User.where(id: shared_access.pluck(:user_id))
   end

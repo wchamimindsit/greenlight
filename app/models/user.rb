@@ -224,9 +224,9 @@ class User < ApplicationRecord
   end
 
   # Validar si la ultima parte del nombre del rol coincide con el parametro
-  def has_role_org?(role)
+  def has_role_org?(end_name_role)
     roles.each do |single_role|
-      return true if single_role.name.end_with?(role.to_s)
+      return true if single_role.name.end_with?(end_name_role.to_s)
     end
 
     false
