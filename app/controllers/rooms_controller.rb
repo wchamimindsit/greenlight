@@ -155,26 +155,41 @@ class RoomsController < ApplicationController
   def start
     logger.info "Support: #{current_user.email} is starting room #{@room.uid}"
 
-    # Join the user in and start the meeting.
-    opts = default_meeting_options
-    opts[:user_is_moderator] = true
-
-    # Include the user's choices for the room settings
-    room_settings = JSON.parse(@room[:room_settings])
-    opts[:mute_on_start] = room_settings["muteOnStart"]
-    opts[:require_moderator_approval] = room_settings["requireModeratorApproval"]
-
-    begin
-      redirect_to join_path(@room, current_user.name, opts, current_user.uid)
-    rescue BigBlueButton::BigBlueButtonException => e
-      logger.error("Support: #{@room.uid} start failed: #{e}")
-
-      redirect_to room_path, alert: I18n.t(e.key.to_s.underscore, default: I18n.t("bigbluebutton_exception"))
+    active_rooms = 0
+    active_room_name = ""
+    current_user.ordered_rooms_active.each do |room|
+      logger.info "Sala activa: #{room.id} #{@room.uid} #{@room.id}"
+      active_room_name = room.name
+      if @room.id != room.id
+        active_rooms += 1
+      end      
     end
 
-    # Notify users that the room has started.
-    # Delay 5 seconds to allow for server start, although the request will retry until it succeeds.
-    NotifyUserWaitingJob.set(wait: 5.seconds).perform_later(@room)
+    if active_rooms > 0
+      logger.info("Support: #{@room.uid} not start")
+      redirect_to room_path, alert: I18n.t("bigbluebutton_exception_active_room", room_name: active_room_name)
+    else
+      # Join the user in and start the meeting.
+      opts = default_meeting_options
+      opts[:user_is_moderator] = true
+
+      # Include the user's choices for the room settings
+      room_settings = JSON.parse(@room[:room_settings])
+      opts[:mute_on_start] = room_settings["muteOnStart"]
+      opts[:require_moderator_approval] = room_settings["requireModeratorApproval"]
+
+      begin
+        redirect_to join_path(@room, current_user.name, opts, current_user.uid)
+      rescue BigBlueButton::BigBlueButtonException => e
+        logger.error("Support: #{@room.uid} start failed: #{e}")
+
+        redirect_to room_path, alert: I18n.t(e.key.to_s.underscore, default: I18n.t("bigbluebutton_exception"))
+      end
+
+      # Notify users that the room has started.
+      # Delay 5 seconds to allow for server start, although the request will retry until it succeeds.
+      NotifyUserWaitingJob.set(wait: 5.seconds).perform_later(@room)
+    end
   end
 
   # POST /:room_uid/update_settings
@@ -261,6 +276,16 @@ class RoomsController < ApplicationController
   # GET /:room_uid/logout
   def logout
     logger.info "Support: #{current_user.present? ? current_user.email : 'Guest'} has left room #{@room.uid}"
+
+    if current_user.present? ? @room.owned_by?(current_user) : false
+      role_user_room = @room.user_by_owned&.highest_priority_role.name
+      if room_running_by_role?(@room.bbb_id, role_user_room)
+        logger.info "Esta saliendo el dueño de la sala"
+      else
+        logger.info "Esta finalizando sesion el dueño de la sala"
+        @room.update_attributes(end_last_session: DateTime.now, active: false)
+      end     
+    end
 
     # Redirect the correct page.
     redirect_to @room
