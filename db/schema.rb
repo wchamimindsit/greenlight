@@ -75,6 +75,8 @@ ActiveRecord::Schema.define(version: 2020_01_30_144841) do
     t.string "attendee_pw"
     t.string "access_code"
     t.boolean "deleted", default: false, null: false
+    t.datetime "end_last_session"
+    t.boolean "active", default: false, null: false
     t.index ["bbb_id"], name: "index_rooms_on_bbb_id"
     t.index ["deleted"], name: "index_rooms_on_deleted"
     t.index ["last_session"], name: "index_rooms_on_last_session"
