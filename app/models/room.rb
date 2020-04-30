@@ -27,6 +27,7 @@ class Room < ApplicationRecord
 
   belongs_to :owner, class_name: 'User', foreign_key: :user_id
   has_many :shared_access
+  has_many :session_histories
 
   def self.admins_search(string)
     active_database = Rails.configuration.database_configuration[Rails.env]["adapter"]
