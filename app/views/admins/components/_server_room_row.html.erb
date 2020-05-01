@@ -24,7 +24,7 @@
       </text>
     </div>
     <div class="small text-muted">
-      <%= [t("administrator.users.table.created"), ": ", room.created_at].join %>
+      <%= [t("administrator.users.table.last_session"), ": ", Time.find_zone("Bogota").parse(room.last_session.to_s)].join %>
     </div>
   </td>
   <td class="text-left">
@@ -34,7 +34,7 @@
     <%= room.uid %>
   </td>
   <td class="text-left">
-    <% running = room_is_running(room.bbb_id) %>
+    <% running = room.active %>
     <% if running %>
       <%= t("administrator.rooms.running") %>
     <% else %>

@@ -153,6 +153,7 @@ en:
       table:
         authenticator: Authenticator
         created: Created
+        last_session: Last session
         name: Name
         not_found: No users match your search
         no_users: No users found

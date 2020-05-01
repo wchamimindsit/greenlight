@@ -28,6 +28,7 @@ class User < ApplicationRecord
 
   before_destroy :destroy_rooms
 
+  has_many :session_histories
   has_many :rooms
   has_many :shared_access
   belongs_to :main_room, class_name: 'Room', foreign_key: :room_id, required: false

@@ -138,4 +138,14 @@ ActiveRecord::Schema.define(version: 2020_01_30_144841) do
     t.index ["user_id"], name: "index_users_roles_on_user_id"
   end
 
+  create_table "session_histories", force: :cascade do |t|
+    t.integer "room_id"
+    t.integer "user_id"
+    t.datetime "start_session"
+    t.datetime "end_session"
+    t.integer "total_participants"
+    t.index ["room_id"], name: "index_session_histories_on_room_id"
+    t.index ["user_id"], name: "index_session_histories_on_user_id"
+  end
+
 end
