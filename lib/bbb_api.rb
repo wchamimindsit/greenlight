@@ -9,6 +9,8 @@ module BbbApi
       Rails.configuration.bigbluebutton_endpoint = "https://app.aulaparatodos.com/bigbluebutton/api/"
     elsif user_role == "gobval"
       Rails.configuration.bigbluebutton_endpoint = "https://co02ocs.aulaparatodos.com/bigbluebutton/api/"
+    elsif user_role == "tres"
+      Rails.configuration.bigbluebutton_endpoint = "https://co03ocs.aulaparatodos.com/bigbluebutton/api/"
     else
       Rails.configuration.bigbluebutton_endpoint = "https://co01ocr.aulaparatodos.com/bigbluebutton/api/"
     end
@@ -19,6 +21,8 @@ module BbbApi
       Rails.configuration.bigbluebutton_secret_claro
     elsif user_role == "gobval"
       Rails.configuration.bigbluebutton_secret_gobval
+    elsif user_role == "tres"
+      Rails.configuration.bigbluebutton_secret_tres
     else
       Rails.configuration.bigbluebutton_secret
     end
