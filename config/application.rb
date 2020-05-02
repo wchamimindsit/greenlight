@@ -75,6 +75,12 @@ module Greenlight
       config.bigbluebutton_secret_default
     end
 
+    config.bigbluebutton_secret_tres = if ENV["BIGBLUEBUTTON_SECRET_TRES"].present?
+      ENV["BIGBLUEBUTTON_SECRET_TRES"]
+    else
+      config.bigbluebutton_secret_default
+    end
+
     # Fix endpoint format if required.
     config.bigbluebutton_endpoint += "/" unless config.bigbluebutton_endpoint.ends_with?('/')
     config.bigbluebutton_endpoint += "api/" if config.bigbluebutton_endpoint.ends_with?('bigbluebutton/')
