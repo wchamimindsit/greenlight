@@ -48,22 +48,22 @@ module Joiner
   end
 
   def join_room(opts)
-    room_settings = JSON.parse(@room[:room_settings])
-    role_user_room = @room.user_by_owned&.highest_priority_role.name
+    @room_settings = JSON.parse(@room[:room_settings])
 
-    if room_running_by_role?(@room.bbb_id, role_user_room) || @room.owned_by?(current_user) || room_settings["anyoneCanStart"]
+    if room_running?(@room.bbb_id) || @room.owned_by?(current_user) || room_setting_with_config("anyoneCanStart")
 
       # Determine if the user needs to join as a moderator.
-      opts[:user_is_moderator] = @room.owned_by?(current_user) || room_settings["joinModerator"] || @shared_room
+      opts[:user_is_moderator] = @room.owned_by?(current_user) || room_setting_with_config("joinModerator") || @shared_room
 
-      opts[:require_moderator_approval] = room_settings["requireModeratorApproval"]
-      opts[:mute_on_start] = room_settings["muteOnStart"]
+      opts[:require_moderator_approval] = room_setting_with_config("requireModeratorApproval")
+      opts[:mute_on_start] = room_setting_with_config("muteOnStart")
 
       if current_user
-        redirect_to join_path_by_role(role_user_room, @room, current_user.name, opts, current_user.uid)
+        redirect_to join_path(@room, current_user.name, opts, current_user.uid)
       else
         join_name = params[:join_name] || params[@room.invite_path][:join_name]
-        redirect_to join_path_by_role(role_user_room, @room, join_name, opts)
+
+        redirect_to join_path(@room, join_name, opts, fetch_guest_id)
       end
     else
       search_params = params[@room.invite_path] || params
@@ -76,6 +76,36 @@ module Joiner
       render :wait
     end
   end
+
+  # def join_room(opts)
+  #   room_settings = JSON.parse(@room[:room_settings])
+  #   role_user_room = @room.user_by_owned&.highest_priority_role.name
+
+  #   if room_running_by_role?(@room.bbb_id, role_user_room) || @room.owned_by?(current_user) || room_settings["anyoneCanStart"]
+
+  #     # Determine if the user needs to join as a moderator.
+  #     opts[:user_is_moderator] = @room.owned_by?(current_user) || room_settings["joinModerator"] || @shared_room
+
+  #     opts[:require_moderator_approval] = room_settings["requireModeratorApproval"]
+  #     opts[:mute_on_start] = room_settings["muteOnStart"]
+
+  #     if current_user
+  #       redirect_to join_path_by_role(role_user_room, @room, current_user.name, opts, current_user.uid)
+  #     else
+  #       join_name = params[:join_name] || params[@room.invite_path][:join_name]
+  #       redirect_to join_path_by_role(role_user_room, @room, join_name, opts)
+  #     end
+  #   else
+  #     search_params = params[@room.invite_path] || params
+  #     @search, @order_column, @order_direction, pub_recs =
+  #       public_recordings(@room.bbb_id, search_params.permit(:search, :column, :direction), true)
+
+  #     @pagy, @public_recordings = pagy_array(pub_recs)
+
+  #     # They need to wait until the meeting begins.
+  #     render :wait
+  #   end
+  # end
 
   def incorrect_user_domain
     Rails.configuration.loadbalanced_configuration && @room.owner.provider != @user_domain
