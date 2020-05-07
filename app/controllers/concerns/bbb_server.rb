@@ -64,22 +64,22 @@ module BbbServer
     bbb_server.join_meeting_url(room.bbb_id, name, password, join_opts)
   end
 
-  # Devuelve una URL para unirse a una usuario en una reunión por medio del rol del propietario de la sala
-  # def join_path_by_role(role_user_room, room, name, options = {}, uid = nil)
-  #   # Create the meeting, even if it's running
-  #   start_session(room, options)
+  Devuelve una URL para unirse a una usuario en una reunión por medio del rol del propietario de la sala
+  def join_path_by_role(role_user_room, room, name, options = {}, uid = nil)
+    # Create the meeting, even if it's running
+    start_session(room, options)
 
-  #   # Determine the password to use when joining.
-  #   password = options[:user_is_moderator] ? room.moderator_pw : room.attendee_pw
+    # Determine the password to use when joining.
+    password = options[:user_is_moderator] ? room.moderator_pw : room.attendee_pw
 
-  #   # Generate the join URL.
-  #   join_opts = {}
-  #   join_opts[:userID] = uid if uid
-  #   join_opts[:join_via_html5] = true
-  #   join_opts[:guest] = true if options[:require_moderator_approval] && !options[:user_is_moderator]
+    # Generate the join URL.
+    join_opts = {}
+    join_opts[:userID] = uid if uid
+    join_opts[:join_via_html5] = true
+    join_opts[:guest] = true if options[:require_moderator_approval] && !options[:user_is_moderator]
 
-  #   bbb_server_by_role(role_user_room).join_meeting_url(room.bbb_id, name, password, join_opts)
-  # end
+    bbb_server_by_role(role_user_room).join_meeting_url(room.bbb_id, name, password, join_opts)
+  end
 
   # Creates a meeting on the BigBlueButton server.
   def start_session(room, options = {})
