@@ -3,60 +3,60 @@
 module BbbApi
   RETURNCODE_SUCCESS = "SUCCESS"
 
-  def bbb_endpoint
-    Rails.configuration.bigbluebutton_endpoint
-  end
-
-  def bbb_secret
-    Rails.configuration.bigbluebutton_secret
-  end
-
-  # Sets a BigBlueButtonApi object for interacting with the API.
-  def bbb(user_provider)
-    if Rails.configuration.loadbalanced_configuration
-      user_domain = retrieve_provider_info(user_provider)
-
-      BigBlueButton::BigBlueButtonApi.new(remove_slash(user_domain["apiURL"]), user_domain["secret"], "0.8")
-    else
-      BigBlueButton::BigBlueButtonApi.new(remove_slash(bbb_endpoint), bbb_secret, "0.8")
-    end
-  end
-
-  # def bbb_endpoint(user_role)
-  #   logger.info "Dominio: #{user_role}"
-  #   if user_role == "claro"
-  #     Rails.configuration.bigbluebutton_endpoint = "https://app.aulaparatodos.com/bigbluebutton/api/"
-  #   elsif user_role == "gobval"
-  #     Rails.configuration.bigbluebutton_endpoint = "https://co02ocs.aulaparatodos.com/bigbluebutton/api/"
-  #   elsif user_role == "tres"
-  #     Rails.configuration.bigbluebutton_endpoint = "https://co03ocs.aulaparatodos.com/bigbluebutton/api/"
-  #   else
-  #     Rails.configuration.bigbluebutton_endpoint = "https://co01ocr.aulaparatodos.com/bigbluebutton/api/"
-  #   end
+  # def bbb_endpoint
+  #   Rails.configuration.bigbluebutton_endpoint
   # end
 
-  # def bbb_secret(user_role)
-  #   if user_role == "claro"
-  #     Rails.configuration.bigbluebutton_secret_claro
-  #   elsif user_role == "gobval"
-  #     Rails.configuration.bigbluebutton_secret_gobval
-  #   elsif user_role == "tres"
-  #     Rails.configuration.bigbluebutton_secret_tres
-  #   else
-  #     Rails.configuration.bigbluebutton_secret
-  #   end
+  # def bbb_secret
+  #   Rails.configuration.bigbluebutton_secret
   # end
 
   # # Sets a BigBlueButtonApi object for interacting with the API.
-  # def bbb(user_provider, apt_domain_name)
+  # def bbb(user_provider)
   #   if Rails.configuration.loadbalanced_configuration
   #     user_domain = retrieve_provider_info(user_provider)
 
   #     BigBlueButton::BigBlueButtonApi.new(remove_slash(user_domain["apiURL"]), user_domain["secret"], "0.8")
   #   else
-  #     BigBlueButton::BigBlueButtonApi.new(remove_slash(bbb_endpoint(apt_domain_name)), bbb_secret(apt_domain_name), "0.8")
+  #     BigBlueButton::BigBlueButtonApi.new(remove_slash(bbb_endpoint), bbb_secret, "0.8")
   #   end
   # end
+
+  def bbb_endpoint(user_role)
+    logger.info "Dominio: #{user_role}"
+    if user_role == "claro"
+      Rails.configuration.bigbluebutton_endpoint = "https://app.aulaparatodos.com/bigbluebutton/api/"
+    elsif user_role == "gobval"
+      Rails.configuration.bigbluebutton_endpoint = "https://co02ocs.aulaparatodos.com/bigbluebutton/api/"
+    elsif user_role == "tres"
+      Rails.configuration.bigbluebutton_endpoint = "https://co03ocs.aulaparatodos.com/bigbluebutton/api/"
+    else
+      Rails.configuration.bigbluebutton_endpoint = "https://co01ocr.aulaparatodos.com/bigbluebutton/api/"
+    end
+  end
+
+  def bbb_secret(user_role)
+    if user_role == "claro"
+      Rails.configuration.bigbluebutton_secret_claro
+    elsif user_role == "gobval"
+      Rails.configuration.bigbluebutton_secret_gobval
+    elsif user_role == "tres"
+      Rails.configuration.bigbluebutton_secret_tres
+    else
+      Rails.configuration.bigbluebutton_secret
+    end
+  end
+
+  # Sets a BigBlueButtonApi object for interacting with the API.
+  def bbb(user_provider, apt_domain_name)
+    if Rails.configuration.loadbalanced_configuration
+      user_domain = retrieve_provider_info(user_provider)
+
+      BigBlueButton::BigBlueButtonApi.new(remove_slash(user_domain["apiURL"]), user_domain["secret"], "0.8")
+    else
+      BigBlueButton::BigBlueButtonApi.new(remove_slash(bbb_endpoint(apt_domain_name)), bbb_secret(apt_domain_name), "0.8")
+    end
+  end
 
   # Rereives info from the loadbalanced in regards to a Provider (or tenant).
   def retrieve_provider_info(provider, api = 'api', route = 'getUser')
