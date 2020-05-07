@@ -64,7 +64,7 @@ module BbbServer
     bbb_server.join_meeting_url(room.bbb_id, name, password, join_opts)
   end
 
-  Devuelve una URL para unirse a una usuario en una reunión por medio del rol del propietario de la sala
+  #Devuelve una URL para unirse a una usuario en una reunión por medio del rol del propietario de la sala
   def join_path_by_role(role_user_room, room, name, options = {}, uid = nil)
     # Create the meeting, even if it's running
     start_session(room, options)
