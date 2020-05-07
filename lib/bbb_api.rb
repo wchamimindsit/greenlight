@@ -11,6 +11,17 @@ module BbbApi
     Rails.configuration.bigbluebutton_secret
   end
 
+  # Sets a BigBlueButtonApi object for interacting with the API.
+  def bbb(user_provider)
+    if Rails.configuration.loadbalanced_configuration
+      user_domain = retrieve_provider_info(user_provider)
+
+      BigBlueButton::BigBlueButtonApi.new(remove_slash(user_domain["apiURL"]), user_domain["secret"], "0.8")
+    else
+      BigBlueButton::BigBlueButtonApi.new(remove_slash(bbb_endpoint), bbb_secret, "0.8")
+    end
+  end
+
   # def bbb_endpoint(user_role)
   #   logger.info "Dominio: #{user_role}"
   #   if user_role == "claro"
@@ -36,17 +47,7 @@ module BbbApi
   #   end
   # end
 
-  def bbb(user_provider)
-    if Rails.configuration.loadbalanced_configuration
-      user_domain = retrieve_provider_info(user_provider)
-
-      BigBlueButton::BigBlueButtonApi.new(remove_slash(user_domain["apiURL"]), user_domain["secret"], "0.8")
-    else
-      BigBlueButton::BigBlueButtonApi.new(remove_slash(bbb_endpoint), bbb_secret, "0.8")
-    end
-  end
-
-  # Sets a BigBlueButtonApi object for interacting with the API.
+  # # Sets a BigBlueButtonApi object for interacting with the API.
   # def bbb(user_provider, apt_domain_name)
   #   if Rails.configuration.loadbalanced_configuration
   #     user_domain = retrieve_provider_info(user_provider)
