@@ -72,6 +72,8 @@ class ApplicationController < ActionController::Base
         apt_domain_name = "gobval"
       elsif current_user&.has_role_org?(:_tres)
         apt_domain_name = "tres"
+      elsif current_user&.has_role_org?(:_cuatro)
+        apt_domain_name = "cuatro"
       else
         apt_domain_name = "apt"
       end
