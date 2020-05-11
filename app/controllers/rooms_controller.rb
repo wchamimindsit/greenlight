@@ -273,7 +273,7 @@ class RoomsController < ApplicationController
     end
   end
 
-  GET /:room_uid/logout
+  # GET /:room_uid/logout
   def logout
     logger.info "Support: #{current_user.present? ? current_user.email : 'Guest'} has left room #{@room.uid}"
 
