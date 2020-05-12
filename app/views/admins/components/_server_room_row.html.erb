@@ -34,7 +34,7 @@
     <%= room.uid %>
   </td>
   <td class="text-left">
-    <% running = room.active %>
+    <% running = room_is_running(room.bbb_id) %>
     <% if running %>
       <%= t("administrator.rooms.running") %>
     <% else %>

@@ -274,31 +274,11 @@ class RoomsController < ApplicationController
   end
 
   # GET /:room_uid/logout
-  # def logout
-  #   logger.info "Support: #{current_user.present? ? current_user.email : 'Guest'} has left room #{@room.uid}"
-
-  #   if current_user.present? ? @room.owned_by?(current_user) : false
-  #     if room_running?(@room.bbb_id)
-  #       logger.info "Esta saliendo el dueño de la sala"
-  #     else
-  #       logger.info "Esta finalizando sesion el dueño de la sala"
-  #       @room.update_attributes(end_last_session: DateTime.now, active: false)
-
-  #       @session_history = SessionHistory.most_recent_for(current_user.id, @room.id)
-  #       @session_history.update_attributes(end_session: DateTime.now)
-  #     end     
-  #   end
-
-  #   # Redirect the correct page.
-  #   redirect_to @room
-  # end
-
   def logout
     logger.info "Support: #{current_user.present? ? current_user.email : 'Guest'} has left room #{@room.uid}"
 
     if current_user.present? ? @room.owned_by?(current_user) : false
-      role_user_room = @room.user_by_owned&.highest_priority_role.name
-      if room_running_by_role?(@room.bbb_id, role_user_room)
+      if room_running?(@room.bbb_id)
         logger.info "Esta saliendo el dueño de la sala"
       else
         logger.info "Esta finalizando sesion el dueño de la sala"
@@ -312,6 +292,26 @@ class RoomsController < ApplicationController
     # Redirect the correct page.
     redirect_to @room
   end
+
+  # def logout
+  #   logger.info "Support: #{current_user.present? ? current_user.email : 'Guest'} has left room #{@room.uid}"
+
+  #   if current_user.present? ? @room.owned_by?(current_user) : false
+  #     role_user_room = @room.user_by_owned&.highest_priority_role.name
+  #     if room_running_by_role?(@room.bbb_id, role_user_room)
+  #       logger.info "Esta saliendo el dueño de la sala"
+  #     else
+  #       logger.info "Esta finalizando sesion el dueño de la sala"
+  #       @room.update_attributes(end_last_session: DateTime.now, active: false)
+
+  #       @session_history = SessionHistory.most_recent_for(current_user.id, @room.id)
+  #       @session_history.update_attributes(end_session: DateTime.now)
+  #     end     
+  #   end
+
+  #   # Redirect the correct page.
+  #   redirect_to @room
+  # end
 
   # POST /:room_uid/login
   def login
