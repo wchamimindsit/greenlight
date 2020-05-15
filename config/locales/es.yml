@@ -427,6 +427,7 @@ es:
     join: Entrar
     last_session: "Última sesión en %{session}"
     login: Entrar
+    organization: Organización
     owner: Dueño
     no_room:
       description: Ingresa la url o id de la sala a la que quieres acceder

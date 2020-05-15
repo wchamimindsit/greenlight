@@ -483,6 +483,7 @@ en:
     join: Join
     last_session: Last session on %{session}
     login: Enter
+    organization: Organization
     owner: Owner
     owner_banned: This room is currently unavailable
     no_room:

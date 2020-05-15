@@ -483,6 +483,7 @@ es_MX:
     join: Entrar
     last_session: "Última sesión en %{session}"
     login: Entrar
+    organization: Organización
     owner: Dueño
     owner_banned: Esta sala no está disponible actualmente
     no_room:
