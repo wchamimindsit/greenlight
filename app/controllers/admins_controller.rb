@@ -43,6 +43,11 @@ class AdminsController < ApplicationController
 
     @user_list = merge_user_list
 
+    # Validacion para filtrar datos por organizacion si se tiene asignada
+    if current_user && current_user.organization_id
+      @organization = Organization.find_by(id: current_user.organization_id)
+    end 
+
     @pagy, @users = pagy(manage_users_list)
   end
 
@@ -52,6 +57,12 @@ class AdminsController < ApplicationController
 
   # GET /admins/server_recordings
   def server_recordings
+    
+    # Validacion para filtrar datos por organizacion si se tiene asignada
+    if current_user && current_user.organization_id
+      @organization = Organization.find_by(id: current_user.organization_id)
+    end 
+
     server_rooms = rooms_list_for_recordings
 
     @search, @order_column, @order_direction, recs =
@@ -69,6 +80,11 @@ class AdminsController < ApplicationController
     @running_room_bbb_ids = all_running_meetings[:meetings].pluck(:meetingID)
 
     @user_list = shared_user_list if shared_access_allowed
+
+    # Validacion para filtrar datos por organizacion si se tiene asignada
+    if current_user && current_user.organization_id
+      @organization = Organization.find_by(id: current_user.organization_id)
+    end 
 
     @pagy, @rooms = pagy_array(server_rooms_list)
   end
