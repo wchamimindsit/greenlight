@@ -68,7 +68,7 @@ class RoomsController < ApplicationController
 
     if current_user && current_user.organization_id
       @organization = Organization.find_by(id: current_user.organization_id)
-    end
+    end    
 
     # If its the current user's room
     if current_user && (@room.owned_by?(current_user) || @shared_room)
@@ -90,6 +90,14 @@ class RoomsController < ApplicationController
 
       show_user_join
     end
+
+    if !@organization.nil? 
+      if @organization.nextinvoice && @organization.reseller_id && @organization.reseller_id == 1 && DateTime.now() > @organization.nextinvoice
+        logger.info "La organizacion #{@organization.name} ha caducado: #{@organization.nextinvoice}"
+        flash[:alert] = I18n.t("aulaparatodos_exception_expiration")
+      end
+    end
+
   end
 
   # POST /:room_uid
