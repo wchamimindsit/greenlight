@@ -84,6 +84,9 @@ $(document).on('turbolinks:load', function(){
 
     $("#shareRoomModal").on("show.bs.modal", function() {
       $(".selectpicker").selectpicker('val','')
+      $("input[id=fileUsersAccess]").change( function(event) {
+        loadUsersAccess(URL.createObjectURL(event.target.files[0]));
+      });
     })
 
     $(".bootstrap-select").on("click", function() {
@@ -229,6 +232,26 @@ function saveAccessChanges() {
   let listItemsToAdd = $("#user-list li:not(.remove-shared)").toArray().map(user => $(user).data("uid"))
 
   $.post($("#save-access").data("path"), {add: listItemsToAdd})
+}
+
+function loadUsersAccess(path){
+  $.ajax({
+    type: "GET",
+    url: path,
+    dataType: "text",
+    success: function(data) { processData(data);},
+    error:  function(jqXHR, textStatus, errorThrown ) { console.error(errorThrown); }    
+ });
+}
+
+function processData(data) {  
+  console.log("'");
+  $.each(data.split(/\n/g), function(key, value) {
+    if(!value.trim() === false) {
+        console.log(value.split(';'));
+      }
+  });
+  console.log("'");
 }
 
 // Get list of users shared with and display them
