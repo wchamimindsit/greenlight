@@ -163,6 +163,7 @@ en:
       title: Manage Users
   add_to_google_calendar: "Add to Google Calendar"
   aulaparatodos_exception_expiration: Esta cuenta está en el límite de sus 30 días de uso. Para usar AulaParaTodos por otros 30 días más puedes realizar tu pago línea <a href="https://biz.payulatam.com/L0c743d0992EECE" target="_blank"><img src="http://www.payulatam.com/img-secure-2015/boton_pagar_pequeno.png" style="width:100px;"/></a> o <strong><a href="mailto:administracion@mindsit.co">contáctanos</a></strong> para gestionar tu factura vía email.
+  aulaparatodos_exception_expiration_grace_day: Su servicio mensual a <strong>caducado</strong>, para continuar usando los servicios completos de <strong>AulaParaTodos</strong> renueve su servicio mensual aquí <a href="https://biz.payulatam.com/L0c743d0992EECE" target="_blank"><img src="http://www.payulatam.com/img-secure-2015/boton_pagar_pequeno.png" style="width:100px;"/></a>
   bigbluebutton: AulaParaTodos
   bigbluebutton_exception: Oops, there was an error when starting the meeting!
   bigbluebutton_exception_active_room: You already have an active session in room% <strong>{room_name}</strong>. You must <strong>End Session</strong> in that room to start a different one.
