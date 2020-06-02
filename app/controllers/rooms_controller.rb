@@ -371,6 +371,35 @@ class RoomsController < ApplicationController
 
   # Find the room from the uid.
   def find_room
+
+    data_parameters = params[:room_uid]
+    parameters = data_parameters.split('&')
+
+    if parameters.length > 1
+
+      data_uid = parameters[0]
+      data_parameters = Base64.decode64(parameters[1])
+      parameters = data_parameters.split('&')
+      
+      data_user = parameters[0]
+      data_pin = parameters[1]
+
+      params[:room_uid] = data_uid
+      params[:user_name] = data_user
+      params[:user_pin] = data_pin
+
+      cookies.encrypted[:room_uid] = data_uid
+      cookies.encrypted[:user_name] = data_user
+      cookies.encrypted[:user_pin] = data_pin
+
+      logger.info "Accediendo desde evaluateok: #{data_user} [#{data_pin}]"
+    else
+      if cookies.encrypted[:room_uid] && cookies.encrypted[:room_uid] == params[:room_uid]
+        params[:user_name] = cookies.encrypted[:user_name]
+        params[:user_pin] = cookies.encrypted[:user_pin]
+      end
+    end
+
     @room = Room.includes(:owner).find_by!(uid: params[:room_uid])
   end
 
