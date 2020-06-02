@@ -56,6 +56,7 @@ ActiveRecord::Schema.define(version: 2020_01_30_144841) do
     t.string "provider"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "can_invite_users", default: false
     t.index ["name", "provider"], name: "index_roles_on_name_and_provider", unique: true
     t.index ["name"], name: "index_roles_on_name"
     t.index ["priority", "provider"], name: "index_roles_on_priority_and_provider", unique: true
@@ -183,6 +184,26 @@ ActiveRecord::Schema.define(version: 2020_01_30_144841) do
     t.string "serverslist", default: "{ }"
     t.string "imagelogo"
     t.boolean "email_verified", default: false
+    t.boolean "enabled", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "country_id"
+    t.integer "state_id"
+    t.integer "city_id"
+  end
+
+  create_table "participants", force: :cascade do |t|
+    t.string "identification_type"
+    t.string "identification"
+    t.string "name"
+    t.string "surnames"
+    t.string "email"
+    t.boolean "email_verified", default: false
+    t.string "address"
+    t.string "pin"
+    t.string "phone"
+    t.string "photo"
+    t.string "gender"
     t.boolean "enabled", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
