@@ -182,5 +182,8 @@ module Greenlight
 
     # Default admin password
     config.admin_password_default = ENV['ADMIN_PASSWORD'] || 'administrator'
+
+    # Configurar cantidad de dias de gracia para vencimiento de licencias
+    config.grace_days_for_use = ENV['GRACE_DAYS_FOR_USE']
   end
 end
