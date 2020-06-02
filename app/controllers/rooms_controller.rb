@@ -93,8 +93,18 @@ class RoomsController < ApplicationController
 
     if !@organization.nil? 
       if @organization.nextinvoice && @organization.reseller_id && @organization.reseller_id == 1 && DateTime.now() > @organization.nextinvoice
-        logger.info "La organizacion #{@organization.name} ha caducado: #{@organization.nextinvoice}"
-        flash[:alert] = I18n.t("aulaparatodos_exception_expiration")
+
+        expiration_date = @organization.nextinvoice
+        expiration_date = (expiration_date + (Rails.configuration.grace_days_for_use.to_i * 86400)).to_s
+
+        if DateTime.now() > expiration_date
+          logger.info "La organizacion #{@organization.name} ha caducado y ha pasado los dias de gracia: #{expiration_date}"
+          flash[:alert] = I18n.t("aulaparatodos_exception_expiration_grace_day")
+        else
+          logger.info "La organizacion #{@organization.name} ha caducado: #{@organization.nextinvoice}"
+          flash[:alert] = I18n.t("aulaparatodos_exception_expiration")
+        end 
+        
       end
     end
 
@@ -166,6 +176,25 @@ class RoomsController < ApplicationController
   # POST /:room_uid/start
   def start
     logger.info "Support: #{current_user.email} is starting room #{@room.uid}"
+
+    # Validaciones en caso de que no este autorizado a iniciar conferencias por vencimiento de licencia
+    if current_user && current_user.organization_id
+      @organization = Organization.find_by(id: current_user.organization_id)
+
+      if !@organization.nil? 
+        if @organization.nextinvoice && @organization.reseller_id && @organization.reseller_id == 1
+          
+          expiration_date = @organization.nextinvoice
+          expiration_date = (expiration_date + (Rails.configuration.grace_days_for_use.to_i * 86400)).to_s
+
+          if DateTime.now() > expiration_date
+            return redirect_to current_user.main_room, flash: { alert: I18n.t("aulaparatodos_exception_expiration_grace_day") }
+          end
+          
+        end
+      end
+    end  
+    # Fin validaciones
 
     active_rooms = 0
     active_room_name = ""
