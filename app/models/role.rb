@@ -70,6 +70,7 @@ class Role < ApplicationRecord
     update_permission("can_manage_users", permissions[:can_manage_users].to_s)
     update_permission("can_manage_rooms_recordings", permissions[:can_manage_rooms_recordings].to_s)
     update_permission("can_appear_in_share_list", permissions[:can_appear_in_share_list].to_s)
+    update_permission("can_invite_users", permissions[:can_invite_users].to_s)
   end
 
   # Updates the value of the permission and enables it
