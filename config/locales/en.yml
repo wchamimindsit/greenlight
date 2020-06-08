@@ -127,6 +127,7 @@ en:
       colour:
         title: Role Colour
         info: Set the colour that will be associated with the role
+      invite_users: Allow users to send invitations
     rooms:
       title: Server Rooms
       table:
