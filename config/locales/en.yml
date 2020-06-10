@@ -387,6 +387,7 @@ en:
       save: Save Changes
       cancel_changes: Cancel Changes
       select: Select User
+      select_file: Select File
     merge_user:
       cancel: Cancel
       from: Account to be Merged
@@ -562,3 +563,4 @@ en:
     signin: Please sign in to access your account.
     title: Verify your email
     verification: Verification
+  columns_participant_create: ["identificationtype", "identification", "name", "surnames", "email", "address", "pin", "phone", "gender"]
