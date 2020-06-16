@@ -106,6 +106,7 @@ es:
       colour:
         title: Color del rol
         info: Defina el color que será asociado al rol
+      invite_users: Permitir a los usuarios enviar invitaciones
     title: Configuración de la organización
     users:
       invite: Invitar usuario
@@ -461,6 +462,17 @@ es:
     wait:
       message: La sesión todavía no ha comenzado.
       auto: Serás enviado a la sala automáticamente cuando empiece la sesión
+  participant:
+    manage: Administrar Participantes
+    name: Nombre
+    surnames: Apellidos
+    phone: Teléfono
+    email: Email
+    gender: Genero
+    address: Dirección
+    identification: Identificación
+    identification_type: Tipo de Identificación
+    pin: PIN
   settings:
     account:
       fullname: Nombre completo

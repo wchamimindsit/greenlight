@@ -100,3 +100,28 @@
 .remove-shared {
   text-decoration: line-through;
 }
+
+.custom-file {
+  font-size: smaller !important;
+}
+
+.modal-manage-participants {
+  max-width: 50% !important;
+}
+
+#lbFileUsersAccess {
+  text-align: left;
+}
+
+.custom-file-input:hover {
+  background: #467fcf !important;
+  color: white !important;
+}
+
+.custom-file-input:active::before {
+  background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
+}
+
+.modal-manage-participants {
+  max-width: 50% !important;
+}

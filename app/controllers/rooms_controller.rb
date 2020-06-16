@@ -60,8 +60,24 @@ class RoomsController < ApplicationController
     start
   end
 
+  # GET /:room_uid/load_manage_participant
+  def load_manage_participant
+
+    begin
+    @room = Room.find_by(uid: params[:room_uid])
+    @participants = Participant.from_room(@room.id)
+      
+    rescue => e
+      logger.error "Error on load manage participant: #{e}"
+    end
+    
+  end
+
   # GET /:room_uid
   def show
+
+    load_manage_participant
+
     @anyone_can_start = JSON.parse(@room[:room_settings])["anyoneCanStart"]
     @room_running = room_running?(@room.bbb_id)
     @shared_room = room_shared_with_user

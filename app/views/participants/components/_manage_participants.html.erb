@@ -1,0 +1,30 @@
+<%
+#comments
+%>
+<div class="row">
+  <div class="col-12">
+    <div class="table-responsive" style="height:300px; overflow-y:auto;">
+      <table id="participants-table" class="table table-hover table-outline table-vcenter text-nowrap card-table">
+        <thead>
+          <tr>
+            <th>
+              <%= t("participant.identification") %>
+            </th>
+            <th>
+              <%= t("participant.name") %>
+            </th>
+            <th>
+              <%= t("participant.email") %>
+            </th>
+            <th class="text-center"><i class="icon-settings"></i></th>
+          </tr>
+        </thead>
+        <tbody id="participant-table">
+          <% participants.each do |participant| %>
+            <%= render "participants/components/participant_row", participant: participant, room: @room.uid %>
+          <% end %>
+        </tbody>
+      </table>      
+    </div>
+  </div>
+</div>

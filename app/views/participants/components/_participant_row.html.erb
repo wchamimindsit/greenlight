@@ -1,0 +1,26 @@
+<%
+#comments
+%>
+<tr id="participant-block" >
+    <td class="text-center">
+      <%= "#{participant.identification_type.upcase}  #{participant.identification}" %>
+    </td>
+    <td class="text-left">
+      <%= "#{participant.name} #{participant.surnames}" %>
+    </td>
+    <td class="text-center">
+        <%= participant.email %>
+      </td>
+    <td class="text-center">
+      <div class="item-action dropdown">
+        <a href="javascript:void(0)" data-toggle="dropdown" class="icon">
+          <i class="fas fa-ellipsis-v px-4"></i>
+        </a>
+        <div class="dropdown-menu dropdown-menu-right">
+          <a href="" data-toggle="modal" data-target="#manageParticipantModal" data-path="<%= delete_participant_path(room) %>"  class="delete-participant dropdown-item">
+            <i class="dropdown-icon far fa-trash-alt"></i> <%= t("delete") %>
+          </a>
+        </div>
+      </div>
+    </td>
+  </tr>

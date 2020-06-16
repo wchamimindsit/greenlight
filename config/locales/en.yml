@@ -127,6 +127,7 @@ en:
       colour:
         title: Role Colour
         info: Set the colour that will be associated with the role
+      invite_users: Allow users to send invitations
     rooms:
       title: Server Rooms
       table:
@@ -517,6 +518,17 @@ en:
     wait:
       message: The meeting hasn't started yet.
       auto: You will automatically join when the meeting starts.
+  participant:
+    manage: Manage Participants
+    name: Name
+    surnames: Surnames
+    phone: Phone
+    email: Email
+    gender: Gender
+    address: Address
+    identification: Identification
+    identification_type: Identification Type
+    pin: PIN
   settings:
     account:
       fullname: Full name

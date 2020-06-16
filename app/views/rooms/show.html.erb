@@ -120,5 +120,6 @@
 
 <% if shared_access_allowed %>
   <%= render "shared/modals/share_room_modal" %>
+  <%= render "participants/modals/manage_participant_modal", participants: @participants %>
   <%= render "shared/modals/remove_access_modal" %>
 <% end %>

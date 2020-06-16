@@ -76,7 +76,8 @@ $(document).on('turbolinks:load', function(){
 
     $(".share-room").click(function() {
       // Update the path of save button
-      $("#save-access").attr("data-path", $(this).data("path"))
+      //$("#save-access").attr("data-path", $(this).data("path"))
+      $("#save-participants").attr("data-path", $(this).data("path"))
 
       // Get list of users shared with and display them
       displaySharedUsers($(this).data("users-path"))
@@ -84,6 +85,12 @@ $(document).on('turbolinks:load', function(){
 
     $("#shareRoomModal").on("show.bs.modal", function() {
       $(".selectpicker").selectpicker('val','')
+    })
+
+    $("#manageParticipantModal").on("show.bs.modal", function(evn) {
+      /* var button = $(evn.relatedTarget)
+      var recipient = button.data('path')
+      console.log(recipient) */
       $("input[id=fileUsersAccess]").change( function(event) {
         loadUsersAccess(URL.createObjectURL(event.target.files[0]));
       });
@@ -234,24 +241,54 @@ function saveAccessChanges() {
   $.post($("#save-access").data("path"), {add: listItemsToAdd})
 }
 
-function loadUsersAccess(path){
+function saveParticipants() {
+  if($("#fileUsersAccess").val())
+    $.post($("#save-participants").data("path"), {add: objSaveAccessChanges})
+}
+
+function loadUsersAccess(path) {
   $.ajax({
     type: "GET",
     url: path,
-    dataType: "text",
-    success: function(data) { processData(data);},
-    error:  function(jqXHR, textStatus, errorThrown ) { console.error(errorThrown); }    
+    beforeSend: function(xhr) {
+      xhr.overrideMimeType("application/x-www-form-urlencoded; charset=ISO-8859-1");
+    },
+    success: function(data) {
+      processData(data);
+      $("#save-participants").prop('disabled', false);
+      $("#lbFileUsersAccess").text($("#fileUsersAccess")[0].files[0].name);
+    },
+    error:  function(jqXHR, textStatus, err) { console.error(err); }
  });
 }
 
-function processData(data) {  
-  console.log("'");
-  $.each(data.split(/\n/g), function(key, value) {
+var objSaveAccessChanges = {};
+
+function processData(data) {
+  var arr = {}, lstHeader = {};
+  $.each(data.split(/\n/g), function(index, value) {
     if(!value.trim() === false) {
-        console.log(value.split(';'));
-      }
+      var lstLine = (value.indexOf(";") > -1) ? value.split(';') : value.split(',');
+      switch (index) {
+        case 0:
+          for (var i in lstLine) {
+              let element = (lstLine[i].toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).replace(/\s/g,"");
+              lstHeader[i] = element;
+              arr[element] = [];
+          }
+          break;      
+        default:
+          try {            
+            for (var j in lstLine) {
+              arr[lstHeader[j]].push(lstLine[j].replace(/\r/g,""));
+            }
+          } catch (error) { console.log(error); }
+          
+          break;
+      }  
+    }
   });
-  console.log("'");
+  objSaveAccessChanges = arr;
 }
 
 // Get list of users shared with and display them

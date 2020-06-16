@@ -11,7 +11,7 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 2020_01_30_144841) do
-
+  
   create_table "features", force: :cascade do |t|
     t.integer "setting_id"
     t.string "name", null: false
@@ -164,7 +164,7 @@ ActiveRecord::Schema.define(version: 2020_01_30_144841) do
     t.string "settings", default: "{ }"
     t.integer "maxusers", null: false
     t.datetime "nextinvoice", null: false
-    t.boolean "enabled", default: false  
+    t.boolean "enabled", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "country_id"
@@ -212,4 +212,16 @@ ActiveRecord::Schema.define(version: 2020_01_30_144841) do
     t.integer "city_id"
   end
 
+  create_table "participants_rooms", id: false, force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "room_id"
+    t.integer "participant_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "enabled", default: "active"
+
+    t.index ["participant_id"], name: "index_participants_rooms_on_room_id"
+    t.index ["room_id", "participant_id"], name: "index_participants_rooms_on_participant_id_and_room_id"
+    t.index ["room_id"], name: "index_participants_rooms_on_participant_id"
+  end
 end

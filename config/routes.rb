@@ -127,9 +127,11 @@ Rails.application.routes.draw do
   # Participant resources.
   resources :participants, only: [:create, :show, :destroy], param: :room_uid, path: '/'
 
-  # Save participants
+  # Extended participants routes.
   scope '/:room_uid' do
     post '/create', to: 'participants#create', as: :participant_create
+    post '/delete_participant', to: 'participants#delete_participant', as: :delete_participant
+
   end
 
   # Recording operations routes
