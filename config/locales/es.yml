@@ -106,6 +106,7 @@ es:
       colour:
         title: Color del rol
         info: Defina el color que será asociado al rol
+      invite_users: Permitir a los usuarios enviar invitaciones
     title: Configuración de la organización
     users:
       invite: Invitar usuario

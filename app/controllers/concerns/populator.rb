@@ -100,10 +100,18 @@ module Populator
       roles_can_appear << role.name if role.get_permission("can_appear_in_share_list") && role.priority >= 0
     end
 
-    initial_list = User.where.not(uid: current_user.uid)
-                       .without_role(:pending)
-                       .without_role(:denied)
-                       .with_highest_priority_role(roles_can_appear)
+    # Validacion para filtrar datos por organizacion si se tiene asignada
+    if !@organization.nil?
+      initial_list = User.where(organization_id: @organization.id).where.not(uid: current_user.uid)
+                         .without_role(:pending)
+                         .without_role(:denied)
+                         .with_highest_priority_role(roles_can_appear)
+    else
+      initial_list = User.where.not(uid: current_user.uid)
+                         .without_role(:pending)
+                         .without_role(:denied)
+                         .with_highest_priority_role(roles_can_appear)
+    end
 
     return initial_list unless Rails.configuration.loadbalanced_configuration
     initial_list.where(provider: @user_domain)
@@ -111,7 +119,13 @@ module Populator
 
   # Returns a list of users that can merged into another user
   def merge_user_list
-    initial_list = User.where.not(uid: current_user.uid).without_role(:super_admin)
+
+    # Validacion para filtrar datos por organizacion si se tiene asignada
+    if !@organization.nil?
+      initial_list = User.where(organization_id: @organization.id).where.not(uid: current_user.uid).without_role(:super_admin)
+    else
+      initial_list = User.where.not(uid: current_user.uid).without_role(:super_admin)
+    end    
 
     return initial_list unless Rails.configuration.loadbalanced_configuration
     initial_list.where(provider: @user_domain)

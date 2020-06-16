@@ -127,6 +127,7 @@ es_MX:
       colour:
         title: Color de rol
         info: Define el color que sera asociado con el rol
+      invite_users: Permitir a los usuarios enviar invitaciones
     rooms:
       title: Salas en el servidor
       table:
