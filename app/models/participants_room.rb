@@ -6,4 +6,17 @@ class ParticipantsRoom < ApplicationRecord
   validates :user_id, presence: true
   validates :room_id, presence: true
   validates :participant_id, presence: true
+
+  def self.remove_participant(user_id, room_id, participant_id)
+
+    ParticipantsRoom.find_by(
+      room_id: room_id, 
+      participant_id: participant_id
+    ).update_attributes(
+      enabled: "inactive by #{user_id}", 
+      updated_at: DateTime.now
+    )
+
+  end
+
 end

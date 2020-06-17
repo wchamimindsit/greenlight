@@ -20,11 +20,27 @@ class ParticipantsController < ApplicationController
     end
   end
 
-  # POST /:room_uid/delete_participant
+  # DELETE /:room_uid/delete_participant
   def delete_participant
+    begin
+      
+      room_id = Room.find_by(uid: params[:room_uid]).id
+      participant_id = params[:remove]
+      user_id = session[:user_id]
 
-    logger.info "delete_participant -> params: #{params.to_json}"
-    
+      logger.info "delete_participant -> room_id: #{room_id}, participant_id: #{participant_id}"
+
+      ParticipantsRoom.remove_participant(user_id, room_id, participant_id)
+        
+      flash[:success] = I18n.t("participant.remove_participant_success")
+
+    rescue => e
+      logger.error "Support: Error in delete_participant: #{e}"
+      flash[:alert] = I18n.t("participant.remove_participant_error")
+    end
+
+    # Redirects to the page that made the initial request
+    redirect_back fallback_location: room_path
   end
   
   # POST /:room_uid/create
@@ -149,16 +165,15 @@ class ParticipantsController < ApplicationController
           end
         end
         #end insert
-        logger.info "-------------------------------------------------------------------"
 
-        flash[:success] = I18n.t("room.shared_access_success")
+        flash[:success] = I18n.t("participant.save_participants_success")
       else
         logger.error "Support: The file doesn't contain the required columns"
-        flash[:alert] = I18n.t("room.shared_access_error")
+        flash[:alert] = I18n.t("participant.save_participants_error")
       end
     rescue => e
       logger.error "Support: Error in file upload participants: #{e}"
-      flash[:alert] = I18n.t("room.shared_access_error")
+      flash[:alert] = I18n.t("participant.save_participants_error")
     end
 
     redirect_back fallback_location: room_path
@@ -166,40 +181,3 @@ class ParticipantsController < ApplicationController
 
   #
 end
-
-=begin 
-        lstInsert.each do |index, row|
-          begin
-            objParticipant =
-              Participant.create(
-                identification_type: row[0],
-                identification: row[1],
-                name: row[2],
-                surnames: row[3],
-                email: row[4],
-                address: row[5],
-                pin: row[6],
-                phone: row[7],
-                gender: row[8],
-              )
-
-            logger.info "objParticipant.id"
-            logger.info objParticipant.id
-
-            ParticipantsRoom.create(
-              user_id: user_id,
-              room_id: room_id,
-              participant_id: objParticipant.id,
-              created_at: DateTime.now(),
-            )
-          rescue => ex
-            logger.error "Support: The file contain id '#{row[1]}' repeated \n#{ex}"
-          end
-
-          logger.info "--||-----------------------------------------------------------||--"
-
-          Participant.all.each do |part|
-            logger.info part.identification_type + "_" + part.identification
-          end
-        end
-=end

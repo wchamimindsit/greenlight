@@ -21,7 +21,7 @@
         </thead>
         <tbody id="participant-table">
           <% participants.each do |participant| %>
-            <%= render "participants/components/participant_row", participant: participant, room: @room.uid %>
+            <%= render "participants/components/participant_row", participant: participant %>
           <% end %>
         </tbody>
       </table>      

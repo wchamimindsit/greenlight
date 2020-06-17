@@ -212,14 +212,13 @@ ActiveRecord::Schema.define(version: 2020_01_30_144841) do
     t.integer "city_id"
   end
 
-  create_table "participants_rooms", id: false, force: :cascade do |t|
+  create_table "participants_rooms", force: :cascade do |t|
     t.integer "user_id"
     t.integer "room_id"
     t.integer "participant_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "enabled", default: "active"
-
     t.index ["participant_id"], name: "index_participants_rooms_on_room_id"
     t.index ["room_id", "participant_id"], name: "index_participants_rooms_on_participant_id_and_room_id"
     t.index ["room_id"], name: "index_participants_rooms_on_participant_id"

@@ -17,7 +17,7 @@
           <i class="fas fa-ellipsis-v px-4"></i>
         </a>
         <div class="dropdown-menu dropdown-menu-right">
-          <a href="" data-toggle="modal" data-target="#manageParticipantModal" data-path="<%= delete_participant_path(room) %>"  class="delete-participant dropdown-item">
+          <a id="delete-participant" data-value="<%= participant.id %>" class="delete-participant dropdown-item">
             <i class="dropdown-icon far fa-trash-alt"></i> <%= t("delete") %>
           </a>
         </div>

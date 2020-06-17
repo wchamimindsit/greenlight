@@ -87,10 +87,10 @@ $(document).on('turbolinks:load', function(){
       $(".selectpicker").selectpicker('val','')
     })
 
-    $("#manageParticipantModal").on("show.bs.modal", function(evn) {
-      /* var button = $(evn.relatedTarget)
-      var recipient = button.data('path')
-      console.log(recipient) */
+    $("#manageParticipantModal").on("show.bs.modal", function(evn) {      
+      $("a[id='delete-participant']").on("click", function(event) {
+        deleteParticipant($("#manageParticipantModal").data('path'), {remove: $(event.target).data('value')})
+      })
       $("input[id=fileUsersAccess]").change( function(event) {
         loadUsersAccess(URL.createObjectURL(event.target.files[0]));
       });
@@ -244,6 +244,17 @@ function saveAccessChanges() {
 function saveParticipants() {
   if($("#fileUsersAccess").val())
     $.post($("#save-participants").data("path"), {add: objSaveAccessChanges})
+}
+
+function deleteParticipant(path, value) {
+    $.ajax({
+      async: true,
+      type: "DELETE",
+      url: path,
+      data: value,
+      success: function(data) { console.log(data) },
+      error:  function(jqXHR, textStatus, err) { console.error(err); }
+   });
 }
 
 function loadUsersAccess(path) {

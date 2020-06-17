@@ -529,6 +529,10 @@ en:
     identification: Identification
     identification_type: Identification Type
     pin: PIN
+    save_participants_success: Participants were successfully added
+    save_participants_error: An error occurred while adding the participant
+    remove_participant_success: The participant was successfully removed
+    remove_participant_error: An error occurred while removing the participant
   settings:
     account:
       fullname: Full name

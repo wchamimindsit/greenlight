@@ -473,6 +473,10 @@ es:
     identification: Identificación
     identification_type: Tipo de Identificación
     pin: PIN
+    save_participants_success: Los participantes fueron agregados exitosamente
+    save_participants_error: Ocurrió un error al agregar el participante
+    remove_participant_success: El participante fue removido exitosamente
+    remove_participant_error: Ocurrió un error al remover el participante
   settings:
     account:
       fullname: Nombre completo

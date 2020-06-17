@@ -130,7 +130,7 @@ Rails.application.routes.draw do
   # Extended participants routes.
   scope '/:room_uid' do
     post '/create', to: 'participants#create', as: :participant_create
-    post '/delete_participant', to: 'participants#delete_participant', as: :delete_participant
+    delete '/delete_participant', to: 'participants#delete_participant', as: :delete_participant
 
   end
 
