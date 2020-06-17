@@ -25,10 +25,16 @@ module AdminsHelper
   end
 
   def admin_invite_registration
-    highest_role = current_user.highest_priority_role
+    if current_user && current_user.highest_priority_role
 
-    controller_name == "admins" && action_name == "index" &&
+      highest_role = current_user.highest_priority_role
+
+      controller_name == "admins" && action_name == "index" &&
       @settings.get_value("Registration Method") == Rails.configuration.registration_methods[:invite] && highest_role.get_permission("can_invite_users")
+    else
+      controller_name == "admins" && action_name == "index" &&
+      @settings.get_value("Registration Method") == Rails.configuration.registration_methods[:invite]
+    end
   end
 
   def room_authentication_string

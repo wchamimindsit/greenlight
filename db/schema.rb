@@ -11,7 +11,7 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 2020_01_30_144841) do
-  
+
   create_table "features", force: :cascade do |t|
     t.integer "setting_id"
     t.string "name", null: false
