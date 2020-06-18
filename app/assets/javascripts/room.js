@@ -76,8 +76,7 @@ $(document).on('turbolinks:load', function(){
 
     $(".share-room").click(function() {
       // Update the path of save button
-      //$("#save-access").attr("data-path", $(this).data("path"))
-      $("#save-participants").attr("data-path", $(this).data("path"))
+      $("#save-access").attr("data-path", $(this).data("path"))
 
       // Get list of users shared with and display them
       displaySharedUsers($(this).data("users-path"))
@@ -87,13 +86,31 @@ $(document).on('turbolinks:load', function(){
       $(".selectpicker").selectpicker('val','')
     })
 
-    $("#manageParticipantModal").on("show.bs.modal", function(evn) {      
-      $("a[id='delete-participant']").on("click", function(event) {
-        deleteParticipant($("#manageParticipantModal").data('path'), {remove: $(event.target).data('value')})
-      })
-      $("input[id=fileUsersAccess]").change( function(event) {
-        loadUsersAccess(URL.createObjectURL(event.target.files[0]));
+    $("#manageParticipantModal").on("show.bs.modal", function(event) {
+
+      $("#save-participants").attr("data-path", 
+        $(event.relatedTarget).data("path")
+      );
+      $("input[id=fileUsersAccess]").change(function(e) {
+        loadUsersAccess(URL.createObjectURL(e.target.files[0]));
       });
+    })
+
+    $("#deleteParticipantModal").on("show.bs.modal", function(event) {
+
+      $("#participant-remove").val($(event.relatedTarget).data('value'))
+      
+      $("#participant-delete-checkbox").click(function(){
+        if ($("#participant-delete-checkbox").prop("checked")) {
+          $("#participant-delete-confirm").removeAttr("disabled")
+          $("#participant-perm-delete").hide()
+          $("#participant-delete-warning").show()
+        } else {
+          $("#participant-delete-confirm").prop("disabled", "disabled")
+          $("#participant-perm-delete").show()
+          $("#participant-delete-warning").hide()
+        }
+      })
     })
 
     $(".bootstrap-select").on("click", function() {
@@ -244,17 +261,6 @@ function saveAccessChanges() {
 function saveParticipants() {
   if($("#fileUsersAccess").val())
     $.post($("#save-participants").data("path"), {add: objSaveAccessChanges})
-}
-
-function deleteParticipant(path, value) {
-    $.ajax({
-      async: true,
-      type: "DELETE",
-      url: path,
-      data: value,
-      success: function(data) { console.log(data) },
-      error:  function(jqXHR, textStatus, err) { console.error(err); }
-   });
 }
 
 function loadUsersAccess(path) {

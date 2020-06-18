@@ -55,7 +55,7 @@
                   <i class="dropdown-icon fas fa-users"></i> <%= t("room.share") %>
                 </a>
                 <% if room.id == @room.id  %>
-                  <a href="" data-toggle="modal" data-target="#manageParticipantModal" class="share-room dropdown-item"  data-path="<%= participant_create_path(room) %>" >
+                  <a href="" data-toggle="modal" data-target="#manageParticipantModal" class="upload-participant dropdown-item" data-path="<%= participant_create_path(room) %>" >
                     <i class="dropdown-icon fas fa-user-shield"></i> <%= t("participant.manage") %>
                   </a>
                 <% end %>

@@ -23,17 +23,16 @@ class ParticipantsController < ApplicationController
   # DELETE /:room_uid/delete_participant
   def delete_participant
     begin
-      
+      unless params[:remove].nil?
+        
       room_id = Room.find_by(uid: params[:room_uid]).id
       participant_id = params[:remove]
       user_id = session[:user_id]
 
-      logger.info "delete_participant -> room_id: #{room_id}, participant_id: #{participant_id}"
-
       ParticipantsRoom.remove_participant(user_id, room_id, participant_id)
         
       flash[:success] = I18n.t("participant.remove_participant_success")
-
+    end
     rescue => e
       logger.error "Support: Error in delete_participant: #{e}"
       flash[:alert] = I18n.t("participant.remove_participant_error")

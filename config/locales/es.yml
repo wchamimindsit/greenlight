@@ -324,6 +324,12 @@ es:
       keep: "Cambie de opinión, la conservaré"
       warning: <b>No</b> podrás recuperar esta sala
       recording_warning: "o cualquiera de sus %{recordings_num} grabaciones asociadas."
+    delete_participant:
+      confirm: ¿Estás seguro de querer eliminar este participante?
+      delete: Estoy seguro, eliminar este particiapante
+      keep: Cambie de opinión, lo conservaré
+      warning: Esta acción elimina el usuario de la sala, mas no de la plataforma
+      delete_warning: Puedes agregarlo nuevamente cargandolo desde el archivo
     invite_user:
       email_placeholder: Introduce los emails de usuarios (separados por comas)
       footer: El usuario recibirá un email con instrucciones de como registrarse
