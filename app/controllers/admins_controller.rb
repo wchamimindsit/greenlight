@@ -39,14 +39,14 @@ class AdminsController < ApplicationController
     @order_direction = params[:direction] && params[:direction] != "none" ? params[:direction] : "DESC"
 
     @role = params[:role] ? Role.find_by(name: params[:role], provider: @user_domain) : nil
-    @tab = params[:tab] || "active"
-
-    @user_list = merge_user_list
+    @tab = params[:tab] || "active"   
 
     # Validacion para filtrar datos por organizacion si se tiene asignada
     if current_user && current_user.organization_id
       @organization = Organization.find_by(id: current_user.organization_id)
     end 
+
+    @user_list = merge_user_list
 
     @pagy, @users = pagy(manage_users_list)
   end
@@ -77,14 +77,14 @@ class AdminsController < ApplicationController
     @order_column = params[:column] && params[:direction] != "none" ? params[:column] : "created_at"
     @order_direction = params[:direction] && params[:direction] != "none" ? params[:direction] : "DESC"
 
-    @running_room_bbb_ids = all_running_meetings[:meetings].pluck(:meetingID)
-
-    @user_list = shared_user_list if shared_access_allowed
+    @running_room_bbb_ids = all_running_meetings[:meetings].pluck(:meetingID)    
 
     # Validacion para filtrar datos por organizacion si se tiene asignada
     if current_user && current_user.organization_id
       @organization = Organization.find_by(id: current_user.organization_id)
     end 
+
+    @user_list = shared_user_list if shared_access_allowed
 
     @pagy, @rooms = pagy_array(server_rooms_list)
   end

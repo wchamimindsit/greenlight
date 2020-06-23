@@ -1,0 +1,29 @@
+<%
+#comments
+%>
+<div class="modal fade" id="manageParticipantModal" tabindex="-1" role="dialog" style="z-index: 1045;">
+  <div class="modal-dialog modal-dialog-centered modal-manage-participants" role="document">
+    <div class="modal-content text-center">
+      <div class="modal-body">
+        <div class="card-body p-6">
+          <% setting_id = "participants"%>
+
+          <%= content_tag(:div, id: "participants", class: "setting-view card") do %>
+          <div class="card-body p-6">
+            <div class="card-title text-primary">
+              <div class="form-group">
+                <%= render "participants/components/participant_subtitle" %>
+              </div>
+            </div>
+            <%= render "participants/components/manage_participants", participants: participants %>
+          </div>
+          <% end %>
+
+        </div>
+        <div class="card-footer">
+          <p><%= t("modal.share_access.footer") %></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

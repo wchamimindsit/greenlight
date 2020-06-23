@@ -41,7 +41,7 @@
             <% end %>
           </div>
         </td>
-        <td class="text-right">          
+        <td class="text-right">
           <div class="item-action dropdown" data-display="static">
             <a href="javascript:void(0)" data-toggle="dropdown" data-display="static" class="icon">
               <i class="fas fa-ellipsis-v px-4"></i>
@@ -54,6 +54,11 @@
                 <a href="" data-toggle="modal" data-target="#shareRoomModal" class="share-room dropdown-item" data-path="<%= room_shared_access_path(room) %>" data-users-path="<%= room_shared_users_path(room) %>">
                   <i class="dropdown-icon fas fa-users"></i> <%= t("room.share") %>
                 </a>
+                <% if room.id == @room.id  %>
+                  <a href="" data-toggle="modal" data-target="#manageParticipantModal" class="upload-participant dropdown-item" data-path="<%= participant_create_path(room) %>" >
+                    <i class="dropdown-icon fas fa-user-shield"></i> <%= t("participant.manage") %>
+                  </a>
+                <% end %>
               <% end %>
               <% unless room == current_user.main_room %>
                 <a href="" data-toggle="modal" data-target="#deleteRoomModal" data-path="<%= room_path(room) %>" data-name="<%= room.name %>" class="delete-room dropdown-item">
@@ -61,7 +66,7 @@
                 </a>
               <% end %>
             </div>
-          </div>         
+          </div>
         </td>
       </tbody>
     </table>

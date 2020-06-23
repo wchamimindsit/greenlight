@@ -49,6 +49,27 @@ $(document).on('turbolinks:load', function(){
     $("#create-room-block").click(function(){
       showCreateRoom(this)
     })
+
+    $("input[id=access_code]").on('input', function(e) {
+      findNameByCode($(e.target).val(), $(e.target).data("path"));
+    });
+
+  }
+
+  function findNameByCode(text, path) {
+    if(text.length > 7 && text.length < 11) {
+      $.post(path, { access_code: text }).done(function(data) {
+        if(data !== null) {
+          $("#join_name").val(data.name + " " + data.surnames)
+          $("#lbParticipantName").text(data.name + " " + data.surnames)
+          $("#btnSubmit").removeAttr("disabled")
+        } else {
+          $("#join_name").val("")
+          $("#lbParticipantName").text("")
+          $("#btnSubmit").prop("disabled", "disabled")
+        }
+      });
+    }
   }
 
     // Autofocus on the Room Name label when creating a room only
@@ -84,9 +105,33 @@ $(document).on('turbolinks:load', function(){
 
     $("#shareRoomModal").on("show.bs.modal", function() {
       $(".selectpicker").selectpicker('val','')
-      $("input[id=fileUsersAccess]").change( function(event) {
-        loadUsersAccess(URL.createObjectURL(event.target.files[0]));
+    })
+
+    $("#manageParticipantModal").on("show.bs.modal", function(event) {
+
+      $("#save-participants").attr("data-path", 
+        $(event.relatedTarget).data("path")
+      );
+      $("input[id=fileUsersAccess]").change(function(e) {
+        loadUsersAccess(URL.createObjectURL(e.target.files[0]));
       });
+    })
+
+    $("#deleteParticipantModal").on("show.bs.modal", function(event) {
+
+      $("#participant-remove").val($(event.relatedTarget).data('value'))
+      
+      $("#participant-delete-checkbox").click(function(){
+        if ($("#participant-delete-checkbox").prop("checked")) {
+          $("#participant-delete-confirm").removeAttr("disabled")
+          $("#participant-perm-delete").hide()
+          $("#participant-delete-warning").show()
+        } else {
+          $("#participant-delete-confirm").prop("disabled", "disabled")
+          $("#participant-perm-delete").show()
+          $("#participant-delete-warning").hide()
+        }
+      })
     })
 
     $(".bootstrap-select").on("click", function() {
@@ -234,24 +279,57 @@ function saveAccessChanges() {
   $.post($("#save-access").data("path"), {add: listItemsToAdd})
 }
 
-function loadUsersAccess(path){
+function saveParticipants() {
+  if($("#fileUsersAccess").val())
+    $.post($("#save-participants").data("path"), {add: objSaveAccessChanges})
+}
+
+function loadUsersAccess(path) {
   $.ajax({
     type: "GET",
     url: path,
-    dataType: "text",
-    success: function(data) { processData(data);},
-    error:  function(jqXHR, textStatus, errorThrown ) { console.error(errorThrown); }    
+    beforeSend: function(xhr) {
+      xhr.overrideMimeType("application/x-www-form-urlencoded; charset=ISO-8859-1");
+    },
+    success: function(data) {
+      processData(data);
+      $("#save-participants").prop('disabled', false);
+      $("#lbFileUsersAccess").text($("#fileUsersAccess")[0].files[0].name);
+    },
+    error:  function(jqXHR, textStatus, err) { console.error(err); }
  });
 }
 
-function processData(data) {  
-  console.log("'");
-  $.each(data.split(/\n/g), function(key, value) {
+var objSaveAccessChanges = {};
+
+function processData(data) {
+  var arr = {}, lstHeader = {}, pyc = ";", slc = ",";
+  $.each(data.split(/\n/g), function(index, value) {
     if(!value.trim() === false) {
-        console.log(value.split(';'));
-      }
+      var lstLine = (value.indexOf(pyc) > -1) ? 
+      value.endsWith(pyc) ? value.substr(0,value.length).split(pyc) : value.split(pyc) : 
+      value.endsWith(slc) ? value.substr(0,value.length).split(slc) : value.split(slc);
+      switch (index) {
+        case 0:
+          for (var i in lstLine) {
+              let element = (lstLine[i].toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).replace(/\s/g,"");
+              lstHeader[i] = element;
+              arr[element] = [];
+          }
+          break;      
+        default:
+          try {            
+            for (var j in lstLine) {
+              arr[lstHeader[j]].push(lstLine[j].replace(/\r/g,""));
+            }
+          } catch (error) { console.log(error); }
+          
+          break;
+      }  
+    }
   });
-  console.log("'");
+  delete arr[""];
+  objSaveAccessChanges = arr;
 }
 
 // Get list of users shared with and display them

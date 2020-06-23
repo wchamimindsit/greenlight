@@ -123,6 +123,17 @@ Rails.application.routes.draw do
     post '/login', to: 'rooms#login', as: :login_room
   end
 
+
+  # Participant resources.
+  resources :participants, only: [:create, :show, :destroy], param: :room_uid, path: '/'
+
+  # Extended participants routes.
+  scope '/:room_uid' do
+    post '/create', to: 'participants#create', as: :participant_create
+    delete '/delete_participant', to: 'participants#delete_participant', as: :delete_participant
+    post '/search_info', to: 'participants#search_info', as: :search_info
+  end
+
   # Recording operations routes
   scope '/:meetingID' do
     # Manage recordings

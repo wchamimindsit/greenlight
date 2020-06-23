@@ -127,6 +127,7 @@ en:
       colour:
         title: Role Colour
         info: Set the colour that will be associated with the role
+      invite_users: Allow users to send invitations
     rooms:
       title: Server Rooms
       table:
@@ -182,6 +183,7 @@ en:
   email: Email
   email_sent: Your %{email_type} email has been sent! (Please check your Spam folder if you haven't received it)
   enter_your_name: Enter your name!
+  enter_your_access_code: Entrer your access code
   errors:
     bigbluebutton:
       help: Please make sure the proper steps have been taken. <a href="%{doc_link}">Learn more</a>
@@ -355,6 +357,12 @@ en:
       keep: On second thought, I'll keep it.
       warning: You will <b>not</b> be able to recover this room
       recording_warning: or any of its %{recordings_num} associated recordings.
+    delete_participant:
+      confirm: Are you sure you want to delete this participant?
+      delete: I'm sure delete this participant
+      keep: On second thought, I'll keep it.
+      warning: This action removes the user from the room, but not from the platform
+      delete_warning: You can add it again by loading it from the file
     invite_user:
       email_placeholder: Enter the users' emails (seperated by commas)
       footer: The user will receive an email with instructions on how to sign up
@@ -387,6 +395,7 @@ en:
       save: Save Changes
       cancel_changes: Cancel Changes
       select: Select User
+      select_file: Select File
     merge_user:
       cancel: Cancel
       from: Account to be Merged
@@ -516,6 +525,21 @@ en:
     wait:
       message: The meeting hasn't started yet.
       auto: You will automatically join when the meeting starts.
+  participant:
+    manage: Manage Participants
+    name: Name
+    surnames: Surnames
+    phone: Phone
+    email: Email
+    gender: Gender
+    address: Address
+    identification: Identification
+    identification_type: Identification Type
+    pin: PIN
+    save_participants_success: Participants were successfully added
+    save_participants_error: An error occurred while adding the participant
+    remove_participant_success: The participant was successfully removed
+    remove_participant_error: An error occurred while removing the participant
   settings:
     account:
       fullname: Full name
@@ -562,3 +586,4 @@ en:
     signin: Please sign in to access your account.
     title: Verify your email
     verification: Verification
+  columns_participant_create: ["identificationtype", "identification", "name", "surnames", "email", "address", "pin", "phone", "gender"]
