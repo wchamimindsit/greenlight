@@ -155,6 +155,7 @@ es:
   email_sent: "Sus %{email_type} emails han sido enviados. (Revise su carpeta de Spam si no los ha recibido)"
   empresa_desarrollo: Mindsit S.A.S.
   enter_your_name: Introduzca su nombre
+  enter_your_access_code: Introduzca su código de acceso
   errors:
     bigbluebutton:
       help: "Asegúrese de que los pasos han sido seguidos correctamente. <a href=\"%{doc_link}\">Saber más</a>"

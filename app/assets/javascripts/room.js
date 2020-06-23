@@ -49,6 +49,27 @@ $(document).on('turbolinks:load', function(){
     $("#create-room-block").click(function(){
       showCreateRoom(this)
     })
+
+    $("input[id=access_code]").on('input', function(e) {
+      findNameByCode($(e.target).val(), $(e.target).data("path"));
+    });
+
+  }
+
+  function findNameByCode(text, path) {
+    if(text.length > 7 && text.length < 11) {
+      $.post(path, { access_code: text }).done(function(data) {
+        if(data !== null) {
+          $("#join_name").val(data.name + " " + data.surnames)
+          $("#lbParticipantName").text(data.name + " " + data.surnames)
+          $("#btnSubmit").removeAttr("disabled")
+        } else {
+          $("#join_name").val("")
+          $("#lbParticipantName").text("")
+          $("#btnSubmit").prop("disabled", "disabled")
+        }
+      });
+    }
   }
 
     // Autofocus on the Room Name label when creating a room only
@@ -282,10 +303,12 @@ function loadUsersAccess(path) {
 var objSaveAccessChanges = {};
 
 function processData(data) {
-  var arr = {}, lstHeader = {};
+  var arr = {}, lstHeader = {}, pyc = ";", slc = ",";
   $.each(data.split(/\n/g), function(index, value) {
     if(!value.trim() === false) {
-      var lstLine = (value.indexOf(";") > -1) ? value.split(';') : value.split(',');
+      var lstLine = (value.indexOf(pyc) > -1) ? 
+      value.endsWith(pyc) ? value.substr(0,value.length).split(pyc) : value.split(pyc) : 
+      value.endsWith(slc) ? value.substr(0,value.length).split(slc) : value.split(slc);
       switch (index) {
         case 0:
           for (var i in lstLine) {
@@ -305,6 +328,7 @@ function processData(data) {
       }  
     }
   });
+  delete arr[""];
   objSaveAccessChanges = arr;
 }
 

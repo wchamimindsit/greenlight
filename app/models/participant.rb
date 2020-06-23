@@ -10,14 +10,18 @@ class Participant < ApplicationRecord
 
   def self.by_room_with_pager(room_id, max, pag)
     intOffset = (pag - 1) * max
-    objRooms = Participant.from_room(room_id)
+    objRooms = from_room(room_id)
     total_pags = objRooms.length 
 
     [objRooms.limit(max).offset(intOffset), total_pags]
   end
 
+  def self.find_by_code(room_id, code)
+    from_room(room_id).where(identification: code).first
+  end
+
   def self.from_room(room_id)
-    Participant.participants_room(room_id).order(name: :asc)
+    participants_room(room_id).order(name: :asc)
   end
 
   def self.participants_room(room_id)

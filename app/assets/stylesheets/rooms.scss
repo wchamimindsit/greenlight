@@ -125,3 +125,11 @@
 .modal-manage-participants {
   max-width: 50% !important;
 }
+
+.join-form:disabled {
+  cursor: not-allowed;
+}
+
+label#lbParticipantName {
+  padding-top: 2px;
+}

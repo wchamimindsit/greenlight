@@ -20,6 +20,23 @@ class ParticipantsController < ApplicationController
     end
   end
 
+  # POST /:room_uid/search_info
+  def search_info
+    begin      
+      unless params[:access_code].nil?
+
+        room_id = Room.find_by(uid: params[:room_uid]).id
+        objParticipant = Participant.find_by_code(room_id, params[:access_code])
+
+        respond_to do |format|
+          format.json { render body: objParticipant.to_json }
+        end
+      end
+    rescue => e
+      logger.error "Support: Error in search_info: #{e}"
+    end    
+  end
+
   # DELETE /:room_uid/delete_participant
   def delete_participant
     begin

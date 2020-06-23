@@ -131,7 +131,7 @@ Rails.application.routes.draw do
   scope '/:room_uid' do
     post '/create', to: 'participants#create', as: :participant_create
     delete '/delete_participant', to: 'participants#delete_participant', as: :delete_participant
-
+    post '/search_info', to: 'participants#search_info', as: :search_info
   end
 
   # Recording operations routes
