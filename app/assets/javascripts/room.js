@@ -115,6 +115,7 @@ $(document).on('turbolinks:load', function(){
       $("input[id=fileUsersAccess]").change(function(e) {
         readFileSelect(e);
       });
+      $("#fileRequest").click(function(){ downloadTemplate() });
     })
 
     $("#deleteParticipantModal").on("show.bs.modal", function(event) {
@@ -335,6 +336,22 @@ function processData(data) {
   objSaveAccessChanges = arr;
   $("#save-participants").prop('disabled', false);
   $("#lbFileUsersAccess").text($("#fileUsersAccess")[0].files[0].name);
+}
+
+function downloadTemplate() {
+  createLink("Plantilla-Participantes.csv");
+  createLink("GuiaParaLlenarLaPlantilla.pdf");
+}
+
+function createLink(file) {
+  const url = document.URL.substr(0, document.URL.lastIndexOf("/")) + "/" + file;
+  const a = document.createElement('a');
+  a.style.display = 'none';
+  a.href = url;  
+  a.download = file;
+  document.body.appendChild(a);
+  a.click();
+  window.URL.revokeObjectURL(url);
 }
 
 // Get list of users shared with and display them

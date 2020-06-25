@@ -313,6 +313,8 @@ es:
       name_placeholder: Introduce un nombre para la sala
       not_blank: El nombre de la sala no puede estar vacío
       title: Crear una sala nueva
+    create_participant:
+      download_template: Plantilla para cargar participantes  
     delete_account:
       confirm: "¿Estas seguro de querer eliminar esta cuenta de usuario?"
       delete: Estoy seguro de eliminar ésta cuenta
