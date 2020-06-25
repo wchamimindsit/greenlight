@@ -115,7 +115,7 @@ $(document).on('turbolinks:load', function(){
       $("input[id=fileUsersAccess]").change(function(e) {
         readFileSelect(e);
       });
-      $("#fileRequest").click(function(){ downloadTemplate() });
+      $("#download-template").click(function(){ downloadTemplate() });
     })
 
     $("#deleteParticipantModal").on("show.bs.modal", function(event) {
