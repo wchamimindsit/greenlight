@@ -113,7 +113,7 @@ $(document).on('turbolinks:load', function(){
         $(event.relatedTarget).data("path")
       );
       $("input[id=fileUsersAccess]").change(function(e) {
-        loadUsersAccess(URL.createObjectURL(e.target.files[0]));
+        readFileSelect(e);
       });
     })
 
@@ -284,20 +284,23 @@ function saveParticipants() {
     $.post($("#save-participants").data("path"), {add: objSaveAccessChanges})
 }
 
-function loadUsersAccess(path) {
-  $.ajax({
-    type: "GET",
-    url: path,
-    beforeSend: function(xhr) {
-      xhr.overrideMimeType("application/x-www-form-urlencoded; charset=ISO-8859-1");
-    },
-    success: function(data) {
-      processData(data);
-      $("#save-participants").prop('disabled', false);
-      $("#lbFileUsersAccess").text($("#fileUsersAccess")[0].files[0].name);
-    },
-    error:  function(jqXHR, textStatus, err) { console.error(err); }
- });
+function readFileSelect(event) {
+  var file = event.target.files[0];
+  var reader = new FileReader();
+  reader.onload = function (e) {
+
+    var codes = new Uint8Array(e.target.result);
+    var detectedEncoding = Encoding.detect(codes);
+    try {
+      var unicodeString = Encoding.convert(codes, {
+        to: 'unicode',
+        from: detectedEncoding,
+        type: 'string'
+      });
+      processData(unicodeString);
+    } catch (ex) { console.log(ex) }
+  };
+  reader.readAsArrayBuffer(file);
 }
 
 var objSaveAccessChanges = {};
@@ -330,6 +333,8 @@ function processData(data) {
   });
   delete arr[""];
   objSaveAccessChanges = arr;
+  $("#save-participants").prop('disabled', false);
+  $("#lbFileUsersAccess").text($("#fileUsersAccess")[0].files[0].name);
 }
 
 // Get list of users shared with and display them
