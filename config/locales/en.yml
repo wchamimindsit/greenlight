@@ -345,6 +345,8 @@ en:
       name_placeholder: Enter a room name...
       not_blank: Room name cannot be blank.
       title: Create New Room
+    create_participant:
+      download_template: Template to upload participants
     delete_account:
       confirm: Are you sure you want to delete this account?
       delete: I'm sure, delete this account.
