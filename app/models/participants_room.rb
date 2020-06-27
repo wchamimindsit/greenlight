@@ -19,4 +19,11 @@ class ParticipantsRoom < ApplicationRecord
 
   end
 
+  def self.remove_room(user_id, room_id)
+    ParticipantsRoom.where(room_id: room_id).update_all(
+      enabled: "inactive by #{user_id}", 
+      updated_at: DateTime.now
+    )
+  end
+
 end

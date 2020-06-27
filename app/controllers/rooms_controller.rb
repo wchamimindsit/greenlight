@@ -163,6 +163,8 @@ class RoomsController < ApplicationController
       # Don't delete the users home room.
       raise I18n.t("room.delete.home_room") if @room == @room.owner.main_room
       @room.destroy
+      #Inactiva los usuarios de la sala, pero no los borra
+      ParticipantsRoom.remove_room(current_user.id, @room.id)
     rescue => e
       flash[:alert] = I18n.t("room.delete.fail", error: e)
     else
