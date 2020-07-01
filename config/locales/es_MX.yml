@@ -388,6 +388,7 @@ es_MX:
       require_approval: Requerir aprobación del moderador antes de ingresar a la sesión
       start: Permitir usuarios iniciar esta sesión
       footer_text: Puedes hacer cambios a tu sala en cualquier momento
+      private_room: Hacer la sala privada
     rename_room:
       name_placeholder: Introduce un nuevo nombre para la sala...
     share_access:
