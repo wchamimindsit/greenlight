@@ -163,6 +163,8 @@ class RoomsController < ApplicationController
       # Don't delete the users home room.
       raise I18n.t("room.delete.home_room") if @room == @room.owner.main_room
       @room.destroy
+      #Inactiva los usuarios de la sala, pero no los borra
+      ParticipantsRoom.remove_room(current_user.id, @room.id)
     rescue => e
       flash[:alert] = I18n.t("room.delete.fail", error: e)
     else
@@ -404,6 +406,7 @@ class RoomsController < ApplicationController
       "requireModeratorApproval": options[:require_moderator_approval] == "1",
       "anyoneCanStart": options[:anyone_can_start] == "1",
       "joinModerator": options[:all_join_moderator] == "1",
+      "privateRoom": options[:private_room] == "1",
     }
 
     room_settings.to_json
@@ -411,7 +414,7 @@ class RoomsController < ApplicationController
 
   def room_params
     params.require(:room).permit(:name, :auto_join, :mute_on_join, :access_code,
-      :require_moderator_approval, :anyone_can_start, :all_join_moderator)
+      :require_moderator_approval, :anyone_can_start, :all_join_moderator, :private_room)
   end
 
   # Find the room from the uid.
@@ -421,23 +424,34 @@ class RoomsController < ApplicationController
     parameters = data_parameters.split('&')
 
     if parameters.length > 1
+      begin
 
-      data_uid = parameters[0]
-      data_parameters = Base64.decode64(parameters[1]).force_encoding("UTF-8")
-      parameters = data_parameters.split('&')
-      
-      data_user = parameters[0]
-      data_pin = parameters[1]
+        data_uid = parameters[0]
+        data_parameters = Room.decode_params(parameters[1])
+        parameters = data_parameters.split('&')
+        
+        data_user = parameters[0]
+        data_pin = parameters[1]
 
-      params[:room_uid] = data_uid
-      params[:user_name] = data_user
-      params[:user_pin] = data_pin
+        params[:room_uid] = data_uid
+        params[:user_name] = data_user
+        params[:user_pin] = data_pin
 
-      cookies.encrypted[:room_uid] = data_uid
-      cookies.encrypted[:user_name] = data_user
-      cookies.encrypted[:user_pin] = data_pin
+        cookies.encrypted[:room_uid] = data_uid
+        cookies.encrypted[:user_name] = data_user
+        cookies.encrypted[:user_pin] = data_pin
 
-      logger.info "Accediendo desde evaluateok: #{data_user} [#{data_pin}]"
+        logger.info "Accediendo desde evaluateok: #{data_user} [#{data_pin}]"
+      rescue => e
+        logger.error "Error on find room: #{e}"
+        # Fallo y puedo hacer esta accion
+        if cookies.encrypted[:room_uid] && cookies.encrypted[:room_uid] == params[:room_uid]
+          params[:user_name] = cookies.encrypted[:user_name]
+          params[:user_pin] = cookies.encrypted[:user_pin]
+        end
+        # Lo envia a la pag principal
+        return redirect_to root_path
+      end
     else
       if cookies.encrypted[:room_uid] && cookies.encrypted[:room_uid] == params[:room_uid]
         params[:user_name] = cookies.encrypted[:user_name]

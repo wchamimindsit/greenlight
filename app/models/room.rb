@@ -57,6 +57,15 @@ class Room < ApplicationRecord
     table
   end
 
+  def self.decode_params(encode)
+    begin
+      Base64.decode64(encode).force_encoding("UTF-8")
+      # Base64.decode64(URI.unescape(parameters[1])).force_encoding("ISO-8859-1").encode("UTF-8")
+      # Base64.decode64(URI.unescape(parameters[1])).encode("UTF-8", "Windows-1252")
+    rescue => e
+    end
+  end
+
   # Determines if a user owns a room.
   def owned_by?(user)
     user_id == user&.id

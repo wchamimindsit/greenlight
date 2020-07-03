@@ -179,6 +179,10 @@ $(document).on('turbolinks:load', function(){
         $("#user-list").append(listItem)
       }
     })
+
+    $("#evaluateok").click(function() {
+      location.href='https://cloud.evaluateok.com/EvaluateOnline'
+    })
   }
 });
 
@@ -193,6 +197,7 @@ function showCreateRoom(target) {
   $("#room_require_moderator_approval").prop("checked", false)
   $("#room_anyone_can_start").prop("checked", false)
   $("#room_all_join_moderator").prop("checked", false)
+  $("#room_private_room").prop("checked", false)
 
   //show all elements & their children with a create-only class
   $(".create-only").each(function() {
@@ -253,6 +258,7 @@ function updateCurrentSettings(settings_path){
     $("#room_require_moderator_approval").prop("checked", settings.requireModeratorApproval)
     $("#room_anyone_can_start").prop("checked", settings.anyoneCanStart)
     $("#room_all_join_moderator").prop("checked", settings.joinModerator)
+    $("#room_private_room").prop("checked", settings.privateRoom)
   })
 }
 

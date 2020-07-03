@@ -23,6 +23,16 @@ module RoomsHelper
     "http://calendar.google.com/calendar/r/eventedit?text=#{@room.name}&location=#{request.base_url + request.fullpath}"
   end
 
+  def valid_private_room
+    isPrivateRoom = JSON.parse(@room[:room_settings])["privateRoom"]
+
+    if(isPrivateRoom == true)
+        params[:user_name].nil? #@participants.length
+      else
+        false
+    end
+  end
+
   def room_authentication_required
     @settings.get_value("Room Authentication") == "true" &&
       current_user.nil?

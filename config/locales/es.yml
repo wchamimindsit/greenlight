@@ -352,6 +352,7 @@ es:
       require_approval: Requerir aprobación del moderador antes de ingresar a la sesión
       start: Permitir usuarios iniciar esta sesión
       footer_text: Puedes hacer cambios a tu sala en cualquier momento
+      private_room: Hacer la sala privada
     rename_room:
       name_placeholder: Introduce un nuevo nombre para la sala...
     share_access:
@@ -449,6 +450,8 @@ es:
     login: Entrar
     organization: Organización
     owner: Dueño
+    owner_banned: Esta sala no está disponible actualmente
+    private_room_msg: Esta sala es privada para acceder ingresa desde evaluateok
     no_room:
       description: Ingresa la url o id de la sala a la que quieres acceder
       edit_profile: Editar perfil de usuario

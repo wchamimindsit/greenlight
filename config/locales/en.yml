@@ -388,6 +388,7 @@ en:
       require_approval: Require moderator approval before joining
       start: Allow any user to start this meeting
       footer_text: Adjustment to your room can be done at anytime.
+      private_room: Make the room private
     rename_room:
       name_placeholder: Enter a new room name...
     share_access:
@@ -499,6 +500,7 @@ en:
     organization: Organization
     owner: Owner
     owner_banned: This room is currently unavailable
+    private_room_msg: This room is private to access enter from evaluateok
     no_room:
       description: Enter the room url or the room id for the room you want to join.
       edit_profile: Edit User Profile
