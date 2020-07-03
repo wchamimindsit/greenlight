@@ -424,25 +424,34 @@ class RoomsController < ApplicationController
     parameters = data_parameters.split('&')
 
     if parameters.length > 1
+      begin
 
-      data_uid = parameters[0]
-      data_parameters = Base64.decode64(parameters[1]).force_encoding("UTF-8")
-      # data_parameters = Base64.decode64(URI.unescape(parameters[1])).force_encoding("ISO-8859-1").encode("UTF-8")
-      # data_parameters = Base64.decode64(URI.unescape(parameters[1])).encode("UTF-8", "Windows-1252")
-      parameters = data_parameters.split('&')
-      
-      data_user = parameters[0]
-      data_pin = parameters[1]
+        data_uid = parameters[0]
+        data_parameters = Room.decode_params(parameters[1])
+        parameters = data_parameters.split('&')
+        
+        data_user = parameters[0]
+        data_pin = parameters[1]
 
-      params[:room_uid] = data_uid
-      params[:user_name] = data_user
-      params[:user_pin] = data_pin
+        params[:room_uid] = data_uid
+        params[:user_name] = data_user
+        params[:user_pin] = data_pin
 
-      cookies.encrypted[:room_uid] = data_uid
-      cookies.encrypted[:user_name] = data_user
-      cookies.encrypted[:user_pin] = data_pin
+        cookies.encrypted[:room_uid] = data_uid
+        cookies.encrypted[:user_name] = data_user
+        cookies.encrypted[:user_pin] = data_pin
 
-      logger.info "Accediendo desde evaluateok: #{data_user} [#{data_pin}]"
+        logger.info "Accediendo desde evaluateok: #{data_user} [#{data_pin}]"
+      rescue => e
+        logger.error "Error on find room: #{e}"
+        # Fallo y puedo hacer esta accion
+        if cookies.encrypted[:room_uid] && cookies.encrypted[:room_uid] == params[:room_uid]
+          params[:user_name] = cookies.encrypted[:user_name]
+          params[:user_pin] = cookies.encrypted[:user_pin]
+        end
+        # Lo envia a la pag principal
+        return redirect_to root_path
+      end
     else
       if cookies.encrypted[:room_uid] && cookies.encrypted[:room_uid] == params[:room_uid]
         params[:user_name] = cookies.encrypted[:user_name]

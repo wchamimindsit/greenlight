@@ -179,6 +179,10 @@ $(document).on('turbolinks:load', function(){
         $("#user-list").append(listItem)
       }
     })
+
+    $("#evaluateok").click(function() {
+      location.href='https://cloud.evaluateok.com/EvaluateOnline'
+    })
   }
 });
 
