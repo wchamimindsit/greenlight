@@ -57,7 +57,7 @@ $(document).on('turbolinks:load', function(){
   }
 
   function findNameByCode(text, path) {
-    if(text.length > 7 && text.length < 11) {
+    if(text.length >= 6 && text.length <= 15) {
       $.post(path, { access_code: text }).done(function(data) {
         if(data !== null) {
           $("#join_name").val(data.name + " " + data.surnames)
