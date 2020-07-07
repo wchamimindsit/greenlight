@@ -451,7 +451,7 @@ es:
     organization: Organización
     owner: Dueño
     owner_banned: Esta sala no está disponible actualmente
-    private_room_msg: Esta sala es, privada para acceder ingresa desde EvaluateOk
+    private_room_msg: Esta sala es privada, para acceder ingresa desde EvaluateOk
     no_room:
       description: Ingresa la url o id de la sala a la que quieres acceder
       edit_profile: Editar perfil de usuario
