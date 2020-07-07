@@ -178,6 +178,6 @@ table {
   cursor: pointer;
 }
 
-#delete-confirm:disabled {
+#delete-confirm:disabled, #participant-delete-confirm:disabled {
   cursor: not-allowed;
 }

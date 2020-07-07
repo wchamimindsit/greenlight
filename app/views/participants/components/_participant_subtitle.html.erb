@@ -1,0 +1,30 @@
+<%
+#
+%>
+<div class="row mt-2">
+  
+    <div class="col-5" style="text-align: left;">
+      <p class="subtitle"><%= t("participant.manage") %></p>
+    </div>
+
+    <div class="col-7">
+      
+      <div class="d-inline-block float-right">
+        <div class="input-group">
+          <div class="custom-file">
+            <input type="file" id="fileUsersAccess" required="true" accept=".CSV" class="custom-file-input">
+            <label id="lbFileUsersAccess" class="custom-file-label" for="fileUsersAccess"><%= t("modal.share_access.select_file") %></label>
+          </div>
+
+          <span class="input-group-append">
+            <button id="save-participants" class="btn btn-primary btn-block" onclick="saveParticipants()" disabled="true" >
+              <i class="fas fa-upload"></i>
+            </button>
+          </span>
+        </div>
+      </div>
+    </div>
+
+</div>
+
+<hr class="mt-0">

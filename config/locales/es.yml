@@ -155,6 +155,7 @@ es:
   email_sent: "Sus %{email_type} emails han sido enviados. (Revise su carpeta de Spam si no los ha recibido)"
   empresa_desarrollo: Mindsit S.A.S.
   enter_your_name: Introduzca su nombre
+  enter_your_access_code: Introduzca su código de acceso
   errors:
     bigbluebutton:
       help: "Asegúrese de que los pasos han sido seguidos correctamente. <a href=\"%{doc_link}\">Saber más</a>"
@@ -312,6 +313,8 @@ es:
       name_placeholder: Introduce un nombre para la sala
       not_blank: El nombre de la sala no puede estar vacío
       title: Crear una sala nueva
+    create_participant:
+      download_template: Plantilla para cargar participantes  
     delete_account:
       confirm: "¿Estas seguro de querer eliminar esta cuenta de usuario?"
       delete: Estoy seguro de eliminar ésta cuenta
@@ -324,6 +327,12 @@ es:
       keep: "Cambie de opinión, la conservaré"
       warning: <b>No</b> podrás recuperar esta sala
       recording_warning: "o cualquiera de sus %{recordings_num} grabaciones asociadas."
+    delete_participant:
+      confirm: ¿Estás seguro de querer eliminar este participante?
+      delete: Estoy seguro, eliminar este particiapante
+      keep: Cambie de opinión, lo conservaré
+      warning: Esta acción elimina el usuario de la sala, mas no de la plataforma
+      delete_warning: Puedes agregarlo nuevamente cargandolo desde el archivo
     invite_user:
       email_placeholder: Introduce los emails de usuarios (separados por comas)
       footer: El usuario recibirá un email con instrucciones de como registrarse
@@ -343,8 +352,17 @@ es:
       require_approval: Requerir aprobación del moderador antes de ingresar a la sesión
       start: Permitir usuarios iniciar esta sesión
       footer_text: Puedes hacer cambios a tu sala en cualquier momento
+      private_room: Hacer la sala privada
     rename_room:
       name_placeholder: Introduce un nuevo nombre para la sala...
+    share_access:
+      footer: Compartir una sala con un usuario le permite iniciar la sesión y ver las grabaciones.
+      list: Compartir con
+      title: Compartir acceso a salas
+      save: Guardar cambios
+      cancel_changes: Cancelar cambios
+      select: Seleccionar usuario
+      select_file: Seleccionar Archivo      
   name_update_success: El nombre de la sala ha sido actualizado exitosamente
   no_user_email_exists: "No hay ningún usuario existente con el correo electrónico especificado. Por favor, asegúrese de que lo escribió correctamente."
   omniauth_error: Ocurrió un error al intentar ingresar utilizando OmniAuth. Por favor intente nuevamente o contacte un administrador.
@@ -432,6 +450,8 @@ es:
     login: Entrar
     organization: Organización
     owner: Dueño
+    owner_banned: Esta sala no está disponible actualmente
+    private_room_msg: Esta sala es, privada para acceder ingresa desde EvaluateOk
     no_room:
       description: Ingresa la url o id de la sala a la que quieres acceder
       edit_profile: Editar perfil de usuario
@@ -454,6 +474,21 @@ es:
     wait:
       message: La sesión todavía no ha comenzado.
       auto: Serás enviado a la sala automáticamente cuando empiece la sesión
+  participant:
+    manage: Administrar Participantes
+    name: Nombre
+    surnames: Apellidos
+    phone: Teléfono
+    email: Email
+    gender: Genero
+    address: Dirección
+    identification: Identificación
+    identification_type: Tipo de Identificación
+    pin: PIN
+    save_participants_success: Los participantes fueron agregados exitosamente
+    save_participants_error: Ocurrió un error al agregar el participante
+    remove_participant_success: El participante fue removido exitosamente
+    remove_participant_error: Ocurrió un error al remover el participante
   settings:
     account:
       fullname: Nombre completo
@@ -499,3 +534,4 @@ es:
     signin: "Ingresa para tener acceso a la información de tu cuenta "
     title: Verificar tu cuenta de correo
     verification: Verificación
+  columns_participant_create: ["tipoidentificacion", "identificacion", "nombre", "apellido", "email", "direccion", "pin", "telefono", "genero"]

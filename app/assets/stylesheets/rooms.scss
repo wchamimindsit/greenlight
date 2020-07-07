@@ -100,3 +100,53 @@
 .remove-shared {
   text-decoration: line-through;
 }
+
+.custom-file {
+  font-size: smaller !important;
+}
+
+.modal-manage-participants {
+  max-width: 50% !important;
+}
+
+#lbFileUsersAccess {
+  text-align: left;
+}
+
+.custom-file-input:hover {
+  background: #467fcf !important;
+  color: white !important;
+}
+
+.custom-file-input:active::before {
+  background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
+}
+
+.modal-manage-participants {
+  max-width: 50% !important;
+}
+
+.join-form:disabled {
+  cursor: not-allowed;
+}
+
+label#lbParticipantName {
+  padding-top: 2px;
+}
+
+.download-template {
+  text-align: right !important;
+  padding-right: 3% !important;
+  padding-bottom: 1% !important;
+}
+
+#evaluateok {
+  background: url("../favicon_evaluate.png") 100% no-repeat;
+  padding-left: 9%;
+  width: 60px;
+  height: 60px;
+}
+
+.private-room-message {
+  font-weight: 600;
+}

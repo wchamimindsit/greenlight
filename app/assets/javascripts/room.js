@@ -49,6 +49,27 @@ $(document).on('turbolinks:load', function(){
     $("#create-room-block").click(function(){
       showCreateRoom(this)
     })
+
+    $("input[id=access_code]").on('input', function(e) {
+      findNameByCode($(e.target).val(), $(e.target).data("path"));
+    });
+
+  }
+
+  function findNameByCode(text, path) {
+    if(text.length >= 6 && text.length <= 15) {
+      $.post(path, { access_code: text }).done(function(data) {
+        if(data !== null) {
+          $("#join_name").val(data.name + " " + data.surnames)
+          $("#lbParticipantName").text(data.name + " " + data.surnames)
+          $("#btnSubmit").removeAttr("disabled")
+        } else {
+          $("#join_name").val("")
+          $("#lbParticipantName").text("")
+          $("#btnSubmit").prop("disabled", "disabled")
+        }
+      });
+    }
   }
 
     // Autofocus on the Room Name label when creating a room only
@@ -84,6 +105,34 @@ $(document).on('turbolinks:load', function(){
 
     $("#shareRoomModal").on("show.bs.modal", function() {
       $(".selectpicker").selectpicker('val','')
+    })
+
+    $("#manageParticipantModal").on("show.bs.modal", function(event) {
+
+      $("#save-participants").attr("data-path", 
+        $(event.relatedTarget).data("path")
+      );
+      $("input[id=fileUsersAccess]").change(function(e) {
+        readFileSelect(e);
+      });
+      $("#download-template").click(function(){ downloadTemplate() });
+    })
+
+    $("#deleteParticipantModal").on("show.bs.modal", function(event) {
+
+      $("#participant-remove").val($(event.relatedTarget).data('value'))
+      
+      $("#participant-delete-checkbox").click(function(){
+        if ($("#participant-delete-checkbox").prop("checked")) {
+          $("#participant-delete-confirm").removeAttr("disabled")
+          $("#participant-perm-delete").hide()
+          $("#participant-delete-warning").show()
+        } else {
+          $("#participant-delete-confirm").prop("disabled", "disabled")
+          $("#participant-perm-delete").show()
+          $("#participant-delete-warning").hide()
+        }
+      })
     })
 
     $(".bootstrap-select").on("click", function() {
@@ -130,6 +179,10 @@ $(document).on('turbolinks:load', function(){
         $("#user-list").append(listItem)
       }
     })
+
+    $("#evaluateok").click(function() {
+      location.href='https://cloud.evaluateok.com/EvaluateOnline'
+    })
   }
 });
 
@@ -144,6 +197,7 @@ function showCreateRoom(target) {
   $("#room_require_moderator_approval").prop("checked", false)
   $("#room_anyone_can_start").prop("checked", false)
   $("#room_all_join_moderator").prop("checked", false)
+  $("#room_private_room").prop("checked", false)
 
   //show all elements & their children with a create-only class
   $(".create-only").each(function() {
@@ -204,6 +258,7 @@ function updateCurrentSettings(settings_path){
     $("#room_require_moderator_approval").prop("checked", settings.requireModeratorApproval)
     $("#room_anyone_can_start").prop("checked", settings.anyoneCanStart)
     $("#room_all_join_moderator").prop("checked", settings.joinModerator)
+    $("#room_private_room").prop("checked", settings.privateRoom)
   })
 }
 
@@ -229,6 +284,80 @@ function saveAccessChanges() {
   let listItemsToAdd = $("#user-list li:not(.remove-shared)").toArray().map(user => $(user).data("uid"))
 
   $.post($("#save-access").data("path"), {add: listItemsToAdd})
+}
+
+function saveParticipants() {
+  if($("#fileUsersAccess").val())
+    $.post($("#save-participants").data("path"), {add: objSaveAccessChanges})
+}
+
+function readFileSelect(event) {
+  var file = event.target.files[0];
+  var reader = new FileReader();
+  reader.onload = function (e) {
+
+    var codes = new Uint8Array(e.target.result);
+    var detectedEncoding = Encoding.detect(codes);
+    try {
+      var unicodeString = Encoding.convert(codes, {
+        to: 'unicode',
+        from: detectedEncoding,
+        type: 'string'
+      });
+      processData(unicodeString);
+    } catch (ex) { console.log(ex) }
+  };
+  reader.readAsArrayBuffer(file);
+}
+
+var objSaveAccessChanges = {};
+
+function processData(data) {
+  var arr = {}, lstHeader = {}, pyc = ";", slc = ",";
+  $.each(data.split(/\n/g), function(index, value) {
+    if(!value.trim() === false) {
+      var lstLine = (value.indexOf(pyc) > -1) ? 
+      value.endsWith(pyc) ? value.substr(0,value.length).split(pyc) : value.split(pyc) : 
+      value.endsWith(slc) ? value.substr(0,value.length).split(slc) : value.split(slc);
+      switch (index) {
+        case 0:
+          for (var i in lstLine) {
+              let element = (lstLine[i].toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")).replace(/\s/g,"");
+              lstHeader[i] = element;
+              arr[element] = [];
+          }
+          break;      
+        default:
+          try {            
+            for (var j in lstLine) {
+              arr[lstHeader[j]].push(lstLine[j].replace(/\r/g,""));
+            }
+          } catch (error) { console.log(error); }
+          
+          break;
+      }  
+    }
+  });
+  delete arr[""];
+  objSaveAccessChanges = arr;
+  $("#save-participants").prop('disabled', false);
+  $("#lbFileUsersAccess").text($("#fileUsersAccess")[0].files[0].name);
+}
+
+function downloadTemplate() {
+  createLink("Plantilla-Participantes.csv");
+  createLink("GuiaParaLlenarLaPlantilla.pdf");
+}
+
+function createLink(file) {
+  const url = document.URL.substr(0, document.URL.lastIndexOf("/")) + "/" + file;
+  const a = document.createElement('a');
+  a.style.display = 'none';
+  a.href = url;  
+  a.download = file;
+  document.body.appendChild(a);
+  a.click();
+  window.URL.revokeObjectURL(url);
 }
 
 // Get list of users shared with and display them
