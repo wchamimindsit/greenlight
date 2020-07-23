@@ -122,7 +122,7 @@ module Joiner
       meeting_recorded: true,
       moderator_message: "#{invite_msg}\n\n#{request.base_url + room_path(@room)}",
       host: request.host,
-      recording_default_visibility: @settings.get_value("Default Recording Visibility") == "public"
+      recording_default_visibility: @settings.get_value("Default Recording Visibility", session[:organization]) == "public"
     }
   end
 end

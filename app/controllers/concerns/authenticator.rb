@@ -24,7 +24,7 @@ module Authenticator
     migrate_twitter_user(user)
 
     session[:user_id] = user.id
-
+    cookies.encrypted[:organization] = session[:organization] = user.organization_id
     logger.info("Support: #{user.email} has successfully logged in.")
 
     # If there are not terms, or the user has accepted them, check for email verification
@@ -65,6 +65,7 @@ module Authenticator
 
   # Logs current user out of GreenLight.
   def logout
+    session.delete(:organization)
     session.delete(:user_id) if current_user
   end
 

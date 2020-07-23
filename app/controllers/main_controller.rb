@@ -20,6 +20,11 @@ class MainController < ApplicationController
   include Registrar
   # GET /
   def index
+
+    if session[:organization].nil? && !cookies.encrypted[:organization].nil?
+      session[:organization] = cookies.encrypted[:organization]
+    end
+
     # Store invite token
     session[:invite_token] = params[:invite_token] if params[:invite_token] && invite_registration
   end

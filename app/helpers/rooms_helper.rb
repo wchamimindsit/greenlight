@@ -34,13 +34,13 @@ module RoomsHelper
   end
 
   def room_authentication_required
-    @settings.get_value("Room Authentication") == "true" &&
+    @settings.get_value("Room Authentication", session[:organization]) == "true" &&
       current_user.nil?
   end
 
   def current_room_exceeds_limit(room)
     # Get how many rooms need to be deleted to reach allowed room number
-    limit = @settings.get_value("Room Limit").to_i
+    limit = @settings.get_value("Room Limit", session[:organization]).to_i
 
     return false if current_user&.has_role?(:admin) || limit == 15
 

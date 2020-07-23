@@ -66,6 +66,10 @@ es:
       rooms:
         info: Establece el límite de salas que un usuario puede tener (incluyendo la sala principal). Esta configuración no aplica para administradores.
         title: Número de salas por usuario
+      organization:
+        title: Organización
+        info: Organización a la cual se le aplicará la configuración
+        default: Organización        
       subtitle: Personalizar AulaParaTodos
       title: Configuración del sitio web
     flash:

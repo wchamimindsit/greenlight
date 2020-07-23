@@ -83,6 +83,10 @@ es_MX:
       shared_access:
         info: "Al deshabilitar esta opción se eliminara el botón de la lista de opciones para la sala, con lo cual los usuarios no podrán compartir salas"
         title: Permitir a los usuarios compartir salas
+      organization:
+        title: Organización
+        info: Organización a la cual se le aplicará la configuración
+        default: Organización        
       subtitle: Personalizar AulaParaTodos
       title: Configuración del sitio web
     flash:

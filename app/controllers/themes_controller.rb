@@ -22,9 +22,9 @@ class ThemesController < ApplicationController
 
   # GET /primary
   def index
-    color = @settings.get_value("Primary Color") || Rails.configuration.primary_color_default
-    lighten_color = @settings.get_value("Primary Color Lighten") || Rails.configuration.primary_color_lighten_default
-    darken_color = @settings.get_value("Primary Color Darken") || Rails.configuration.primary_color_darken_default
+    color = @settings.get_value("Primary Color", session[:organization]) || Rails.configuration.primary_color_default
+    lighten_color = @settings.get_value("Primary Color Lighten", session[:organization]) || Rails.configuration.primary_color_lighten_default
+    darken_color = @settings.get_value("Primary Color Darken", session[:organization]) || Rails.configuration.primary_color_darken_default
 
     file_name = Rails.root.join('lib', 'assets', '_primary_themes.scss')
     @file_contents = File.read(file_name)

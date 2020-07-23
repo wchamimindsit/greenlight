@@ -52,6 +52,7 @@ Rails.application.routes.draw do
     post '/undelete', to: 'admins#undelete', as: :admin_undelete
     post '/merge/:user_uid', to: 'admins#merge_user', as: :merge_user
     # Site Settings
+    post '/set_organization', to: 'admins#set_organization', as: :admin_set_organization
     post '/update_settings', to: 'admins#update_settings', as: :admin_update_settings
     post '/registration_method', to: 'admins#registration_method', as: :admin_change_registration
     post '/coloring', to: 'admins#coloring', as: :admin_coloring
@@ -123,6 +124,11 @@ Rails.application.routes.draw do
     post '/login', to: 'rooms#login', as: :login_room
   end
 
+  #Extended payments routes.
+  #scope '/payments' do
+  #  post '/confirmed', to: 'payments#confirmed', as: :payments_confirmed
+  #end
+  match '/payments/confirmed', to: 'payments#confirmed', via: [:post, :put], as: :payments_confirmed
 
   # Participant resources.
   resources :participants, only: [:create, :show, :destroy], param: :room_uid, path: '/'
