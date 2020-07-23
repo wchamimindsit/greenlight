@@ -83,6 +83,10 @@ en:
       shared_access:
         info: Setting to disabled will remove the button from the Room options dropdown, preventing users from sharing rooms
         title: Allow Users to Share Rooms
+      organization:
+        title: Organization
+        info: Organization to which the configuration will be applied
+        default: Organization
       subtitle: Customize AulaParaTodos
       title: Site Settings
     flash:

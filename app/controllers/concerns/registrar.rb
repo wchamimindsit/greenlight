@@ -20,11 +20,11 @@ module Registrar
   extend ActiveSupport::Concern
 
   def approval_registration
-    @settings.get_value("Registration Method") == Rails.configuration.registration_methods[:approval]
+    @settings.get_value("Registration Method", session[:organization]) == Rails.configuration.registration_methods[:approval]
   end
 
   def invite_registration
-    @settings.get_value("Registration Method") == Rails.configuration.registration_methods[:invite]
+    @settings.get_value("Registration Method", session[:organization]) == Rails.configuration.registration_methods[:invite]
   end
 
   # Returns a hash containing whether the user has been invited and if they
