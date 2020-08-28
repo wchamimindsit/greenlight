@@ -160,6 +160,7 @@ es:
   empresa_desarrollo: Mindsit S.A.S.
   enter_your_name: Introduzca su nombre
   enter_your_access_code: Introduzca su código de acceso
+  enter_for_finish: Presione enter al finalizar de ingresar su código
   errors:
     bigbluebutton:
       help: "Asegúrese de que los pasos han sido seguidos correctamente. <a href=\"%{doc_link}\">Saber más</a>"
@@ -233,6 +234,7 @@ es:
   invite_message: "Para invitar a alguien a la sesión, envíele este enlace:"
   javascript:
     room:
+      exceeded_participants: "El máximo de participantes fue excedido y tiene %{n} participantes que ya están ingresados"
       mailer:
         subject: 'le ha invitado a ver una grabación.'
         body: 'Siga el enlace para ver la grabación:'

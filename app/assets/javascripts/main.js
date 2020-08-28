@@ -49,3 +49,9 @@ function getLocalizedString(key) {
 
   return translated
 }
+
+function showMessage(selector, type_message, message) {
+  $.get("shared/show_message", { type_message, message }).done(function(data) {    
+    $(selector).empty().append(data);
+  });
+}

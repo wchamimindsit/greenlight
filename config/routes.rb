@@ -33,6 +33,9 @@ Rails.application.routes.draw do
   # Redirect to terms page
   match '/terms', to: 'users#terms', via: [:get, :post]
 
+  # Show message
+  get '/shared/show_message', to: 'shared#show_message', as: :show_message
+
   # Admin resouces
   resources :admins, only: [:index]
 
