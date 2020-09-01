@@ -83,6 +83,10 @@ en:
       shared_access:
         info: Setting to disabled will remove the button from the Room options dropdown, preventing users from sharing rooms
         title: Allow Users to Share Rooms
+      organization:
+        title: Organization
+        info: Organization to which the configuration will be applied
+        default: Organization
       subtitle: Customize AulaParaTodos
       title: Site Settings
     flash:
@@ -184,6 +188,7 @@ en:
   email_sent: Your %{email_type} email has been sent! (Please check your Spam folder if you haven't received it)
   enter_your_name: Enter your name!
   enter_your_access_code: Entrer your access code
+  enter_for_finish: Press enter when you finish writing your code
   errors:
     bigbluebutton:
       help: Please make sure the proper steps have been taken. <a href="%{doc_link}">Learn more</a>
@@ -257,7 +262,8 @@ en:
   invalid_login_method: Login failed due to account mismatch. You need to log in with omniauth.
   invite_message: "To invite someone to the meeting, send them this link:"
   javascript:
-    room:
+    room:      
+      exceeded_participants: "The maximum number of participants was exceeded and you have %{n} participants already entered"
       mailer:
         subject: 'has invited you to view a recording.'
         body: 'To view the recording, follow the link below:'
@@ -500,7 +506,7 @@ en:
     organization: Organization
     owner: Owner
     owner_banned: This room is currently unavailable
-    private_room_msg: This room is private to access enter from evaluateok
+    private_room_msg: This room is private, to access enter from EvaluateOk
     no_room:
       description: Enter the room url or the room id for the room you want to join.
       edit_profile: Edit User Profile

@@ -14,6 +14,7 @@ ActiveRecord::Schema.define(version: 2020_01_30_144841) do
 
   create_table "features", force: :cascade do |t|
     t.integer "setting_id"
+    t.integer "organization_id", default: 0
     t.string "name", null: false
     t.string "value"
     t.boolean "enabled", default: false
@@ -21,6 +22,7 @@ ActiveRecord::Schema.define(version: 2020_01_30_144841) do
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_features_on_name"
     t.index ["setting_id"], name: "index_features_on_setting_id"
+    t.index ["organization_id"], name: "index_features_on_organization_id"
   end
 
   create_table "invitations", force: :cascade do |t|

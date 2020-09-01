@@ -50,19 +50,25 @@ $(document).on('turbolinks:load', function(){
       showCreateRoom(this)
     })
 
-    $("input[id=access_code]").on('input', function(e) {
-      findNameByCode($(e.target).val(), $(e.target).data("path"));
+    $("input[id=access_code]").on('keyup', function(e) {
+      if (e.keyCode === 13) {
+          e.preventDefault();
+          findNameByCode($(e.target).val(), $(e.target).data("path"));
+      }
     });
-
+    
   }
 
   function findNameByCode(text, path) {
     if(text.length >= 6 && text.length <= 15) {
       $.post(path, { access_code: text }).done(function(data) {
+
         if(data !== null) {
           $("#join_name").val(data.name + " " + data.surnames)
           $("#lbParticipantName").text(data.name + " " + data.surnames)
+          $("#lbParticipantName").removeClass("text-muted")
           $("#btnSubmit").removeAttr("disabled")
+          $("input[id=access_code]").off()
         } else {
           $("#join_name").val("")
           $("#lbParticipantName").text("")
@@ -185,6 +191,8 @@ $(document).on('turbolinks:load', function(){
     })
   }
 });
+
+var max_participant = 200;
 
 function showCreateRoom(target) {
   var modal = $(target)
@@ -335,13 +343,25 @@ function processData(data) {
           } catch (error) { console.log(error); }
           
           break;
-      }  
+      }
     }
   });
-  delete arr[""];
-  objSaveAccessChanges = arr;
-  $("#save-participants").prop('disabled', false);
-  $("#lbFileUsersAccess").text($("#fileUsersAccess")[0].files[0].name);
+
+  var lstParticipants = [];
+  var key = getLocalizedString("columns_participant_create")[1];
+  $("input[name='identification']").each(function(i, obj){ lstParticipants.push(obj.value) });
+  var intParticipants = lstParticipants.filter(e => arr[key].includes(e)).length;
+  var total = arr[key].length + lstParticipants.length;
+
+  if(total <= max_participant){
+    delete arr[""];
+    objSaveAccessChanges = arr;
+    $("#show_message").empty();
+    $("#save-participants").prop('disabled', false);
+    $("#lbFileUsersAccess").text($("#fileUsersAccess")[0].files[0].name);
+  } else {
+    showMessage("#show_message", "alert", getLocalizedString("javascript.room.exceeded_participants").replace("%{n}", intParticipants))
+  }
 }
 
 function downloadTemplate() {

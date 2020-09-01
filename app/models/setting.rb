@@ -20,16 +20,25 @@ class Setting < ApplicationRecord
   has_many :features
 
   # Updates the value of the feature and enables it
-  def update_value(name, value)
-    feature = features.find_or_create_by!(name: name)
+  def update_value(name, organization, value)
 
+    if organization.nil?
+      organization = 0
+    end
+
+    feature = features.find_or_create_by!(name: name, organization_id: organization)
     feature.update_attributes(value: value, enabled: true)
   end
 
   # Returns the value if enabled or the default if not enabled
-  def get_value(name)
+  def get_value(name, organization)
+
+    if organization.nil?
+      organization = 0
+    end
+
     # Return feature value if already exists
-    features.each do |feature|
+    features.where(organization_id: organization).each do |feature|
       next if feature.name != name
 
       return feature.value if feature.enabled
@@ -37,7 +46,7 @@ class Setting < ApplicationRecord
     end
 
     # Create the feature since it doesn't exist
-    features.create(name: name)
+    features.create(name: name, organization_id: organization)
     default_value(name)
   end
 

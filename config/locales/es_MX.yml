@@ -83,6 +83,10 @@ es_MX:
       shared_access:
         info: "Al deshabilitar esta opción se eliminara el botón de la lista de opciones para la sala, con lo cual los usuarios no podrán compartir salas"
         title: Permitir a los usuarios compartir salas
+      organization:
+        title: Organización
+        info: Organización a la cual se le aplicará la configuración
+        default: Organización        
       subtitle: Personalizar AulaParaTodos
       title: Configuración del sitio web
     flash:
@@ -185,6 +189,7 @@ es_MX:
   empresa_desarrollo: Mindsit S.A.S.
   enter_your_name: Introduce tu nombre
   enter_your_access_code: Introduzca su código de acceso
+  enter_for_finish: Presione enter al finalizar de ingresar su código
   errors:
     bigbluebutton:
       help: "Asegurate de que los pasos han sido seguidos correctamente. <a href=\"%{doc_link}\">Aprender más</a>"
@@ -258,6 +263,7 @@ es_MX:
   invite_message: "Para invitar a alquien a la sesión, enviale este enlace:"
   javascript:
     room:
+      exceeded_participants: "El máximo de participantes fue excedido y tiene %{n} participantes que ya están ingresados"
       mailer:
         subject: 'te ha invitado a ver una grabación'
         body: 'Sigue el enlace para ver la grabación'
@@ -500,7 +506,7 @@ es_MX:
     organization: Organización
     owner: Dueño
     owner_banned: Esta sala no está disponible actualmente
-    private_room_msg: Esta sala es privada para acceder ingresa desde evaluateok
+    private_room_msg: Esta sala es privada, para acceder ingresa desde EvaluateOk
     no_room:
       description: Ingresa la url o id de la sala a la que quieres acceder
       edit_profile: Editar perfil de usuario

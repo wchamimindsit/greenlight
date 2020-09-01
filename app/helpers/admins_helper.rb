@@ -30,15 +30,15 @@ module AdminsHelper
       highest_role = current_user.highest_priority_role
 
       controller_name == "admins" && action_name == "index" &&
-      @settings.get_value("Registration Method") == Rails.configuration.registration_methods[:invite] && highest_role.get_permission("can_invite_users")
+      @settings.get_value("Registration Method", session[:organization]) == Rails.configuration.registration_methods[:invite] && highest_role.get_permission("can_invite_users")
     else
       controller_name == "admins" && action_name == "index" &&
-      @settings.get_value("Registration Method") == Rails.configuration.registration_methods[:invite]
+      @settings.get_value("Registration Method", session[:organization]) == Rails.configuration.registration_methods[:invite]
     end
   end
 
   def room_authentication_string
-    if @settings.get_value("Room Authentication") == "true"
+    if @settings.get_value("Room Authentication", session[:organization]) == "true"
       I18n.t("administrator.site_settings.authentication.enabled")
     else
       I18n.t("administrator.site_settings.authentication.disabled")
@@ -46,7 +46,7 @@ module AdminsHelper
   end
 
   def shared_access_string
-    if @settings.get_value("Shared Access") == "true"
+    if @settings.get_value("Shared Access", session[:organization]) == "true"
       I18n.t("administrator.site_settings.authentication.enabled")
     else
       I18n.t("administrator.site_settings.authentication.disabled")
@@ -54,15 +54,23 @@ module AdminsHelper
   end
 
   def recording_default_visibility_string
-    if @settings.get_value("Default Recording Visibility") == "public"
+    if @settings.get_value("Default Recording Visibility", session[:organization]) == "public"
       I18n.t("recording.visibility.public")
     else
       I18n.t("recording.visibility.unlisted")
     end
   end
 
+  def current_organization_string
+    if @organization.nil?
+      I18n.t("administrator.site_settings.organization.default")
+    else
+      @organization.name 
+    end    
+  end
+
   def registration_method_string
-    case @settings.get_value("Registration Method")
+    case @settings.get_value("Registration Method", session[:organization])
     when Rails.configuration.registration_methods[:open]
         I18n.t("administrator.site_settings.registration.methods.open")
     when Rails.configuration.registration_methods[:invite]
@@ -90,7 +98,7 @@ module AdminsHelper
   end
 
   def room_limit_number
-    @settings.get_value("Room Limit").to_i
+    @settings.get_value("Room Limit", session[:organization]).to_i
   end
 
   def edit_disabled

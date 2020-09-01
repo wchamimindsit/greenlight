@@ -156,9 +156,11 @@ class ApplicationController < ActionController::Base
   def check_user_role
     if current_user&.has_role? :denied
       session.delete(:user_id)
+      session.delete(:organization)
       redirect_to root_path, flash: { alert: I18n.t("registration.banned.fail") }
     elsif current_user&.has_role? :pending
       session.delete(:user_id)
+      session.delete(:organization)
       redirect_to root_path, flash: { alert: I18n.t("registration.approval.fail") }
     end
   end
@@ -207,7 +209,7 @@ class ApplicationController < ActionController::Base
 
   # Indicates whether users are allowed to share rooms
   def shared_access_allowed
-    @settings.get_value("Shared Access") == "true"
+    @settings.get_value("Shared Access", session[:organization]) == "true"
   end
   helper_method :shared_access_allowed
 

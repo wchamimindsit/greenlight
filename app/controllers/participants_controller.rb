@@ -28,12 +28,12 @@ class ParticipantsController < ApplicationController
         room_id = Room.find_by(uid: params[:room_uid]).id
         objParticipant = Participant.find_by_code(room_id, params[:access_code])
         objReturn = {
-          name: objParticipant.nil? ? "" : objParticipant.name, 
+          name: objParticipant.nil? ? "" : objParticipant.name,
           surnames: objParticipant.nil? ? "" : objParticipant.surnames
         }
 
         respond_to do |format|
-          format.json { render body: objReturn.to_json }
+          format.json { render body: objParticipant.nil? ? objParticipant.to_json : objReturn.to_json }
         end
       end
     rescue => e
