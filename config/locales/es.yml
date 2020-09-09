@@ -66,6 +66,10 @@ es:
       rooms:
         info: Establece el límite de salas que un usuario puede tener (incluyendo la sala principal). Esta configuración no aplica para administradores.
         title: Número de salas por usuario
+      organization:
+        title: Organización
+        info: Organización a la cual se le aplicará la configuración
+        default: Organización        
       subtitle: Personalizar AulaParaTodos
       title: Configuración del sitio web
     flash:
@@ -156,6 +160,7 @@ es:
   empresa_desarrollo: Mindsit S.A.S.
   enter_your_name: Introduzca su nombre
   enter_your_access_code: Introduzca su código de acceso
+  enter_for_finish: Presione enter al finalizar de ingresar su código
   errors:
     bigbluebutton:
       help: "Asegúrese de que los pasos han sido seguidos correctamente. <a href=\"%{doc_link}\">Saber más</a>"
@@ -229,6 +234,7 @@ es:
   invite_message: "Para invitar a alguien a la sesión, envíele este enlace:"
   javascript:
     room:
+      exceeded_participants: "El máximo de participantes fue excedido y tiene %{n} participantes que ya están ingresados"
       mailer:
         subject: 'le ha invitado a ver una grabación.'
         body: 'Siga el enlace para ver la grabación:'
@@ -451,7 +457,7 @@ es:
     organization: Organización
     owner: Dueño
     owner_banned: Esta sala no está disponible actualmente
-    private_room_msg: Esta sala es, privada para acceder ingresa desde EvaluateOk
+    private_room_msg: Esta sala es privada, para acceder ingresa desde EvaluateOk
     no_room:
       description: Ingresa la url o id de la sala a la que quieres acceder
       edit_profile: Editar perfil de usuario

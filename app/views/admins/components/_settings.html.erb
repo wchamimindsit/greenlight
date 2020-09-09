@@ -12,8 +12,33 @@
 # You should have received a copy of the GNU Lesser General Public License along
 # with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
 %>
-
+<% adminUpdateSettingsPath = admin_update_settings_path(setting: 'Branding Image') %>
 <div class="form-group">
+  <div class="row">
+    <div class="col-12">
+      <div class="mb-6 form-group">
+        <label class="form-label"><%= t("administrator.site_settings.organization.title") %></label>
+        <label class="form-label text-muted"><%= t("administrator.site_settings.organization.info") %></label>
+        <div class="dropdown">
+          <button class="btn btn-primary dropdown-toggle" type="button" id="currentOrganization" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <%= current_organization_string %>
+          </button>
+          <div class="dropdown-menu" aria-labelledby="currentOrganization">
+            <% if current_organization_string != t("administrator.site_settings.organization.default") %>
+              <%= button_to admin_set_organization_path(value: 0), class: "dropdown-item", "data-disable": "" do %>
+                <%= t("administrator.site_settings.organization.default") %>
+              <% end %>
+            <% end %>
+            <% Organization.all.each do |objOrganization| %>
+              <%= button_to admin_set_organization_path(value: objOrganization.id), class: "dropdown-item", "data-disable": "" do %>
+                <%= objOrganization.name %>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="row">
     <div class="col-12">
       <div class="mb-6 form-group">
@@ -22,7 +47,7 @@
         <div class="input-group">
           <input id="branding-url" type="text" class="form-control" value="<%= logo_image %>">
           <span class="input-group-append">
-            <button id="branding-image" onclick="changeBrandingImage('<%= admin_update_settings_path(setting: 'Branding Image') %>')" class="btn btn-primary" type="button"><%= t("administrator.site_settings.branding.change") %></button>
+            <button id="branding-image" onclick="changeBrandingImage('<%= adminUpdateSettingsPath %>')" class="btn btn-primary" type="button"><%= t("administrator.site_settings.branding.change") %></button>
           </span>
         </div>
       </div>

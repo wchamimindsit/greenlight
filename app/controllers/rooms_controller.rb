@@ -66,6 +66,12 @@ class RoomsController < ApplicationController
     begin
     @room = Room.find_by(uid: params[:room_uid])
     @participants = Participant.from_room(@room.id)
+
+    if current_user && current_user.organization_id
+      session[:organization] = current_user.organization_id
+    else
+      session[:organization] = User.find_by(id: @room.user_id).organization_id
+    end
       
     rescue => e
       logger.error "Error on load manage participant: #{e}"
@@ -108,6 +114,7 @@ class RoomsController < ApplicationController
     end
 
     if !@organization.nil? 
+      
       if @organization.nextinvoice && @organization.reseller_id && @organization.reseller_id == 1 && DateTime.now() > @organization.nextinvoice
 
         expiration_date = @organization.nextinvoice
@@ -502,7 +509,7 @@ class RoomsController < ApplicationController
   end
 
   def auth_required
-    @settings.get_value("Room Authentication") == "true" && current_user.nil?
+    @settings.get_value("Room Authentication", session[:organization]) == "true" && current_user.nil?
   end
 
   # Checks if the room is shared with the user and room sharing is enabled
@@ -511,7 +518,7 @@ class RoomsController < ApplicationController
   end
 
   def room_limit_exceeded
-    limit = @settings.get_value("Room Limit").to_i
+    limit = @settings.get_value("Room Limit", session[:organization]).to_i
 
     # Does not apply to admin or users that aren't signed in
     # 15+ option is used as unlimited

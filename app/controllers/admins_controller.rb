@@ -53,6 +53,9 @@ class AdminsController < ApplicationController
 
   # GET /admins/site_settings
   def site_settings
+    unless session[:organization].nil?
+      @organization = Organization.find_by(id: session[:organization])
+    end
   end
 
   # GET /admins/server_recordings
@@ -199,9 +202,21 @@ class AdminsController < ApplicationController
 
   # SITE SETTINGS
 
+  # POST /admins/set_organization/
+  def set_organization
+
+    @organization = Organization.find_by(id: params[:value])
+    unless @organization.nil?
+      session[:organization] = @organization.id
+    else 
+      session[:organization] = params[:value]
+    end
+    redirect_to admin_site_settings_path, flash: { success: @organization.nil? ? "Default" : @organization.name }
+  end
+
   # POST /admins/update_settings
   def update_settings
-    @settings.update_value(params[:setting], params[:value])
+    @settings.update_value(params[:setting], session[:organization], params[:value])
 
     flash_message = I18n.t("administrator.flash.settings")
 
@@ -214,9 +229,9 @@ class AdminsController < ApplicationController
 
   # POST /admins/color
   def coloring
-    @settings.update_value("Primary Color", params[:value])
-    @settings.update_value("Primary Color Lighten", color_lighten(params[:value]))
-    @settings.update_value("Primary Color Darken", color_darken(params[:value]))
+    @settings.update_value("Primary Color", session[:organization], params[:value])
+    @settings.update_value("Primary Color Lighten", session[:organization], color_lighten(params[:value]))
+    @settings.update_value("Primary Color Darken", session[:organization], color_darken(params[:value]))
     redirect_to admin_site_settings_path, flash: { success: I18n.t("administrator.flash.settings") }
   end
 
@@ -229,7 +244,7 @@ class AdminsController < ApplicationController
       redirect_to admin_site_settings_path,
         flash: { alert: I18n.t("administrator.flash.invite_email_verification") }
     else
-      @settings.update_value("Registration Method", new_method)
+      @settings.update_value("Registration Method", session[:organization], new_method)
       redirect_to admin_site_settings_path,
         flash: { success: I18n.t("administrator.flash.registration_method_updated") }
     end
