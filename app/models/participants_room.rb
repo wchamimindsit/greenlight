@@ -26,4 +26,13 @@ class ParticipantsRoom < ApplicationRecord
     )
   end
 
+  def self.count_by_room(room_id) 
+    ParticipantsRoom.where(
+      "participants_rooms.room_id = #{room_id} AND " \
+      "participants_rooms.enabled = 'active' "
+    ).select("COUNT(participants_rooms.room_id) as total").
+    group("participants_rooms.room_id").order("total").first.total
+    
+  end
+
 end

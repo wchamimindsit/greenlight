@@ -1,6 +1,7 @@
 class Organization < ApplicationRecord
 
   has_many :users  
+  has_many :rooms, through: :users
 
   before_save { email.try(:downcase!) }
   validates :name, length: { maximum: 256 }, presence: true

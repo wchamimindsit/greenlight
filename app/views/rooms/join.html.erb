@@ -35,7 +35,7 @@
       <span><%= t("room.private_room_msg") %></span>      
       <button id="evaluateok" class="btn"></button>
     </div>
-    <% elsif @participants.nil? || @participants.length == 0 %>
+    <% elsif @room.nil? || @room.count_participants == 0 %>
       <%= form_for room_path(@room), method: :post do |f| %>
         <div class="input-group">
           <%= f.hidden_field(:search, :value => params[:search])%>
