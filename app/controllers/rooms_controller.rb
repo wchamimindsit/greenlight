@@ -82,7 +82,7 @@ class RoomsController < ApplicationController
   # GET /:room_uid
   def show
 
-    load_manage_participant
+    load_manage_participant if current_user
 
     @anyone_can_start = JSON.parse(@room[:room_settings])["anyoneCanStart"]
     @room_running = room_running?(@room.bbb_id)
