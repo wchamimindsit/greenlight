@@ -71,7 +71,7 @@ $(document).on('turbolinks:load', function(){
           $("input[id=access_code]").off()
         } else {
           $("#join_name").val("")
-          $("#lbParticipantName").text("")
+          //$("#lbParticipantName").text("")
           $("#btnSubmit").prop("disabled", "disabled")
         }
       });

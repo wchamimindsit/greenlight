@@ -32,6 +32,7 @@ class User < ApplicationRecord
   has_many :rooms
   has_many :shared_access
   belongs_to :main_room, class_name: 'Room', foreign_key: :room_id, required: false
+  belongs_to :organization, class_name: 'Organization', foreign_key: :organization_id, required: false
 
   has_and_belongs_to_many :roles, join_table: :users_roles
 
