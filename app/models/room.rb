@@ -32,11 +32,13 @@ class Room < ApplicationRecord
   
   def count_participants
 
-    Room.joins("INNER JOIN participants_rooms ON participants_rooms.room_id = rooms.id ").where(
+    objRoom = Room.joins("INNER JOIN participants_rooms ON participants_rooms.room_id = rooms.id ").where(
       "participants_rooms.room_id = #{self.id} AND " \
       "participants_rooms.enabled = 'active' "
     ).select("COUNT(participants_rooms.room_id) as total, rooms.id").
-    group("rooms.id").order("total").first.total    
+    group("rooms.id").order("total").first
+    
+    objRoom = objRoom.nil? ? 0 : objRoom.total
   end
 
   def self.admins_search(string)
