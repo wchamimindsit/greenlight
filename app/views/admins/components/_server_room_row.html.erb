@@ -11,6 +11,8 @@
 # PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
 # You should have received a copy of the GNU Lesser General Public License along
 # with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
+
+organization = room.owner.organization
 %>
 
 <tr id="room-block" data-path="<%= update_settings_path(room) %>" data-room-settings=<%= room.room_settings %> data-room-access-code="<%= room.access_code %>">
@@ -29,6 +31,9 @@
   </td>
   <td class="text-left">
     <%= room.owner.name %>
+    <div class="small text-muted">
+      <%= organization.nil? ? '' : organization.name %>
+    </div>
   </td>
   <td class="text-left">
     <%= room.uid %>

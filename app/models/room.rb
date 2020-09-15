@@ -28,6 +28,18 @@ class Room < ApplicationRecord
   belongs_to :owner, class_name: 'User', foreign_key: :user_id
   has_many :shared_access
   has_many :session_histories
+  has_many :participants_rooms, class_name: "ParticipantsRoom"
+  
+  def count_participants
+
+    objRoom = Room.joins("INNER JOIN participants_rooms ON participants_rooms.room_id = rooms.id ").where(
+      "participants_rooms.room_id = #{self.id} AND " \
+      "participants_rooms.enabled = 'active' "
+    ).select("COUNT(participants_rooms.room_id) as total, rooms.id").
+    group("rooms.id").order("total").first
+    
+    objRoom = objRoom.nil? ? 0 : objRoom.total
+  end
 
   def self.admins_search(string)
     active_database = Rails.configuration.database_configuration[Rails.env]["adapter"]
