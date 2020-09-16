@@ -189,6 +189,7 @@ en:
   enter_your_name: Enter your name!
   enter_your_access_code: Entrer your access code
   enter_for_finish: Press enter when you finish writing your code
+  invalid_code: Enter a valid access code
   errors:
     bigbluebutton:
       help: Please make sure the proper steps have been taken. <a href="%{doc_link}">Learn more</a>
