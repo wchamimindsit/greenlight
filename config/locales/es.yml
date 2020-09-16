@@ -161,6 +161,7 @@ es:
   enter_your_name: Introduzca su nombre
   enter_your_access_code: Introduzca su código de acceso
   enter_for_finish: Presione enter al finalizar de ingresar su código
+  invalid_code: Introduzca un código de acceso valido
   errors:
     bigbluebutton:
       help: "Asegúrese de que los pasos han sido seguidos correctamente. <a href=\"%{doc_link}\">Saber más</a>"
