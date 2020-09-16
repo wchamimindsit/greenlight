@@ -50,32 +50,32 @@ $(document).on('turbolinks:load', function(){
       showCreateRoom(this)
     })
 
-    $("input[id=access_code]").on('keyup', function(e) {
-      if (e.keyCode === 13) {
-          e.preventDefault();
-          findNameByCode($(e.target).val(), $(e.target).data("path"));
+    $("input[id=access_code]").on('input', function(e) {
+      if($(e.target).val().length >= 6 ) {
+        $("#btnSubmit").removeAttr("disabled")
       }
     });
-    
-  }
 
-  function findNameByCode(text, path) {
-    if(text.length >= 6 && text.length <= 15) {
-      $.post(path, { access_code: text }).done(function(data) {
+    $("button[id=btnSubmit]").on('click', function() {
+      input = $("input[id=access_code]")
+      text = input.val()
+      path = input.data("path")
+      
+      if(text.length >= 6 && text.length <= 15) {
+        $.post(path, { access_code: text }).done(function(data) {
+  
+          if(data !== null) {
+            $("#join_name").val(data.name + " " + data.surnames)
+            $("#frm_access_code").submit();
+          } else {
+            $("#lbParticipantName").removeClass("text-muted")
+            $("#lbParticipantName").text(getLocalizedString("invalid_code"))
+          }
+          
+        });
+      }
+    });
 
-        if(data !== null) {
-          $("#join_name").val(data.name + " " + data.surnames)
-          $("#lbParticipantName").text(data.name + " " + data.surnames)
-          $("#lbParticipantName").removeClass("text-muted")
-          $("#btnSubmit").removeAttr("disabled")
-          $("input[id=access_code]").off()
-        } else {
-          $("#join_name").val("")
-          //$("#lbParticipantName").text("")
-          $("#btnSubmit").prop("disabled", "disabled")
-        }
-      });
-    }
   }
 
     // Autofocus on the Room Name label when creating a room only
