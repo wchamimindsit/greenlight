@@ -18,11 +18,10 @@
 
 class UserMailer < ApplicationMailer
   include ApplicationHelper
-  include ThemingHelper
 
   default from: Rails.configuration.smtp_sender
 
-  def verify_email(user, url, settings)
+  def verify_email(user, url, settings, logo_image, user_color)
     @settings = settings
     @user = user
     @url = url
@@ -31,7 +30,7 @@ class UserMailer < ApplicationMailer
     mail(to: @user.email, subject: t('landing.welcome'))
   end
 
-  def password_reset(user, url, settings)
+  def password_reset(user, url, settings, logo_image, user_color)
     @settings = settings
     @user = user
     @url = url
@@ -40,7 +39,7 @@ class UserMailer < ApplicationMailer
     mail to: user.email, subject: t('reset_password.subtitle')
   end
 
-  def user_promoted(user, role, url, settings)
+  def user_promoted(user, role, url, settings, logo_image, user_color)
     @settings = settings
     @url = url
     @admin_url = url + "admins"
@@ -50,7 +49,7 @@ class UserMailer < ApplicationMailer
     mail to: user.email, subject: t('mailer.user.promoted.subtitle', role: translated_role_name(role))
   end
 
-  def user_demoted(user, role, url, settings)
+  def user_demoted(user, role, url, settings, logo_image, user_color)
     @settings = settings
     @url = url
     @root_url = url
@@ -60,7 +59,7 @@ class UserMailer < ApplicationMailer
     mail to: user.email, subject: t('mailer.user.demoted.subtitle', role: translated_role_name(role))
   end
 
-  def invite_email(name, email, url, settings)
+  def invite_email(name, email, url, settings, logo_image, user_color)
     @settings = settings
     @name = name
     @email = email
@@ -70,7 +69,7 @@ class UserMailer < ApplicationMailer
     mail to: email, subject: t('mailer.user.invite.subject')
   end
 
-  def approve_user(user, url, settings)
+  def approve_user(user, url, settings, logo_image, user_color)
     @settings = settings
     @user = user
     @url = url
@@ -79,7 +78,7 @@ class UserMailer < ApplicationMailer
     mail to: user.email, subject: t('mailer.user.approve.subject')
   end
 
-  def approval_user_signup(user, url, admin_emails, settings)
+  def approval_user_signup(user, url, admin_emails, settings, logo_image, user_color)
     @settings = settings
     @user = user
     @url = url
@@ -89,7 +88,7 @@ class UserMailer < ApplicationMailer
     mail to: admin_emails, subject: t('mailer.user.approve.signup.subject')
   end
 
-  def invite_user_signup(user, url, admin_emails, settings)
+  def invite_user_signup(user, url, admin_emails, settings, logo_image, user_color)
     @settings = settings
     @user = user
     @url = url

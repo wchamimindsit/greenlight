@@ -18,15 +18,16 @@
 
 module Emailer
   extend ActiveSupport::Concern
+  include ThemingHelper
 
   # Sends account activation email.
   def send_activation_email(user)
     begin
       return unless Rails.configuration.enable_email_verification
 
-      UserMailer.verify_email(user, user_verification_link(user), @settings).deliver
+      UserMailer.verify_email(user, user_verification_link(user), @settings, logo_image, user_color).deliver
     rescue => e
-      logger.error "Support: Error in email delivery: #{e}"
+      logger.error "Action: send_activation_email Support: Error in email delivery: #{e}"
       flash[:alert] = I18n.t(params[:message], default: I18n.t("delivery_error"))
     else
       flash[:success] = I18n.t("email_sent", email_type: t("verify.verification"))
@@ -38,9 +39,9 @@ module Emailer
     begin
       return unless Rails.configuration.enable_email_verification
 
-      UserMailer.password_reset(user, reset_link(user), @settings).deliver_now
+      UserMailer.password_reset(user, reset_link(user), @settings, logo_image, user_color).deliver_now
     rescue => e
-      logger.error "Support: Error in email delivery: #{e}"
+      logger.error "Action: send_password_reset_email Support: Error in email delivery: #{e}"
       flash[:alert] = I18n.t(params[:message], default: I18n.t("delivery_error"))
     else
       flash[:success] = I18n.t("email_sent", email_type: t("reset_password.subtitle"))
@@ -51,9 +52,9 @@ module Emailer
     begin
       return unless Rails.configuration.enable_email_verification
 
-      UserMailer.user_promoted(user, role, root_url, @settings).deliver_now
+      UserMailer.user_promoted(user, role, root_url, @settings, logo_image, user_color).deliver_now
     rescue => e
-      logger.error "Support: Error in email delivery: #{e}"
+      logger.error "Action: send_user_promoted_email Support: Error in email delivery: #{e}"
       flash[:alert] = I18n.t(params[:message], default: I18n.t("delivery_error"))
     end
   end
@@ -62,9 +63,9 @@ module Emailer
     begin
       return unless Rails.configuration.enable_email_verification
 
-      UserMailer.user_demoted(user, role, root_url, @settings).deliver_now
+      UserMailer.user_demoted(user, role, root_url, @settings, logo_image, user_color).deliver_now
     rescue => e
-      logger.error "Support: Error in email delivery: #{e}"
+      logger.error "Action: send_user_demoted_email Support: Error in email delivery: #{e}"
       flash[:alert] = I18n.t(params[:message], default: I18n.t("delivery_error"))
     end
   end
@@ -74,9 +75,9 @@ module Emailer
     begin
       return unless Rails.configuration.enable_email_verification
 
-      UserMailer.invite_email(name, email, invitation_link(token), @settings).deliver_now
+      UserMailer.invite_email(name, email, invitation_link(token), @settings, logo_image, user_color).deliver_now
     rescue => e
-      logger.error "Support: Error in email delivery: #{e}"
+      logger.error "Action: send_invitation_email Support: Error in email delivery: #{e}"
       flash[:alert] = I18n.t(params[:message], default: I18n.t("delivery_error"))
     else
       flash[:success] = I18n.t("administrator.flash.invite", email: email)
@@ -87,9 +88,9 @@ module Emailer
     begin
       return unless Rails.configuration.enable_email_verification
 
-      UserMailer.approve_user(user, root_url, @settings).deliver_now
+      UserMailer.approve_user(user, root_url, @settings, logo_image, user_color).deliver_now
     rescue => e
-      logger.error "Support: Error in email delivery: #{e}"
+      logger.error "Action: send_user_approved_email Support: Error in email delivery: #{e}"
       flash[:alert] = I18n.t(params[:message], default: I18n.t("delivery_error"))
     else
       flash[:success] = I18n.t("email_sent", email_type: t("verify.verification"))
@@ -102,9 +103,9 @@ module Emailer
 
       admin_emails = admin_emails()
       UserMailer.approval_user_signup(user, admins_url(tab: "pending"),
-      admin_emails, @settings).deliver_now unless admin_emails.empty?
+      admin_emails, @settings, logo_image, user_color).deliver_now unless admin_emails.empty?
     rescue => e
-      logger.error "Support: Error in email delivery: #{e}"
+      logger.error "Action: send_approval_user_signup_email Support: Error in email delivery: #{e}"
       flash[:alert] = I18n.t(params[:message], default: I18n.t("delivery_error"))
     end
   end
@@ -114,9 +115,9 @@ module Emailer
       return unless Rails.configuration.enable_email_verification
 
       admin_emails = admin_emails()
-      UserMailer.invite_user_signup(user, admins_url, admin_emails, @settings).deliver_now unless admin_emails.empty?
+      UserMailer.invite_user_signup(user, admins_url, admin_emails, @settings, logo_image, user_color).deliver_now unless admin_emails.empty?
     rescue => e
-      logger.error "Support: Error in email delivery: #{e}"
+      logger.error "Action: send_invite_user_signup_email Support: Error in email delivery: #{e}"
       flash[:alert] = I18n.t(params[:message], default: I18n.t("delivery_error"))
     end
   end
