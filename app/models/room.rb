@@ -35,7 +35,7 @@ class Room < ApplicationRecord
   objRoom = Room.joins("INNER JOIN participants_rooms ON   participants_rooms.room_id=rooms.id ").where(
       "rooms.id = #{self.id} "
       #"AND participants_rooms.enabled = 'active' "
-    ).select("COUNT(rooms.id) as total").group("participants_rooms.room_id").first
+    ).select("COUNT(rooms.id) as total").group("rooms.id").first
     
    objRoom = objRoom.nil? ? 0 : objRoom.total
   end
