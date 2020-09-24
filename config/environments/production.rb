@@ -132,7 +132,7 @@ Rails.application.configure do
     "#{severity}: #{msg} \n"
   end
 
-  config.log_level = :info
+  config.log_level = :warn
 
   # Prepend all log lines with the following tags.
   config.log_tags = [:request_id]
