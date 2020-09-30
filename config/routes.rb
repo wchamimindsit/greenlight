@@ -115,6 +115,7 @@ Rails.application.routes.draw do
 
   # Extended room routes.
   scope '/:room_uid' do
+    get '/show_recordings', to: 'rooms#show_recordings', as: :show_recordings
     post '/', to: 'rooms#join'
     patch '/', to: 'rooms#update', as: :update_room
     get '/room_settings', to: 'rooms#room_settings'

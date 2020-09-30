@@ -190,6 +190,7 @@ en:
   enter_your_access_code: Entrer your access code
   enter_for_finish: Press enter when you finish writing your code
   invalid_code: Enter a valid access code
+  loading: Loading...
   errors:
     bigbluebutton:
       help: Please make sure the proper steps have been taken. <a href="%{doc_link}">Learn more</a>
@@ -519,6 +520,7 @@ en:
       title: Join a Room
     no_sessions: This room has no sessions, yet!
     recordings: Room Recordings
+    show_recordings: Show Recordings
     room_limit: You have reached the maximum number of rooms allowed
     room_limit_exceeded: You have exceeded the number of rooms allowed. Please delete %{difference} room(s) to access this room.
     sessions: Sessions

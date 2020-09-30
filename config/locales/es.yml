@@ -162,6 +162,7 @@ es:
   enter_your_access_code: Introduzca su código de acceso
   enter_for_finish: Presione enter al finalizar de ingresar su código
   invalid_code: Introduzca un código de acceso valido
+  loading: Cargando...
   errors:
     bigbluebutton:
       help: "Asegúrese de que los pasos han sido seguidos correctamente. <a href=\"%{doc_link}\">Saber más</a>"
@@ -470,6 +471,7 @@ es:
       title: Ingresar a sala
     no_sessions: Esta sala todavía no tiene sesiones
     recordings: Grabaciones de sala
+    show_recordings: Mostrar grabaciones
     room_limit: Haz alcanzado el número límite de salas permitidas
     room_limit_exceeded: "Haz alcanzado el número límite de salas permitidas. Por favor elimina %{difference} sala(s) para poder acceder a ésta."
     sessions: Sesiones
