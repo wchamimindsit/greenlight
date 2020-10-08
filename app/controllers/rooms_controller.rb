@@ -79,6 +79,20 @@ class RoomsController < ApplicationController
     
   end
 
+  #GET /:room_uid/show_recordings
+  def show_recordings
+    begin
+
+      #load recordings
+      show_room_recordings
+      #reder the partial view
+      render partial: 'shared/sessions', locals: { recordings: @public_recordings, pagy: @pagy, only_public: true, user_recordings: false, title: t("room.recordings") }, formats: :html, layout: false
+      
+    rescue => e
+      logger.error "Error on show_recordings: #{e}"
+    end
+  end
+
   # GET /:room_uid
   def show
 

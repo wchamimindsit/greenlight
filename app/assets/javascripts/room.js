@@ -67,6 +67,7 @@ $(document).on('turbolinks:load', function(){
           if(data !== null) {
             $("#join_name").val(data.name + " " + data.surnames)
             $("#frm_access_code").submit();
+            $("div[id=show_sessions]").empty()
           } else {
             $("#lbParticipantName").removeClass("text-muted")
             $("#lbParticipantName").text(getLocalizedString("invalid_code"))
@@ -76,6 +77,14 @@ $(document).on('turbolinks:load', function(){
       }
     });
 
+    $("button[id=show_recordings]").on('click', function() {
+      $("div[id=show_sessions]").empty().append(getLocalizedString("loading"));
+      $.get(location.href + "/show_recordings").done(function(data) {    
+        $("div[id=shared_sessions]").empty().append(data);
+        $("div[id=show_sessions]").empty()
+      });
+    });
+    
   }
 
     // Autofocus on the Room Name label when creating a room only

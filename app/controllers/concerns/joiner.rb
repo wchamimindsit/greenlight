@@ -19,9 +19,17 @@
 module Joiner
   extend ActiveSupport::Concern
 
+  $showrecordings
+  def obj_show_recordings
+    get = proc{$showrecordings}
+    set = proc{|b| $showrecordings = b}
+    return get, set
+  end
+ 
   # Displays the join room page to the user
   def show_user_join
 
+    self.obj_show_recordings[1].call(false) #set object
     # Get users name
     @name = if current_user
       current_user.name
@@ -33,12 +41,17 @@ module Joiner
       ""
     end
 
-    @search, @order_column, @order_direction, pub_recs =
-      public_recordings(@room.bbb_id, params.permit(:search, :column, :direction), true)
-
-    @pagy, @public_recordings = pagy_array(pub_recs)
-
     render :join
+  end
+
+  def show_room_recordings
+
+    self.obj_show_recordings[1].call(true) #set object
+    
+    @search, @order_column, @order_direction, pub_recs =
+    public_recordings(@room.bbb_id, params.permit(:search, :column, :direction), true)
+
+    @pagy, @public_recordings = pagy_array(pub_recs)    
   end
 
   # create or update cookie to track the three most recent rooms a user joined
@@ -68,12 +81,16 @@ module Joiner
         redirect_to join_path(@room, join_name, opts)
       end
     else
-      search_params = params[@room.invite_path] || params
-      @search, @order_column, @order_direction, pub_recs =
-        public_recordings(@room.bbb_id, search_params.permit(:search, :column, :direction), true)
 
-      @pagy, @public_recordings = pagy_array(pub_recs)
+      if self.obj_show_recordings[0].call #get object
 
+        search_params = params[@room.invite_path] || params
+        @search, @order_column, @order_direction, pub_recs =
+          public_recordings(@room.bbb_id, search_params.permit(:search, :column, :direction), true)
+
+        @pagy, @public_recordings = pagy_array(pub_recs)
+      end
+      
       # They need to wait until the meeting begins.
       render :wait
     end
