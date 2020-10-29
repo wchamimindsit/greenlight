@@ -235,6 +235,7 @@ class RoomsController < ApplicationController
     end  
     # Fin validaciones
 
+    #info_signin_join
     active_rooms = 0
     active_room_name = ""
     current_user.ordered_rooms_active.each do |room|
@@ -374,14 +375,15 @@ class RoomsController < ApplicationController
   def logout
     logger.info "Support: #{current_user.present? ? current_user.email : 'Guest'} has left room #{@room.uid}"
 
-    if current_user.present? ? @room.owned_by?(current_user) : false
+    #info_logout_join
+    if current_user.present? ? room_shared_with_user ? true : @room.owned_by?(current_user) : false
       if room_running?(@room.bbb_id)
         logger.info "Esta saliendo el dueño de la sala"
       else
         logger.info "Esta finalizando sesion el dueño de la sala"
         @room.update_attributes(end_last_session: DateTime.now, active: false)
 
-        @session_history = SessionHistory.most_recent_for(current_user.id, @room.id)
+        @session_history = SessionHistory.most_recent_for(room_shared_with_user ? owner_user_room.id : current_user.id, @room.id)
         @session_history.update_attributes(end_session: DateTime.now)
       end     
     end
@@ -420,6 +422,40 @@ class RoomsController < ApplicationController
   end
 
   private
+
+  def owner_user_room
+    if @room
+      return @room.owner
+    else
+      return current_user
+    end
+  end
+
+  def info_signin_join
+    rooms_active = current_user.ordered_rooms_active
+    logger.info(" ")
+    logger.info("current room: #{@room.id} - #{@room.name}")
+    logger.info("current user: #{current_user.id} - #{current_user.name}")
+    logger.info("count rooms_active: #{rooms_active.count}")
+    logger.info(" ")
+  end
+
+  def info_logout_join
+    if current_user.present?
+      logger.info(" ")
+      logger.info("owner_id: #{current_user.id}")
+      logger.info(" ")
+      logger.info("salas propias: #{current_user.rooms.count}")
+      logger.info(current_user.rooms.pluck(:id))
+      logger.info " "
+      logger.info "room_shared_with_user"
+      logger.info room_shared_with_user
+      if owner_user_room
+        logger.info "shared owner_user_room"
+        logger.info "#{owner_user_room.id} - #{owner_user_room.name}"
+      end
+    end
+  end
 
   def create_room_settings_string(options)
     room_settings = {
