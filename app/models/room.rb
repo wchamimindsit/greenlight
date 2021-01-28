@@ -106,6 +106,14 @@ class Room < ApplicationRecord
     ActionCable.server.broadcast("#{uid}_waiting_channel", action: "started")
   end
 
+  def self.all_by_company(id)
+    Room.where(user_id: User.where(organization_id: id).pluck(:id))
+  end
+  
+  def self.rooms_shared_company(id)
+    Room.where(user_id: User.where(organization_id: id).pluck(:id)).where(id: SharedAccess.pluck(:room_id))
+  end
+
   private
 
   # Generates a uid for the room and BigBlueButton.
