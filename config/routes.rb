@@ -45,6 +45,14 @@ Rails.application.routes.draw do
     get '/recordings', to: 'admins#server_recordings', as: :admin_recordings
     get '/site_settings', to: 'admins#site_settings', as: :admin_site_settings
     get '/roles', to: 'admins#roles', as: :admin_roles
+    get '/organizations', to: 'admins#organizations', as: :admin_organizations
+    post '/organization/new', to: 'admins#new_organization', as: :admin_new_organization
+    get '/organization/get/:organization_id', to: 'admins#get_organization', as: :admin_get_organization
+    post '/organization/update/:organization_id', to: 'admins#update_organization', as: :admin_update_organization
+    delete '/organization/delete/:organization_id', to: 'admins#delete_organization', as: :admin_delete_organization
+    post '/organization/active/:organization_id', to: 'admins#active_organization', as: :admin_active_organization
+
+    get '/usersbyorganization', to: 'admins#usersbyorganization', as: :admin_usersbyorganization
     # Manage Users
     get '/edit/:user_uid', to: 'admins#edit_user', as: :admin_edit_user
     post '/ban/:user_uid', to: 'admins#ban_user', as: :admin_ban

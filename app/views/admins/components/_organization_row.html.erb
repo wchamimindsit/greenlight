@@ -1,0 +1,65 @@
+<%
+# BigBlueButton open source conferencing system - http://www.bigbluebutton.org/.
+# Copyright (c) 2018 BigBlueButton Inc. and by respective authors (see below).
+# This program is free software; you can redistribute it and/or modify it under the
+# terms of the GNU Lesser General Public License as published by the Free Software
+# Foundation; either version 3.0 of the License, or (at your option) any later
+# version.
+#
+# BigBlueButton is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+# You should have received a copy of the GNU Lesser General Public License along
+# with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
+
+%>
+
+<tr id="organization-block" data-path="<%= admin_get_organization_path(organization.id) %>" >
+  <td>
+    <div id="organization-title" class="form-inline edit_hover_class">
+      <text id="organization-name-text">
+        <%= organization.name %>
+      </text>
+    </div>
+    <div class="small text-muted">
+      <%= [t("administrator.organizations.table.users_count"), ": ", organization.count_users].join %>
+    </div>
+  </td>
+  <td class="text-left">
+    <%= organization.email %>
+  </td>
+  <td class="text-left">
+    <%= organization.phone %>
+  </td>
+  <td class="text-left">
+    <%= organization.nextinvoice.strftime("%d-%m-%Y %H:%M:%S") %>
+  </td>
+  <td class="text-center">
+    <div class="item-action dropdown">
+      <a href="javascript:void(0)" data-toggle="dropdown" class="icon">
+        <i class="fas fa-ellipsis-v px-4"></i>
+      </a>
+      <div class="dropdown-menu dropdown-menu-right">
+        
+        <% if organization.enabled %>
+
+          <a href="" data-toggle="modal" data-target="#createOrganizationModal" data-path="<%= admin_update_organization_path(organization.id) %>" data-toggle="modal" class="edit-organization dropdown-item">
+            <i class="dropdown-icon fas fa-users"></i> <%= t("edit") %>
+          </a>
+
+          <a href="" data-toggle="modal" data-target="#deleteOrganizationModal" data-path="<%= admin_delete_organization_path(organization.id) %>" data-toggle="modal" data-name="<%= organization.name %>" class="delete-organization dropdown-item">
+            <i class="dropdown-icon far fa-trash-alt"></i> <%= t("delete") %>
+          </a>
+
+        <% else %>
+      
+          <%= button_to admin_active_organization_path(organization.id), class: "dropdown-item", "data-disable": "" do %>
+          <i class="dropdown-icon fas fa-recycle"></i> <%= t("administrator.organizations.activated") %>
+          <% end %>
+
+        <% end %>
+        
+      </div>
+    </div>
+  </td>
+</tr>

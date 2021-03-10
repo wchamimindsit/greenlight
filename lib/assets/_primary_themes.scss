@@ -194,3 +194,9 @@ input:focus, select:focus {
     @extend .btn-primary;
   }
 }
+
+.manage-organization-tab {
+  &.selected {
+    @extend .btn-primary;
+  }
+}

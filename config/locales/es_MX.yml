@@ -141,6 +141,34 @@ es_MX:
         status: Estado
         view: Vista
     title: Configuración de organización
+    organizations:
+      title: Organizaciones
+      new_organization: Nueva Organización
+      invalid_create: Ocurrió un error al crear el nueva organización. Verifique los valores asignados e inténtelo nuevamente
+      successful_create: La nueva organización se creó exitosamente
+      invalid_update: Ocurrió un error al actualizar la organización. Verifique los valores asignados e inténtelo nuevamente
+      invalid_delete: Ocurrió un error al eliminar la organización.
+      invalid_active: Ocurrió un error al activar la organización.
+      successful_update: La nueva organización se actualizo exitosamente
+      successful_delete: La organización se elimino exitosamente
+      successful_active: La organización se activo exitosamente
+      activated: Activar
+      deleted: Eliminadas
+      active: Activas
+      table:
+        name: Organización
+        address: Dirección
+        phone: teléfono
+        email: Email
+        maxusers: Usuarios Máximos
+        nextinvoice: Próxima factura
+        status: Estado
+        enabled: Activa
+        disabled: Deshabilitada
+        updated_at: Última edición
+        users_count: Numero de usuarios
+    usersbyorganization:
+      title: Usuarios por organización
     users:
       invite: Invitar usuario
       edit:
@@ -182,6 +210,7 @@ es_MX:
     month_names: [~, Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre]
   default_admin: "Estas usilizando la contraseña por omisión para esta cuenta de usuario. Haz click <a href=\"%{edit_link}\">aquí </a> para cambiarla"
   delete: Eliminar
+  edit: Editar
   delivery_error: Ocurrió un error durante el envío de correo electrónico. Por favor contacte un administrador.
   docs: Documentación
   email: Cuenta de correo
@@ -414,6 +443,28 @@ es_MX:
       to: Cuenta principal de usuario
       save: Combinar
       footer: Las salas de la cuenta a combinar será tranferida a la lista de salas de la cuenta de usuario principal y después eliminada.
+    create_organization:
+      create: Crear una organización
+      footer_text: Puedes hacer cambios a tu organización en cualquier momento
+      name_placeholder: Ingrese el nombre de la organización
+      address_placeholder: Ingrese la dirección de la organización
+      phone_placeholder: Ingrese el teléfono de la organización
+      email_placeholder: Ingrese el email de la organización
+      email_verified_placeholder: Verificar el email
+      maxusers_placeholder: Ingrese el máximo de usuarios de la organización
+      nextinvoice_placeholder: Ingrese la fecha de cierre de la factura
+      enabled_placeholder: Organización habilitada
+      not_blank: El nombre de la organización no pude estar vacío
+      title: Crear una organización
+    update_organization:
+      title: Actualizar una organización
+      update: Actualizar la organización
+    delete_organization:
+      confirm: "¿Estas seguro de querer eliminar %{organization}?"
+      delete: "Estoy seguro de eliminar ésta organización"
+      keep: "De hecho, la conservaré"
+      delete_warning: "Esta acción desactiva la organización. Todos los usuarios pertenecientes a esta serán desactivados."
+      warning: "Esta acción desactiva la organización de la plataforma y todos sus usuarios"
   name_update_success: El nombre de la sala ha sido actualizado exitosamente
   no_user_email_exists: "No hay ningún usuario existente con el correo electrónico especificado. Por favor, asegúrese de que lo escribió correctamente."
   omniauth_error: Ocurrió un error al intentar ingresar utilizando OmniAuth. Por favor intente nuevamente o contacte un administrador.
@@ -598,4 +649,4 @@ es_MX:
     signin: "Ingresa para tener acceso a la información de tu cuenta "
     title: Verificar tu cuenta de correo
     verification: Verificación
-  columns_participant_create: ["tipoidentificacion", "identificacion", "nombre", "apellido", "email", "direccion", "pin", "telefono", "genero"]
+  columns_participant_create: ["tipoidentificacion", "identificacion", "nombre", "apellido", "email", "direccion", "pin", "teléfono", "genero"]

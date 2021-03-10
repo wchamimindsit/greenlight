@@ -38,6 +38,11 @@ class Ability
         can [:index, :edit_user, :promote, :demote, :ban_user, :unban_user,
              :approve, :invite, :reset, :undelete, :merge_user], :admin
       end
+      
+      if highest_role.get_permission("can_manage_organizations")
+        can [:organizations, :new_organization, :get_organization, :update_organization, :delete_organization, :active_organization,
+             :usersbyorganization], :admin
+      end
 
       can [:server_recordings, :server_rooms], :admin if highest_role.get_permission("can_manage_rooms_recordings")
 

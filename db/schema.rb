@@ -169,6 +169,7 @@ ActiveRecord::Schema.define(version: 2020_01_30_144841) do
     t.boolean "enabled", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "updated_at_user"
     t.integer "country_id"
     t.integer "state_id"
     t.integer "city_id"

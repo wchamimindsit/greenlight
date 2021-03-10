@@ -141,6 +141,32 @@ en:
         status: Status
         view: View
     title: Organization Settings
+    organizations:
+      title: Organizations
+      new_organization: New Organization
+      invalid_create:  There was a problem creating a new organization. Please check the organization values and try again
+      successful_create: The new organization was successfully created
+      invalid_update:  There was a problem updating a new organization. Please check the organization values and try again
+      invalid_delete: There was a problem activating a new organization.
+      invalid_active: There was a problem deleting a new organization.
+      successful_update: The new organization was successfully updated
+      successful_delete: The organization was successfully deleted
+      successful_active: The organization was successfully actived
+      activated: Activated
+      deleted: Deleted
+      active: Active
+      table:
+        name: Organization
+        address: Address
+        phone: Phone
+        email: Email
+        maxusers: Max Users
+        nextinvoice: Next Invoice
+        enabled: Enabled
+        updated_at: Updated At
+        users_count: Number of users
+    usersbyorganization:
+      title: Users by organization
     users:
       invite: Invite User
       edit:
@@ -182,6 +208,7 @@ en:
     month_names: [~, January, February, March, April, May, June, July, August, September, October, November, December]
   default_admin: You are still using the default password for this account. Please click <a href="%{edit_link}">here</a> to change it
   delete: Delete
+  edit: Edit
   delivery_error: An error occured during email delivery. Please contact an administrator!
   docs: Documentation
   email: Email
@@ -414,6 +441,28 @@ en:
       to: Primary Account
       save: Merge
       footer: The rooms of the account to be merged will be transfered over to the Primary Account's room list and then the account will be deleted.
+    create_organization:
+      create: Create a new Organization
+      footer_text: Adjustment to your organization can be done at anytime.
+      name_placeholder: Enter a organization name
+      address_placeholder: Enter a organization address
+      phone_placeholder: Enter a organization phone
+      email_placeholder: Enter a organization email
+      email_verified_placeholder: Verify email
+      maxusers_placeholder: Enter a organization max users of the organization
+      nextinvoice_placeholder: Enter the closing date of the invoice
+      enabled_placeholder: Organization enabled
+      not_blank: Organization name cannot be blank.
+      title: Create New Organization
+    update_organization:
+      title: Update a Organization
+      update: Update a Organization
+    delete_organization:
+      confirm: "Are you sure you want to delete %{organization}?"
+      delete: "I am sure to delete this organization"
+      keep: "In fact, I will keep it"
+      delete_warning: "This action deactivates the organization. All users belonging to this will be deactivated."
+      warning: "This action deactivates the organization of the platform and all its users"
   name_update_success: Room name successfully changed!
   no_user_email_exists: There is no existing user with the email specified. Please make sure you typed it correctly.
   omniauth_error: An error occured while authenticating with omniauth. Please try again or contact an administrator!

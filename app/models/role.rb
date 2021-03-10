@@ -40,7 +40,7 @@ class Role < ApplicationRecord
     Role.create(name: "pending", provider: provider, priority: -1, colour: "#17a2b8").update_all_role_permissions
     Role.create(name: "denied", provider: provider, priority: -2, colour: "#343a40").update_all_role_permissions
     Role.create(name: "super_admin", provider: provider, priority: -3, colour: "#cd201f")
-        .update_all_role_permissions(can_create_rooms: true,
+        .update_all_role_permissions(can_create_rooms: true, can_manage_organizations: true,
       send_promoted_email: true, send_demoted_email: true, can_edit_site_settings: true,
       can_edit_roles: true, can_manage_users: true, can_manage_rooms_recordings: true, can_invite_users: true)
   end
@@ -68,6 +68,7 @@ class Role < ApplicationRecord
     update_permission("can_edit_site_settings", permissions[:can_edit_site_settings].to_s)
     update_permission("can_edit_roles", permissions[:can_edit_roles].to_s)
     update_permission("can_manage_users", permissions[:can_manage_users].to_s)
+    update_permission("can_manage_organizations", permissions[:can_manage_organizations].to_s)
     update_permission("can_manage_rooms_recordings", permissions[:can_manage_rooms_recordings].to_s)
     update_permission("can_appear_in_share_list", permissions[:can_appear_in_share_list].to_s)
     update_permission("can_invite_users", permissions[:can_invite_users].to_s)
