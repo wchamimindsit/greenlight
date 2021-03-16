@@ -69,6 +69,14 @@ module AdminsHelper
     end    
   end
 
+  def selected_organization_string
+    if @organization.nil?
+      I18n.t("administrator.usersbyorganization.all_organizations")
+    else
+      @organization.name
+    end
+  end
+
   def registration_method_string
     case @settings.get_value("Registration Method", session[:organization])
     when Rails.configuration.registration_methods[:open]

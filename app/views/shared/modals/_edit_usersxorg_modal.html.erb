@@ -1,0 +1,67 @@
+<%
+# BigBlueButton open source conferencing system - http://www.bigbluebutton.org/.
+# Copyright (c) 2018 BigBlueButton Inc. and by respective authors (see below).
+# This program is free software; you can redistribute it and/or modify it under the
+# terms of the GNU Lesser General Public License as published by the Free Software
+# Foundation; either version 3.0 of the License, or (at your option) any later
+# version.
+#
+# BigBlueButton is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+# You should have received a copy of the GNU Lesser General Public License along
+# with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
+%>
+
+<div class="modal fade" id="editOrganizationModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content text-center">
+      <div class="modal-body">
+        <div class="card-body p-6">
+          <div class="card-title">
+            <h3 class="update-only"><%= t("modal.update_user_by_organization.title") %></h3>
+          </div>
+
+          <%= form_for(:usersbyorganization, url: admin_set_users_uxorg_path) do |f| %>
+
+          <div class="container">
+            <div id="user-content" class="row">
+              <div class="col-auto mb-2 form-control"></div>
+            </div>
+          </div>
+          <div class="mb-2">
+            
+            <%= f.hidden_field :users, required: true %>
+            <%= f.hidden_field :organization, required: true %>
+
+            <div class="dropdown">
+              <button class="btn btn-secondary dropdown-toggle" type="button" id="btnEditOrganization" data-value="0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <%= t("administrator.usersbyorganization.all_organizations") %>
+              </button>
+              <div class="dropdown-menu" aria-labelledby="currentOrganization">
+                
+                  <%= button_tag '', name: 'cbxOrganization', type: 'button', class: "dropdown-item", "data-value": 0 do %>
+                    <%= t("administrator.usersbyorganization.all_organizations") %>
+                  <% end %>
+                
+                <% Organization.order(:name).each do |objOrganization| %>
+                  <%= button_tag '', name: 'cbxOrganization', type: 'button', class: "dropdown-item", "data-value": objOrganization.id do %>
+                    <%= objOrganization.name %>
+                  <% end %>
+                <% end %>
+              </div>
+            </div>
+
+          </div>
+          <div class="mt-4">
+              <%= f.submit t("modal.update_user_by_organization.update"), class: "update-only btn btn-primary btn-block" %>
+          </div>
+          <% end %>
+        </div>
+        <div class="card-footer">
+          <p><%= t("modal.create_organization.footer_text") %></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

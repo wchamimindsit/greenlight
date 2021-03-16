@@ -150,6 +150,21 @@ $(document).on('turbolinks:load', function(){
       })
     })
 
+    $("#deleteAllParticipantModal").on("show.bs.modal", function() {
+
+      $("#participants-delete-checkbox").click(function(){
+        if ($("#participants-delete-checkbox").prop("checked")) {
+          $("#participants-delete-confirm").removeAttr("disabled")
+          $("#participants-perm-delete").hide()
+          $("#participants-delete-warning").show()
+        } else {
+          $("#participants-delete-confirm").prop("disabled", "disabled")
+          $("#participants-perm-delete").show()
+          $("#participants-delete-warning").hide()
+        }
+      })
+    })
+
     $(".bootstrap-select").on("click", function() {
       $(".bs-searchbox").siblings().hide()
     })

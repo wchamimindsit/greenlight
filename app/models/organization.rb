@@ -14,7 +14,7 @@ class Organization < ApplicationRecord
   end
 
   def count_users
-    User.where(organization: self.id).count
+    User.select(:id).where(organization: self.id).count
   end
 
   def self.duplicate_name(name)
@@ -39,8 +39,8 @@ class Organization < ApplicationRecord
       email_verified: organization[:email_verified],
       maxusers: organization[:maxusers],
       nextinvoice: Time.find_zone("Bogota").parse(organization[:nextinvoice]),
-      enabled: true,
-      updated_at_user: user_id
+      updated_at_user: user_id,
+      enabled: true
     )
     
     new_organization.save!
@@ -51,7 +51,6 @@ class Organization < ApplicationRecord
       return nil
     end
   end
-
 
   # Update a organization
   def self.update_the_organization(user_id, organization_id, organization)
@@ -70,8 +69,6 @@ class Organization < ApplicationRecord
       email_verified: organization[:email_verified],
       maxusers: organization[:maxusers],
       nextinvoice: Time.find_zone("Bogota").parse(organization[:nextinvoice]),
-      enabled: organization[:enabled],
-      enabled: true,
       updated_at_user: user_id
     )
     
@@ -84,7 +81,6 @@ class Organization < ApplicationRecord
     end
   end
 
-
   # Update a organization
   def self.update_status_organization(user_id, organization_id, status)
     begin
@@ -93,14 +89,40 @@ class Organization < ApplicationRecord
 
     return nil if update_organization.nil?
 
-    update_organization.update(enabled: status)
-    update_organization.save!
+    disable_users_by_organization(organization_id) if !status
+
+    update_organization.update_attributes(enabled: status)
     update_organization
 
     rescue => exception
       logger.error "Failed to disable a organization: #{exception}"
       return nil
     end
+  end
+
+  #Disable Users By Organization
+  def self.disable_users_by_organization(organization_id)
+    #Select active users and delete them
+    User.where(organization: organization_id).update_all(deleted: true)
+  end
+
+  #Update Users By Organization
+  def self.update_users_by_organization(users, organization_id)
+    begin
+
+      lstUsers = User.where(id: users);
+
+      lstUsers.each do |user| 
+        user.update_attributes(organization_id: organization_id)
+      end
+
+      return lstUsers.length
+      
+    rescue => exception
+      logger.error "Failed to update the users by organization: #{exception}"
+      return nil
+    end
+    
   end
 
 end

@@ -95,6 +95,16 @@
 
 .dropdown-menu.show {
   min-height: 0px !important;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.checkbox-lg {
+  width: 20px;
+  height: 20px;
+  border: 2px solid;
+  border-radius: 5px;
+  border-color: #737373;
 }
 
 .remove-shared {

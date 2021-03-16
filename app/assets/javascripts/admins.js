@@ -148,10 +148,70 @@ $(document).on('turbolinks:load', function(){
         $(this).attr("type", "text");
         $(this).val(setFormattedDate($(this).val()));
       });
+    
+    } else if (action == "usersbyorganization") {
+
+      $('[data-toggle="tooltip"]').tooltip();
+
+      // Handle selected user tags
+      $(".manage-users-tab").click(function() {
+        $(".manage-users-tab").removeClass("selected")
+        $(this).addClass("selected")
+
+        updateTabParams(this.id)
+      })
+
+      $("#select_all").click(function() {
+        var checked = $(this).is(':checked')
+        $("[name*='user']").prop('checked', checked);
+      });
+
+      $("#edit-organization").click(function() {
+        if($("#select_user:checked").length == 0) {
+          alert(getLocalizedString("administrator.usersbyorganization.select_a_user"))
+        } else {
+          showEditOrganization(this);
+          $("#editOrganizationModal").modal('show');
+        }
+      });
+
+      $("button[name='cbxOrganization']").click(function() {
+        
+        var strOrganization = $(this).html();
+        var organization_id = $(this).data("value");
+
+        $("#btnEditOrganization").html(strOrganization);
+        $("#btnEditOrganization").data("value", organization_id);
+        $("#usersbyorganization_organization").val(organization_id)
+      });
       
-    }
+    } 
   }
 });
+
+function showEditOrganization(target) {
+  
+  var modal = $(target)
+  var select_users = [];
+  //var update_path = modal.data("path")
+
+  //console.log('update_path', update_path)
+  var row = $("#user-content"); row.html("");
+
+  $.each($("#select_user:checked"), function(){
+    select_users.push($(this).val());
+
+    var div = document.createElement("div");
+    div.classList = "col-auto mb-2 form-control";
+    div.textContent = $(this).data("name");
+    row.append(div);
+  });
+
+  //$("#editOrganizationModal form").attr("action", update_path)
+
+  $("#usersbyorganization_users").val(select_users)
+  console.log("Select users: ", select_users);
+}
 
 function organizationDeleteConfirm() {
   if ($("#organization-delete-checkbox").prop("checked")) {

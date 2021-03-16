@@ -79,10 +79,13 @@ class SessionsController < ApplicationController
     return switch_account_to_local(user) if !is_super_admin && auth_changed_to_local?(user)
 
     # Check correct password was entered
-    return redirect_to(signin_path, alert: I18n.t("invalid_credentials")) unless user.try(:authenticate,
-      session_params[:password])
+    return redirect_to(signin_path, alert: I18n.t("invalid_credentials")) unless user.try(:authenticate, session_params[:password])
+
     # Check that the user is not deleted
     return redirect_to root_path, flash: { alert: I18n.t("registration.banned.fail") } if user.deleted?
+
+    # Check that the user's organization is not deleted
+    return redirect_to root_path, flash: { alert: I18n.t("registration.organization.fail") } if user.organization&.enabled? == false
 
     unless is_super_admin
       # Check that the user is a Greenlight account

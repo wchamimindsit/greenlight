@@ -19,6 +19,13 @@ class ParticipantsRoom < ApplicationRecord
 
   end
 
+  def self.remove_all_participant(user_id, room_id)
+    ParticipantsRoom.where(room_id: room_id, enabled: 'active').update_all(
+      enabled: "inactive by #{user_id}", 
+      updated_at: DateTime.now
+    )
+  end
+
   def self.remove_room(user_id, room_id)
     ParticipantsRoom.where(room_id: room_id).update_all(
       enabled: "inactive by #{user_id}", 
@@ -26,14 +33,14 @@ class ParticipantsRoom < ApplicationRecord
     )
   end
 
-  def count_by_room(room_id) 
-    objParticipantsRoom = ParticipantsRoom.where(
+  def self.count_by_room(room_id) 
+    objParticipantsRoom = ParticipantsRoom.select("COUNT(participants_rooms.room_id) as total").where(
       "participants_rooms.room_id = #{room_id} AND " \
       "participants_rooms.enabled = 'active' "
-    ).select("COUNT(participants_rooms.room_id) as total").
+    ).
     group("participants_rooms.room_id").order("total").first
     
-    objParticipantsRoom = objParticipantsRoom.nil? ? 0 : objParticipantsRoom.total        
+    objParticipantsRoom = objParticipantsRoom.nil? ? 0 : objParticipantsRoom.total
   end
 
 end

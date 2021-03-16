@@ -52,7 +52,10 @@ Rails.application.routes.draw do
     delete '/organization/delete/:organization_id', to: 'admins#delete_organization', as: :admin_delete_organization
     post '/organization/active/:organization_id', to: 'admins#active_organization', as: :admin_active_organization
 
-    get '/usersbyorganization', to: 'admins#usersbyorganization', as: :admin_usersbyorganization
+    get '/usersbyorganization', to: 'admins#usersbyorganization', as: :admin_usersxorg
+    post '/usersbyorganization/get_users', to: 'admins#get_users_by_org', as: :admin_get_users_uxorg
+    post '/usersbyorganization/set_users', to: 'admins#set_users_by_org', as: :admin_set_users_uxorg
+
     # Manage Users
     get '/edit/:user_uid', to: 'admins#edit_user', as: :admin_edit_user
     post '/ban/:user_uid', to: 'admins#ban_user', as: :admin_ban
@@ -149,6 +152,7 @@ Rails.application.routes.draw do
   scope '/:room_uid' do
     post '/create', to: 'participants#create', as: :participant_create
     delete '/delete_participant', to: 'participants#delete_participant', as: :delete_participant
+    delete '/delete_all_participant', to: 'participants#delete_all_participant', as: :delete_all_participant
     post '/search_info', to: 'participants#search_info', as: :search_info
   end
 

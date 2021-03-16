@@ -25,6 +25,7 @@ $(document).on('turbolinks:load', function(){
       (controller == "users" && action == "recordings") ||
       (controller == "admins" && action == "server_recordings") ||
       (controller == "admins" && action == "organizations") ||
+      (controller == "admins" && action == "usersbyorganization") ||
       (controller == "admins" && action == "server_rooms")) {
     // Submit search if the user hits enter
     $("#search-input").keypress(function(key) {
