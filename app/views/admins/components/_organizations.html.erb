@@ -1,0 +1,64 @@
+
+<% if @role.nil? %>
+  <%= render "admins/components/manage_organizations_tags" %>
+<% end %>
+<br />
+
+<div class="row">
+  <div class="col-12">
+    <div class="table-responsive">
+      <table id="organizations-table" class="table table-hover table-outline table-vcenter text-nowrap card-table">
+        <thead>
+          <tr>
+            <th data-header="name" data-order="<%= @order_column == "name" ? @order_direction : "none" %>">
+              <%= t("administrator.organizations.table.name") %>
+              <% if @order_column == "name" && @order_direction == "desc" %>
+                ↓
+              <% elsif @order_column == "name" && @order_direction == "asc" %>
+                ↑
+              <% end %>
+            </th>
+            <th class="text-left" data-header="email" data-order="<%= @order_column == "email" ? @order_direction : "none" %>">
+              <%= t("administrator.organizations.table.email") %>
+              <% if @order_column == "email" && @order_direction == "desc" %>
+                ↓
+              <% elsif @order_column == "email" && @order_direction == "asc" %>
+                ↑
+              <% end %>
+            </th>
+            <th data-header="phone" data-order="<%= @order_column == "phone" ? @order_direction : "none" %>">
+              <%= t("administrator.organizations.table.phone") %>
+              <% if @order_column == "phone" && @order_direction == "desc" %>
+                ↓
+              <% elsif @order_column == "phone" && @order_direction == "asc" %>
+                ↑
+              <% end %>
+            </th>
+            <th data-header="nextinvoice" data-order="<%= @order_column == "nextinvoice" ? @order_direction : "none" %>">
+              <%= t("administrator.organizations.table.nextinvoice") %>
+              <% if @order_column == "nextinvoice" && @order_direction == "desc" %>
+                ↓
+              <% elsif @order_column == "nextinvoice" && @order_direction == "asc" %>
+                ↑
+              <% end %>
+            </th>
+            <th class="text-center"><i class="icon-settings"></i></th>
+          </tr>
+        </thead>
+        <tbody id="organizations-table">
+          <% @organizations.each do |organization| %>
+            <%= render "admins/components/organization_row", organization: organization %>
+          <% end %>
+        </tbody>
+      </table>
+      <% if !@organizations.empty?%>
+        <div class="float-right mr-4 mt-4">
+          <%== pagy_bootstrap_nav(@pagy) %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<%= render "shared/modals/create_organization_modal" %>
+<%= render "shared/modals/delete_organization_modal", delete_location: '' %>

@@ -1,0 +1,31 @@
+<%
+#
+%>
+<div class="modal fade" id="deleteAllParticipantModal" tabindex="-2" role="dialog">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content text-center">
+      <div class="modal-body">
+        <div class="card-body p-6">
+          <div class="card-title">
+            <h3><%= t("modal.delete_all_participant.confirm") %></h3>
+          </div>
+
+          <button type="button" class="btn btn-info my-1 btn-del-room" data-dismiss="modal">
+            <%= t("modal.delete_all_participant.keep") %>
+          </button>
+
+          <%= button_to delete_location, method: :delete, id: "participants-delete-confirm", class: "btn btn-danger my-1 btn-del-room", disabled:"", "data-disable": "" do %>
+            <%= t("modal.delete_all_participant.delete") %>
+          <% end %>
+        </div>
+        <div class="card-footer">
+          <label class="custom-control custom-checkbox">
+            <input id="participants-delete-checkbox" type="checkbox" class="custom-control-input">
+            <p id="participants-perm-delete" class="custom-control-label"><%= t("modal.delete_all_participant.warning").html_safe %></p>
+            <p id="participants-delete-warning" class="custom-control-label" style="display: none;"><%= t("modal.delete_all_participant.delete_warning").html_safe %></p>
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

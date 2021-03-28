@@ -16,7 +16,22 @@
             <th>
               <%= t("participant.email") %>
             </th>
-            <th class="text-center"><i class="icon-settings"></i></th>
+            <th class="text-center">
+              <% if ParticipantsRoom.count_by_room(@room.id) > 0 %>
+
+                <div class="item-action dropdown" title="<%= t("delete_all") %>" >
+                  <a href="javascript:void(0)" data-toggle="dropdown" class="icon">
+                    <i class="fas fa-ellipsis-v px-4"></i>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right">
+                    <button id="delete-participant" data-toggle="modal" data-target="#deleteAllParticipantModal" class= "dropdown-item">
+                      <i class="dropdown-icon far fa-trash-alt"></i> <%= t("delete_all") %>
+                    </button>
+                  </div>
+                </div>
+
+              <% end %>
+            </th>
           </tr>
         </thead>
         <tbody id="participant-table">

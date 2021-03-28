@@ -63,6 +63,27 @@ class ParticipantsController < ApplicationController
     redirect_back fallback_location: room_path
   end
   
+  # DELETE /:room_uid/delete_all_participant
+  def delete_all_participant
+    begin
+      unless params[:room_uid].nil?
+          
+        room_id = Room.find_by(uid: params[:room_uid]).id
+        user_id = session[:user_id]
+
+        ParticipantsRoom.remove_all_participant(user_id, room_id)
+          
+        flash[:success] = I18n.t("participant.remove_all_participant_success")
+      end
+    rescue => e
+      logger.error "Support: Error in delete_all_participant: #{e}"
+      flash[:alert] = I18n.t("participant.remove_all_participant_error")
+    end
+
+    # Redirects to the page that made the initial request
+    redirect_back fallback_location: room_path
+  end
+  
   # POST /:room_uid/create
   def create
     begin

@@ -1,0 +1,105 @@
+<%
+# BigBlueButton open source conferencing system - http://www.bigbluebutton.org/.
+# Copyright (c) 2018 BigBlueButton Inc. and by respective authors (see below).
+# This program is free software; you can redistribute it and/or modify it under the
+# terms of the GNU Lesser General Public License as published by the Free Software
+# Foundation; either version 3.0 of the License, or (at your option) any later
+# version.
+#
+# BigBlueButton is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+# You should have received a copy of the GNU Lesser General Public License along
+# with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
+%>
+<% if @role.nil? %>
+  <%= render "admins/components/manage_usersxorg_tags" %>
+<% end %>
+<br />
+
+<div class="form-group">
+  <div class="row">
+    <div class="col-12">
+      <div class="table-responsive">
+        <table class="table table-hover table-outline table-vcenter card-table">
+          <thead>
+            <tr>
+              <th data-header="name" data-order="<%= @order_column == "name" ? @order_direction : "none" %>">
+                <%= t("administrator.usersbyorganization.table.name") %>
+                <% if @order_column == "name" && @order_direction == "desc" %>
+                 ↓
+                <% elsif @order_column == "name" && @order_direction == "asc" %>
+                 ↑
+                <% end %>
+              </th>
+              <th data-header="email" data-order="<%= @order_column == "email" ? @order_direction : "none" %>">
+                <%= t("administrator.usersbyorganization.table.email") %>
+                <% if @order_column == "email" && @order_direction == "desc" %>
+                 ↓
+                <% elsif @order_column == "email" && @order_direction == "asc" %>
+                 ↑
+                <% end %>
+              </th>
+              <th class="text-left" >
+                <%= t("administrator.usersbyorganization.table.organization") %>
+              </th>
+              <th class="text-center">
+                <%= t("administrator.usersbyorganization.table.role") %>
+              </th>
+              <th class="text-center pb-1">
+                <div class="ml-1">
+                  <%= check_box("select", "all", { class: "checkbox-lg", "data-toggle": "tooltip", "data-placement": "top", "title": t("administrator.usersbyorganization.select_all_users") }) %>
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody id="users-table">
+            <tr id="no_users_found" style="display: none;">
+              <td colspan="7" class="text-center h4 p-6 font-weight-normal" >
+                <%= t("administrator.usersbyorganization.table.not_found") %>
+              </td>
+            </tr>
+            <% if @users %>
+              <% @users.each do |user| %>
+                <% if user != current_user %>
+                  <tr data-user-uid="<%= user.uid %>">
+                    <td>
+                      <div><%= user.name %></div>
+                      <div class="small text-muted"><%= [t("administrator.usersbyorganization.table.created"), ": ", user.created_at].join %></div>
+                    </td>
+                    <td class="user-email"><%= user.email && user.email != "" ? user.email : user.username%></td>
+                    <td><%= user.organization ? user.organization.name : "" %></td>
+                    <td class="text-center">
+                      <% roles = user.roles().pluck(:name) %>
+                      <%= render "admins/components/admins_role", role: user.highest_priority_role %>
+                    </td>
+                    <td>
+                      <% if !roles.include?("super_admin") %>
+                      
+                        <div class="form-check mt-1">
+                          <%= check_box("select", "user", { class: "checkbox-lg", "data-name": user.name }, user.id, 0) %>
+                        </div>
+
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+              <% end %>
+            <% else %>
+              <tr>
+                <td colspan="7" class="text-center h4 p-6 font-weight-normal" >
+                  <%= t("administrator.usersbyorganization.table.no_users") %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <div class="float-right mt-4">
+          <%== pagy_bootstrap_nav(@pagy) %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<%= render "shared/modals/edit_usersxorg_modal" %>

@@ -97,3 +97,45 @@
   z-index: 999;
   background: white;
 }
+
+.manage-organization-tab {
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+#create-organization.list-group-item {
+  border-color: rgba($color: #d8d8d8, $alpha: 0.25);
+  border-radius: 1px;
+  width: fit-content;
+}
+
+#edit-organization.list-group-item {
+  border-color: rgba($color: #d8d8d8, $alpha: 0.25);
+  border-radius: 1px;
+  width: fit-content;
+}
+
+.container.users {
+  border: 1px solid rgba(0,40,100,0.12);
+  padding: 10px !important;
+}
+
+#createOrganizationModal {
+
+  input[type=date]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    display: none;
+  }
+
+  input[type=date]::-webkit-calendar-picker-indicator {
+    -webkit-appearance: none;
+    display: none;
+  }
+}
+
+div#user-content {
+  margin-bottom: 20px;
+  max-height: 250px;
+  overflow: auto;
+}

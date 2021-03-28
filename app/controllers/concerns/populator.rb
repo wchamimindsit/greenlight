@@ -25,11 +25,11 @@ module Populator
 
     initial_user = case @tab
       when "active"
-        User.includes(:roles).without_role(:pending).without_role(:denied)
+        User.includes(:roles).includes(:organization).without_role(:pending).without_role(:denied)
       when "deleted"
-        User.includes(:roles).deleted
+        User.includes(:roles).includes(:organization).deleted
       else
-        User.includes(:roles)
+        User.includes(:roles).includes(:organization)
     end
 
     current_role = Role.find_by(name: @tab, provider: @user_domain) if @tab == "pending" || @tab == "denied"

@@ -21,7 +21,8 @@ $(document).on('turbolinks:load', function(){
   if(controller == "rooms" && action == "show" 
     || controller == "rooms" && action == "update" 
     || controller == "users" && action == "recordings" 
-    || controller == "admins" && action == "server_recordings"){
+    || controller == "admins" && action == "server_recordings"
+    || controller == "admins" && action == "usersbyorganization"){
 
     // Choose active header
     // (Name, Length or Users)

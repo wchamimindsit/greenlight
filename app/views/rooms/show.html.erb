@@ -116,6 +116,7 @@
 
 <%= render "shared/modals/delete_room_modal" %>
 <%= render "participants/modals/delete_participant_modal", delete_location: delete_participant_path(@room.uid) %>
+<%= render "participants/modals/delete_all_participant_modal", delete_location: delete_all_participant_path(@room.uid) %>
 
 <%= render "shared/modals/create_room_modal" %>
 

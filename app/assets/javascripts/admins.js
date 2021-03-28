@@ -112,9 +112,207 @@ $(document).on('turbolinks:load', function(){
           });
         }
       });
-    }
+    } else if (action == "organizations") {
+
+      // Handle selected user tags
+      $(".manage-organization-tab").click(function() {
+        $(".manage-organization-tab").removeClass("selected")
+        $(this).addClass("selected")
+
+        updateTabParams(this.id)
+      })
+
+      $("#create-organization").click(function(){
+        showCreateOrganization(this)
+      })
+
+      $(".edit-organization").click(function(){
+        showUpdateOrganization(this)
+      })
+  
+      $(".delete-organization").click(function() {
+        showDeleteOrganization(this);
+      })
+
+      $("#deleteOrganizationModal").on("show.bs.modal", function(event) {
+        $("#organization-delete-checkbox").click(organizationDeleteConfirm)
+      })
+      
+      $("#createOrganizationNextinvoice").attr("min", setFormattedDate(new Date()));
+      $("#createOrganizationNextinvoice").focus(function() {
+        var value = getFormattedDate($(this).val());
+        $(this).attr("type", "date")
+        $(this).val(value);
+      });
+      $("#createOrganizationNextinvoice").blur(function() {
+        $(this).attr("type", "text");
+        $(this).val(setFormattedDate($(this).val()));
+      });
+    
+    } else if (action == "usersbyorganization") {
+
+      $('[data-toggle="tooltip"]').tooltip();
+
+      // Handle selected user tags
+      $(".manage-users-tab").click(function() {
+        $(".manage-users-tab").removeClass("selected")
+        $(this).addClass("selected")
+
+        updateTabParams(this.id)
+      })
+
+      $("#select_all").click(function() {
+        var checked = $(this).is(':checked')
+        $("[name*='user']").prop('checked', checked);
+      });
+
+      $("#edit-organization").click(function() {
+        if($("#select_user:checked").length == 0) {
+          alert(getLocalizedString("administrator.usersbyorganization.select_a_user"))
+        } else {
+          showEditOrganization(this);
+          $("#editOrganizationModal").modal('show');
+        }
+      });
+
+      $("button[name='cbxOrganization']").click(function() {
+        
+        var strOrganization = $(this).html();
+        var organization_id = $(this).data("value");
+
+        $("#btnEditOrganization").html(strOrganization);
+        $("#btnEditOrganization").data("value", organization_id);
+        $("#usersbyorganization_organization").val(organization_id)
+      });
+      
+    } 
   }
 });
+
+function showEditOrganization(target) {
+  
+  var modal = $(target)
+  var select_users = [];
+  //var update_path = modal.data("path")
+
+  //console.log('update_path', update_path)
+  var row = $("#user-content"); row.html("");
+
+  $.each($("#select_user:checked"), function(){
+    select_users.push($(this).val());
+
+    var div = document.createElement("div");
+    div.classList = "col-auto mb-2 form-control";
+    div.textContent = $(this).data("name");
+    row.append(div);
+  });
+
+  //$("#editOrganizationModal form").attr("action", update_path)
+
+  $("#usersbyorganization_users").val(select_users)
+  console.log("Select users: ", select_users);
+}
+
+function organizationDeleteConfirm() {
+  if ($("#organization-delete-checkbox").prop("checked")) {
+    $("#organization-delete-confirm").removeAttr("disabled")
+    $("#organization-perm-delete").hide()
+    $("#organization-delete-warning").show()
+  } else {
+    $("#organization-delete-confirm").prop("disabled", "disabled")
+    $("#organization-perm-delete").show()
+    $("#organization-delete-warning").hide()
+  }
+}
+
+function showCreateOrganization(target) {
+
+  $("#createOrganizationName").val('')
+  $("#createOrganizationAddress").val('')
+  $("#createOrganizationPhone").val('')
+  $("#createOrganizationEmail").val('')
+  $("#createOrganizationMaxusers").val('')
+  $("#createOrganizationNextinvoice").val('')
+  $("#createOrganizationEmailVerified").prop("checked", 0)
+
+  //show all elements & their children with a create-only class
+  $(".create-only").each(function () {
+    $(this).show()
+    if ($(this).children().length > 0) { $(this).children().show() }
+  })
+
+  //hide all elements & their children with a update-only class
+  $(".update-only").each(function () {
+    $(this).attr('style', "display:none !important")
+    if ($(this).children().length > 0) { $(this).children().attr('style', "display:none !important") }
+  })
+}
+
+//Update the createRoomModal to show the correct current settings
+function updateCurrentOrganization(organization_path) {
+  // Get current room settings and set checkbox
+  $.get(organization_path, function (organization) {
+    $("#createOrganizationName").val(organization.name)
+    $("#createOrganizationAddress").val(organization.address)
+    $("#createOrganizationPhone").val(organization.phone)
+    $("#createOrganizationEmail").val(organization.email)
+    $("#createOrganizationMaxusers").val(organization.maxusers)
+    $("#createOrganizationNextinvoice").val(moment(organization.nextinvoice.substr(0, 10)).format('DD/MM/YYYY'))
+    $("#createOrganizationEmailVerified").prop("checked", organization.email_verified)
+  })
+}
+
+function showUpdateOrganization(target) {
+  var modal = $(target)
+  var get_organization_path = modal.closest("#organization-block").data("path")
+  var update_path = modal.data("path")
+  
+  $("#createOrganizationModal form").attr("action", update_path)
+
+  //show all elements & their children with a update-only class
+  $(".update-only").each(function() {
+    $(this).show()
+    if($(this).children().length > 0) { $(this).children().show() }
+  })
+
+  //hide all elements & their children with a create-only class
+  $(".create-only").each(function() {
+    $(this).attr('style',"display:none !important")
+    if($(this).children().length > 0) { $(this).children().attr('style',"display:none !important") }
+  })
+
+  updateCurrentOrganization(get_organization_path)
+}
+
+function showDeleteOrganization(target) {
+  $("#organization-delete-header").text(getLocalizedString("modal.delete_organization.confirm").replace("%{organization}", $(target).data("name")))
+  $("#organization-delete-confirm").parent().attr("action", $(target).data("path"))
+  organizationDeleteConfirm();
+}
+
+function getFormattedDate(value) {
+  
+  if (!value) return value;
+
+  var arr = value.split('/') ;
+  return arr[2] + '-' + arr[1] + '-' + arr[0]
+}
+
+function setFormattedDate(value) {
+
+  if (!value) return value;
+
+  var date = new Date(value + ' GMT-0500');
+  var year = date.getFullYear();
+
+  var month = (1 + date.getMonth()).toString();
+  month = month.length > 1 ? month : '0' + month;
+
+  var day = date.getDate().toString();
+  day = day.length > 1 ? day : '0' + day;
+
+  return day + '/' + month + '/' + year;
+}
 
 // Change the branding image to the image provided
 function changeBrandingImage(path) {

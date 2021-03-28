@@ -22,6 +22,7 @@ class AdminsController < ApplicationController
   include Emailer
   include Recorder
   include Rolify
+  include Organizer
   include Populator
 
   manage_users = [:edit_user, :promote, :demote, :ban_user, :unban_user, :approve, :reset, :merge_user]
@@ -325,6 +326,108 @@ class AdminsController < ApplicationController
     end
 
     redirect_to admin_roles_path
+  end
+
+  # GET /admins/organizations
+  def organizations
+
+    @tab = params[:tab] || "active"
+    @search = params[:search] || ""
+
+    @pagy, @organizations = pagy_array(organization_list, items: 10)
+  end
+
+  #POST /admins/organization/new
+  def new_organization
+
+    new_organization = create_organization(session[:user_id], params[:organization])
+
+    return redirect_to admin_organizations_path, flash: { alert: I18n.t("administrator.organizations.invalid_create") } if new_organization.nil?
+    redirect_to admin_organizations_path, flash: { success: I18n.t("administrator.organizations.successful_create") }
+  end
+
+  # GET /admins/organization/get/:organization_id
+  def get_organization
+    # Respond with JSON object of the organization
+    respond_to do |format|
+      format.json { render body: Organization.find_by_id(params[:organization_id]).to_json }
+    end
+  end
+
+  #POST /admins/organization/update/:organization_id
+  def update_organization
+    
+    update_organization = update_organization_by_id(session[:user_id], params[:organization_id], params[:organization])
+
+    return redirect_to admin_organizations_path, flash: { alert: I18n.t("administrator.organizations.invalid_update") } if update_organization.nil?
+    redirect_to admin_organizations_path, flash: { success: I18n.t("administrator.organizations.successful_update") }
+  end
+
+  #DELETE /admins/organization/delete/:organization_id
+  def delete_organization
+
+    #delete is enabled false
+    update_organization = delete_organization_by_id(session[:user_id], params[:organization_id])
+
+    return redirect_to admin_organizations_path, flash: { alert: I18n.t("administrator.organizations.invalid_delete") } if update_organization.nil?
+    redirect_to admin_organizations_path, flash: { success: I18n.t("administrator.organizations.successful_delete") }
+  end
+
+  #POST /organization/active/:organization_id
+  def active_organization
+
+    active_organization = active_organization_by_id(session[:user_id], params[:organization_id])
+
+    return redirect_to admin_organizations_path, flash: { alert: I18n.t("administrator.organizations.invalid_active") } if active_organization.nil?
+    redirect_to admin_organizations_path, flash: { success: I18n.t("administrator.organizations.successful_active") }
+  end
+
+  # GET /admins/usersbyorganization
+  def usersbyorganization
+
+    # Initializa the data manipulation variables
+    @search = params[:search] || ""
+    @order_column = params[:column] && params[:direction] != "none" ? params[:column] : "created_at"
+    @order_direction = params[:direction] && params[:direction] != "none" ? params[:direction] : "DESC"
+
+    @role = params[:role] ? Role.find_by(name: params[:role], provider: @user_domain) : nil
+    @tab = params[:tab] || "active"   
+
+    # Validacion para filtrar datos por organizacion si se tiene asignada
+    unless session[:users_uxorg].nil?
+      @organization = Organization.find_by(id: session[:users_uxorg])
+    end
+
+    @pagy, @users = pagy(manage_users_list)
+  end
+
+
+  # GET /admins/usersbyorganization/get_users
+  def get_users_by_org
+
+    @organization = Organization.find_by(id: params[:organization])
+
+    unless @organization.nil?
+      session[:users_uxorg] = @organization.id
+    else 
+      session[:users_uxorg] = params[:organization]
+    end
+
+    redirect_to admin_usersxorg_path, flash: { success: @organization.nil? ? t("administrator.usersbyorganization.all_organizations") : @organization.name }
+  end
+
+  # POST /admins/usersbyorganization/set_users
+  def set_users_by_org
+
+    usersbyorganization = params[:usersbyorganization]
+    users = usersbyorganization[:users].split(',')
+    organization = usersbyorganization[:organization]
+    
+    update_users = Organization.update_users_by_organization(users, organization)
+
+    return redirect_to admin_usersxorg_path, flash: { alert: I18n.t("administrator.usersbyorganization.invalid_update") } if update_users.nil?
+
+    redirect_to admin_usersxorg_path, flash: { success: I18n.t("administrator.usersbyorganization.successful_update") }
   end
 
   private

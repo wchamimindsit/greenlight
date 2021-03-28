@@ -50,20 +50,15 @@
                 <% end %>
               </th>
               <th data-header="email" data-order="<%= @order_column == "email" ? @order_direction : "none" %>">
-                <%= t("administrator.users.table.username") %>
+                <%= t("administrator.users.table.email") %>
                 <% if @order_column == "email" && @order_direction == "desc" %>
                  ↓
                 <% elsif @order_column == "email" && @order_direction == "asc" %>
                  ↑
                 <% end %>
               </th>
-              <th class="text-left" data-header="provider" data-order="<%= @order_column == "provider" ? @order_direction : "none" %>">
-                <%= t("administrator.users.table.authenticator") %>
-                <% if @order_column == "provider" && @order_direction == "desc" %>
-                 ↓
-                <% elsif @order_column == "provider" && @order_direction == "asc" %>
-                 ↑
-                <% end %>
+              <th class="text-left" >
+                <%= t("administrator.users.table.organization") %>
               </th>
               <th class="text-center">
                 <%= t("administrator.users.table.role") %>
@@ -87,7 +82,7 @@
                       <div class="small text-muted"><%= [t("administrator.users.table.created"), ": ", user.created_at].join %></div>
                     </td>
                     <td class="user-email"><%= user.email && user.email != "" ? user.email : user.username%></td>
-                    <td><%= user.provider %></td>
+                    <td><%= user.organization ? user.organization.name : "" %></td>
                     <td class="text-center">
                       <% roles = user.roles().pluck(:name) %>
                       <%= render "admins/components/admins_role", role: user.highest_priority_role %>

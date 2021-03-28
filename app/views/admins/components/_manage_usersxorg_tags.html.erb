@@ -1,0 +1,65 @@
+<%
+# BigBlueButton open source conferencing system - http://www.bigbluespan.org/.
+# Copyright (c) 2018 BigBlueButton Inc. and by respective authors (see below).
+# This program is free software; you can redistribute it and/or modify it under the
+# terms of the GNU Lesser General Public License as published by the Free Software
+# Foundation; either version 3.0 of the License, or (at your option) any later
+# version.
+#
+# BigBlueButton is distributed in the hope that it will be useful, but WITHOUT ANY
+# WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
+# PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
+# You should have received a copy of the GNU Lesser General Public License along
+# with BigBlueButton; if not, see <http://www.gnu.org/licenses/>.
+%>
+
+<div class="form-group mt-n3">
+  <div class="row">
+
+    <div class="col-8 mt-auto">
+      <span id="active" class="btn btn-sm tag manage-users-tab <%= 'selected' if @tab == 'active' %>">
+        <%= t("roles.active") %>
+      </span>
+      <span id="pending" class="btn btn-sm tag manage-users-tab <%= 'selected' if @tab == 'pending' %>">
+        <%= t("roles.pending") %>
+      </span>
+      <span id="denied" class="btn btn-sm tag manage-users-tab <%= 'selected' if @tab == 'denied' %>">
+        <%= t("roles.banned") %>
+      </span>
+      <span id="deleted" class="btn btn-sm tag manage-users-tab <%= 'selected' if @tab == 'deleted' %>">
+        <%= t("roles.deleted") %>
+      </span>
+    </div>
+    <div class="col-auto ml-auto">
+      
+      <div class="dropdown">
+        <button class="btn btn-primary dropdown-toggle" type="button" id="currentOrganization" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <%= selected_organization_string %>
+        </button>
+        <div class="dropdown-menu" aria-labelledby="currentOrganization">
+          <% if selected_organization_string != t("administrator.usersbyorganization.all_organizations") %>
+              <%= button_to admin_get_users_uxorg_path(organization: 0), class: "dropdown-item", "data-disable": "" do %>
+              <%= t("administrator.usersbyorganization.all_organizations") %>
+            <% end %>
+          <% end %>
+          <% Organization.order(:name).each do |objOrganization| %>
+            <%= button_to admin_get_users_uxorg_path(organization: objOrganization.id), class: "dropdown-item", "data-disable": "" do %>
+              <%= objOrganization.name %>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="row mt-5">
+
+    <div class="col-auto">
+      <%= link_to "javascript:void(0)", id: "edit-organization", class: "list-group-item list-group-item-action" do %>
+      <span class="icon mr-4"><i class="fas fa-edit"></i></span><%= t("administrator.usersbyorganization.edit_organization") %>
+      <% end %>
+
+    </div>
+
+  </div>
+</div>

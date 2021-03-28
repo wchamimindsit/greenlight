@@ -141,6 +141,50 @@ en:
         status: Status
         view: View
     title: Organization Settings
+    organizations:
+      title: Organizations
+      new_organization: New Organization
+      invalid_create:  There was a problem creating a new organization. Please check the organization values and try again
+      successful_create: The new organization was successfully created
+      invalid_update:  There was a problem updating a organization. Please check the organization values and try again
+      invalid_delete: There was a problem activating a organization.
+      invalid_active: There was a problem deleting a organization.
+      successful_update: The organization was successfully updated
+      successful_delete: The organization was successfully deleted
+      successful_active: The organization was successfully actived
+      activated: Activated
+      deleted: Deleted
+      active: Active
+      table:
+        name: Organization
+        address: Address
+        phone: Phone
+        email: Email
+        maxusers: Max Users
+        nextinvoice: Next Invoice
+        enabled: Enabled
+        updated_at: Updated At
+        users_count: Number of users
+    usersbyorganization:
+      title: Users by organization
+      all_organizations: All organizations
+      edit_organization: Edit organization
+      select_all_users: Select all Users
+      select_a_user: Please select a user
+      invalid_update: There was a problem updating organization users. Please check the organization values and try again
+      successful_update: Users by Organization Updated Successfully
+      table:
+        authenticator: Authenticator
+        created: Created
+        last_session: Last session
+        name: Name
+        not_found: No users match your search
+        no_users: No users found
+        role: Role
+        uid: User ID
+        username: Username
+        email: Email
+        organization: Organization
     users:
       invite: Invite User
       edit:
@@ -165,6 +209,8 @@ en:
         role: Role
         uid: User ID
         username: Username
+        email: Email
+        organization: Organization
       title: Manage Users
   add_to_google_calendar: "Add to Google Calendar"
   aulaparatodos_exception_expiration: Esta cuenta está en el límite de sus 30 días de uso. Para usar AulaParaTodos por otros 30 días más puedes realizar tu pago línea <a href="https://biz.payulatam.com/L0c743d0992EECE" target="_blank"><img src="http://www.payulatam.com/img-secure-2015/boton_pagar_pequeno.png" style="width:100px;"/></a> o <strong><a href="mailto:administracion@mindsit.co">contáctanos</a></strong> para gestionar tu factura vía email.
@@ -182,6 +228,8 @@ en:
     month_names: [~, January, February, March, April, May, June, July, August, September, October, November, December]
   default_admin: You are still using the default password for this account. Please click <a href="%{edit_link}">here</a> to change it
   delete: Delete
+  delete_all: Delete All
+  edit: Edit
   delivery_error: An error occured during email delivery. Please contact an administrator!
   docs: Documentation
   email: Email
@@ -373,6 +421,12 @@ en:
       keep: On second thought, I'll keep it.
       warning: This action removes the user from the room, but not from the platform
       delete_warning: You can add it again by loading it from the file
+    delete_all_participant:
+      confirm: Are you sure you want to delete all participants?
+      delete: I'm sure, delete all participants
+      keep: On second thought, I'll keep them.
+      warning: This action removes the participants from the room, but not from the platform
+      delete_warning: You can add them again by loading them from the file
     invite_user:
       email_placeholder: Enter the users' emails (seperated by commas)
       footer: The user will receive an email with instructions on how to sign up
@@ -414,6 +468,31 @@ en:
       to: Primary Account
       save: Merge
       footer: The rooms of the account to be merged will be transfered over to the Primary Account's room list and then the account will be deleted.
+    create_organization:
+      create: Create a new Organization
+      footer_text: Adjustment to your organization can be done at anytime.
+      name_placeholder: Enter a organization name
+      address_placeholder: Enter a organization address
+      phone_placeholder: Enter a organization phone
+      email_placeholder: Enter a organization email
+      email_verified_placeholder: Verify email
+      maxusers_placeholder: Enter a organization max users of the organization
+      nextinvoice_placeholder: Enter the closing date of the invoice
+      enabled_placeholder: Organization enabled
+      not_blank: Organization name cannot be blank.
+      title: Create New Organization
+    update_organization:
+      title: Update a Organization
+      update: Update a Organization
+    update_user_by_organization:
+      title: Update the users
+      update: Change organization
+    delete_organization:
+      confirm: "Are you sure you want to delete %{organization}?"
+      delete: "I am sure to delete this organization"
+      keep: "In fact, I will keep it"
+      delete_warning: "This action deactivates the organization. All users belonging to this will be deactivated."
+      warning: "This action deactivates the organization of the platform and all its users"
   name_update_success: Room name successfully changed!
   no_user_email_exists: There is no existing user with the email specified. Please make sure you typed it correctly.
   omniauth_error: An error occured while authenticating with omniauth. Please try again or contact an administrator!
@@ -474,6 +553,8 @@ en:
     invite:
       fail: Your token is either invalid or has expired. If you believe this is a mistake, please contact your administrator.
       no_invite: You do not have an invitation to join. Please contact your administrator to receive one.
+    organization:
+      fail: You do not have access to this application. If you believe this is a mistake, please contact your administrator. 
   remove: Remove
   rename: Rename
   reset_password:
@@ -552,7 +633,9 @@ en:
     save_participants_success: Participants were successfully added
     save_participants_error: An error occurred while adding the participant
     remove_participant_success: The participant was successfully removed
+    remove_all_participant_success: The participants was successfully removed
     remove_participant_error: An error occurred while removing the participant
+    remove_participant_error: An error occurred while removing the participants
   settings:
     account:
       fullname: Full name

@@ -141,6 +141,52 @@ es_MX:
         status: Estado
         view: Vista
     title: Configuración de organización
+    organizations:
+      title: Organizaciones
+      new_organization: Nueva Organización
+      invalid_create: Ocurrió un error al crear el nueva organización. Verifique los valores asignados e inténtelo nuevamente
+      successful_create: La nueva organización se creó exitosamente
+      invalid_update: Ocurrió un error al actualizar la organización. Verifique los valores asignados e inténtelo nuevamente
+      invalid_delete: Ocurrió un error al eliminar la organización.
+      invalid_active: Ocurrió un error al activar la organización.
+      successful_update: La nueva organización se actualizo exitosamente
+      successful_delete: La organización se elimino exitosamente
+      successful_active: La organización se activo exitosamente
+      activated: Activar
+      deleted: Eliminadas
+      active: Activas
+      table:
+        name: Organización
+        address: Dirección
+        phone: teléfono
+        email: Email
+        maxusers: Usuarios Máximos
+        nextinvoice: Próxima factura
+        status: Estado
+        enabled: Activa
+        disabled: Deshabilitada
+        updated_at: Última edición
+        users_count: Numero de usuarios
+    usersbyorganization:
+      title: Usuarios por organización
+      all_organizations: Todas las organizaciones
+      edit_organization: Editar organizaciones
+      select_all_users: Selecionar todos los Usuarios
+      select_a_user: Seleccione un usuario, por favor
+      invalid_update: Ocurrió un error al actualizar los usuarios de la organización. Comprueba los valores de la organización y vuelve a intentarlo.
+      successful_update: Los usuarios por organización se actualizaron exitosamente
+      table:
+        authenticator: Autenticador
+        created: Creado
+        last_session: Última sesión
+        name: Nombre
+        not_found: No se encontraron usuarios con ese criterio
+        no_users: No se encontraron usuarios
+        role: Rol
+        uid: Identificador de usuario
+        username: Nombre de usuario
+        email: Email
+        organization: Organización
     users:
       invite: Invitar usuario
       edit:
@@ -156,7 +202,7 @@ es_MX:
         unban: Desbloquear usuario
         undelete: Recuperar
       table:
-        authenticator: Autenificador
+        authenticator: Autenticador
         created: Creado
         last_session: Última sesión
         name: Nombre
@@ -165,6 +211,8 @@ es_MX:
         role: Rol
         uid: Identificador de usuario
         username: Nombre de usuario
+        email: Email
+        organization: Organización
       title: Administrar usuarios
   add_to_google_calendar: "Agregar a calendario de Google"
   aulaparatodos_exception_expiration: Esta cuenta está en el límite de sus 30 días de uso. Para usar AulaParaTodos por otros 30 días más puedes realizar tu pago línea <a href="https://biz.payulatam.com/L0c743d0992EECE" target="_blank"><img src="http://www.payulatam.com/img-secure-2015/boton_pagar_pequeno.png" style="width:100px;"/></a> o <strong><a href="mailto:administracion@mindsit.co">contáctanos</a></strong> para gestionar tu factura vía email.
@@ -182,6 +230,8 @@ es_MX:
     month_names: [~, Enero, Febrero, Marzo, Abril, Mayo, Junio, Julio, Agosto, Septiembre, Octubre, Noviembre, Diciembre]
   default_admin: "Estas usilizando la contraseña por omisión para esta cuenta de usuario. Haz click <a href=\"%{edit_link}\">aquí </a> para cambiarla"
   delete: Eliminar
+  delete_all: Eliminar Todos
+  edit: Editar
   delivery_error: Ocurrió un error durante el envío de correo electrónico. Por favor contacte un administrador.
   docs: Documentación
   email: Cuenta de correo
@@ -373,6 +423,12 @@ es_MX:
       keep: Cambie de opinión, lo conservaré
       warning: Esta acción elimina el participante de la sala, mas no de la plataforma
       delete_warning: Puedes agregarlo nuevamente cargandolo desde el archivo
+    delete_all_participant:
+      confirm: ¿Estás seguro de querer eliminar todos los participantes?
+      delete: Estoy seguro, eliminar todos los participantes
+      keep: Cambie de opinión, los conservaré
+      warning: Esta acción elimina todos los participante de la sala, mas no de la plataforma
+      delete_warning: Puedes agregarlos nuevamente cargandolos desde el archivo
     invite_user:
       email_placeholder: Introduce los emails de usuarios (separados por comas)
       footer: El usuario recibirá un email con instrucciones de como registrarse
@@ -414,6 +470,31 @@ es_MX:
       to: Cuenta principal de usuario
       save: Combinar
       footer: Las salas de la cuenta a combinar será tranferida a la lista de salas de la cuenta de usuario principal y después eliminada.
+    create_organization:
+      create: Crear una organización
+      footer_text: Puedes hacer cambios a tu organización en cualquier momento
+      name_placeholder: Ingrese el nombre de la organización
+      address_placeholder: Ingrese la dirección de la organización
+      phone_placeholder: Ingrese el teléfono de la organización
+      email_placeholder: Ingrese el email de la organización
+      email_verified_placeholder: Verificar el email
+      maxusers_placeholder: Ingrese el máximo de usuarios de la organización
+      nextinvoice_placeholder: Ingrese la fecha de cierre de la factura
+      enabled_placeholder: Organización habilitada
+      not_blank: El nombre de la organización no pude estar vacío
+      title: Crear una organización
+    update_organization:
+      title: Actualizar una organización
+      update: Actualizar la organización
+    update_user_by_organization:
+      title: Actualizar los usuarios
+      update: Cambiar de organización
+    delete_organization:
+      confirm: "¿Estas seguro de querer eliminar %{organization}?"
+      delete: "Estoy seguro de eliminar ésta organización"
+      keep: "De hecho, la conservaré"
+      delete_warning: "Esta acción desactiva la organización. Todos los usuarios pertenecientes a esta serán desactivados."
+      warning: "Esta acción desactiva la organización de la plataforma y todos sus usuarios"
   name_update_success: El nombre de la sala ha sido actualizado exitosamente
   no_user_email_exists: "No hay ningún usuario existente con el correo electrónico especificado. Por favor, asegúrese de que lo escribió correctamente."
   omniauth_error: Ocurrió un error al intentar ingresar utilizando OmniAuth. Por favor intente nuevamente o contacte un administrador.
@@ -474,6 +555,8 @@ es_MX:
     invite:
       fail: "Tu código ha expirado o es invalido. Sí tu crees que este es un error, contacta al administrador del sistema."
       no_invite: No tienes una invitación para ingresar. Contacta al administrador del sistema para obtener una.
+    organization:
+      fail: "No tienes acceso a esta aplicación. Sí tu crees que este es un error, contacta al administrador del sistema."
   remove: Eliminar
   rename: Cambiar nombre
   reset_password:
@@ -552,7 +635,9 @@ es_MX:
     save_participants_success: Los participantes fueron agregados exitosamente
     save_participants_error: Ocurrió un error al agregar el participante
     remove_participant_success: El participante fue removido exitosamente
+    remove_all_participant_success: Los participantes fueron removidos exitosamente
     remove_participant_error: Ocurrió un error al remover el participante
+    remove_all_participant_error: Ocurrió un error al remover los participantes
   settings:
     account:
       fullname: Nombre completo
@@ -598,4 +683,4 @@ es_MX:
     signin: "Ingresa para tener acceso a la información de tu cuenta "
     title: Verificar tu cuenta de correo
     verification: Verificación
-  columns_participant_create: ["tipoidentificacion", "identificacion", "nombre", "apellido", "email", "direccion", "pin", "telefono", "genero"]
+  columns_participant_create: ["tipoidentificacion", "identificacion", "nombre", "apellido", "email", "direccion", "pin", "teléfono", "genero"]
