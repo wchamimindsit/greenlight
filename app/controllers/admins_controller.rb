@@ -382,52 +382,18 @@ class AdminsController < ApplicationController
     redirect_to admin_organizations_path, flash: { success: I18n.t("administrator.organizations.successful_active") }
   end
 
-  # GET /admins/usersbyorganization
-  def usersbyorganization
-
-    # Initializa the data manipulation variables
-    @search = params[:search] || ""
-    @order_column = params[:column] && params[:direction] != "none" ? params[:column] : "created_at"
-    @order_direction = params[:direction] && params[:direction] != "none" ? params[:direction] : "DESC"
-
-    @role = params[:role] ? Role.find_by(name: params[:role], provider: @user_domain) : nil
-    @tab = params[:tab] || "active"   
-
-    # Validacion para filtrar datos por organizacion si se tiene asignada
-    unless session[:users_uxorg].nil?
-      @organization = Organization.find_by(id: session[:users_uxorg])
-    end
-
-    @pagy, @users = pagy(manage_users_list)
-  end
-
-
-  # GET /admins/usersbyorganization/get_users
-  def get_users_by_org
-
-    @organization = Organization.find_by(id: params[:organization])
-
-    unless @organization.nil?
-      session[:users_uxorg] = @organization.id
-    else 
-      session[:users_uxorg] = params[:organization]
-    end
-
-    redirect_to admin_usersxorg_path, flash: { success: @organization.nil? ? t("administrator.usersbyorganization.all_organizations") : @organization.name }
-  end
-
   # POST /admins/usersbyorganization/set_users
   def set_users_by_org
 
     usersbyorganization = params[:usersbyorganization]
-    users = usersbyorganization[:users].split(',')
+    user_uid = usersbyorganization[:user_uid]
     organization = usersbyorganization[:organization]
     
-    update_users = Organization.update_users_by_organization(users, organization)
+    update_users = Organization.update_users_by_organization(user_uid, organization)
 
-    return redirect_to admin_usersxorg_path, flash: { alert: I18n.t("administrator.usersbyorganization.invalid_update") } if update_users.nil?
+    return redirect_to admins_path, flash: { alert: I18n.t("administrator.usersbyorganization.invalid_update") } if update_users.nil?
 
-    redirect_to admin_usersxorg_path, flash: { success: I18n.t("administrator.usersbyorganization.successful_update") }
+    redirect_to admins_path, flash: { success: I18n.t("administrator.usersbyorganization.successful_update") }
   end
 
   private

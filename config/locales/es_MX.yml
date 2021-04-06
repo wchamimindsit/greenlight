@@ -170,8 +170,9 @@ es_MX:
     usersbyorganization:
       title: Usuarios por organización
       all_organizations: Todas las organizaciones
+      without_organization: Sin organización
       edit_organization: Editar organizaciones
-      select_all_users: Selecionar todos los Usuarios
+      select_all_users: Seleccionar todos los Usuarios
       select_a_user: Seleccione un usuario, por favor
       invalid_update: Ocurrió un error al actualizar los usuarios de la organización. Comprueba los valores de la organización y vuelve a intentarlo.
       successful_update: Los usuarios por organización se actualizaron exitosamente
@@ -201,6 +202,7 @@ es_MX:
         perm_delete: Eliminar permanentemente
         unban: Desbloquear usuario
         undelete: Recuperar
+        assign_organization: Asignar organización
       table:
         authenticator: Autenticador
         created: Creado
@@ -487,8 +489,9 @@ es_MX:
       title: Actualizar una organización
       update: Actualizar la organización
     update_user_by_organization:
-      title: Actualizar los usuarios
+      title: Asignar la Organización
       update: Cambiar de organización
+      select: Seleccionar Organización
     delete_organization:
       confirm: "¿Estas seguro de querer eliminar %{organization}?"
       delete: "Estoy seguro de eliminar ésta organización"

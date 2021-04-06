@@ -41,7 +41,7 @@ class Ability
       
       if highest_role.get_permission("can_manage_organizations")
         can [:organizations, :new_organization, :get_organization, :update_organization, :delete_organization, :active_organization,
-             :usersbyorganization, :get_users_by_org, :set_users_by_org], :admin
+             :set_users_by_org], :admin
       end
 
       can [:server_recordings, :server_rooms], :admin if highest_role.get_permission("can_manage_rooms_recordings")

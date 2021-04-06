@@ -85,6 +85,7 @@
                     <td><%= user.organization ? user.organization.name : "" %></td>
                     <td class="text-center">
                       <% roles = user.roles().pluck(:name) %>
+                      <% highest_role = current_user.highest_priority_role %>
                       <%= render "admins/components/admins_role", role: user.highest_priority_role %>
                     </td>
                     <td>
@@ -129,6 +130,13 @@
                                 <i class="dropdown-icon fas fa-user-minus"></i> <%= t("administrator.users.settings.delete") %>
                               </button>
                             <% end %>
+
+                            <% if highest_role.get_permission("can_manage_organizations") %>
+                              <button id="edit-organization" class="dropdown-item" data-user="<%= user.uid %>" data-organization="<%= user&.organization&.id %>" data-toggle="modal" data-target="#editOrganizationModal">
+                                <i class="dropdown-icon fas fa-briefcase"></i> <%= t("administrator.users.settings.assign_organization") %>
+                              </button>
+                            <% end %>
+
                           </div>
                         </div>
                       <% end %>
@@ -156,3 +164,4 @@
 <%= render "shared/modals/invite_user_modal" %>
 <%= render "shared/modals/delete_account_modal", delete_location: relative_root %>
 <%= render "shared/modals/merge_user_modal" %>
+<%= render "shared/modals/edit_usersxorg_modal" %>

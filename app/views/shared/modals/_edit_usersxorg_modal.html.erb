@@ -23,35 +23,18 @@
           </div>
 
           <%= form_for(:usersbyorganization, url: admin_set_users_uxorg_path) do |f| %>
-
-          <div class="container">
-            <div id="user-content" class="row">
-              <div class="col-auto mb-2 form-control"></div>
-            </div>
-          </div>
           <div class="mb-2">
             
-            <%= f.hidden_field :users, required: true %>
+            <%= f.hidden_field :user_uid, required: true %>
             <%= f.hidden_field :organization, required: true %>
 
-            <div class="dropdown">
-              <button class="btn btn-secondary dropdown-toggle" type="button" id="btnEditOrganization" data-value="0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <%= t("administrator.usersbyorganization.all_organizations") %>
-              </button>
-              <div class="dropdown-menu" aria-labelledby="currentOrganization">
-                
-                  <%= button_tag '', name: 'cbxOrganization', type: 'button', class: "dropdown-item", "data-value": 0 do %>
-                    <%= t("administrator.usersbyorganization.all_organizations") %>
-                  <% end %>
-                
+            <div class="organization">
+              <select class="selectpicker" style="min-width: 100% !important;" title="<%= t("modal.update_user_by_organization.select") %>" data-live-search="true" data-virtual-scroll="true" >
                 <% Organization.order(:name).each do |objOrganization| %>
-                  <%= button_tag '', name: 'cbxOrganization', type: 'button', class: "dropdown-item", "data-value": objOrganization.id do %>
-                    <%= objOrganization.name %>
-                  <% end %>
+                  <option value="<%= objOrganization.id %>"><%= objOrganization.name %></option>
                 <% end %>
-              </div>
+              </select>
             </div>
-
           </div>
           <div class="mt-4">
               <%= f.submit t("modal.update_user_by_organization.update"), class: "update-only btn btn-primary btn-block" %>

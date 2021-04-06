@@ -37,9 +37,9 @@
           <%= selected_organization_string %>
         </button>
         <div class="dropdown-menu" aria-labelledby="currentOrganization">
-          <% if selected_organization_string != t("administrator.usersbyorganization.all_organizations") %>
+          <% if selected_organization_string != t("administrator.usersbyorganization.without_organization") %>
               <%= button_to admin_get_users_uxorg_path(organization: 0), class: "dropdown-item", "data-disable": "" do %>
-              <%= t("administrator.usersbyorganization.all_organizations") %>
+              <%= t("administrator.usersbyorganization.without_organization") %>
             <% end %>
           <% end %>
           <% Organization.order(:name).each do |objOrganization| %>

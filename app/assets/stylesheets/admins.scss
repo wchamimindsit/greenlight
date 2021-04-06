@@ -134,8 +134,6 @@
   }
 }
 
-div#user-content {
-  margin-bottom: 20px;
-  max-height: 250px;
-  overflow: auto;
+.organization .selectpicker {
+  z-index: -10 !important;
 }

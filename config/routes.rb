@@ -52,8 +52,6 @@ Rails.application.routes.draw do
     delete '/organization/delete/:organization_id', to: 'admins#delete_organization', as: :admin_delete_organization
     post '/organization/active/:organization_id', to: 'admins#active_organization', as: :admin_active_organization
 
-    get '/usersbyorganization', to: 'admins#usersbyorganization', as: :admin_usersxorg
-    post '/usersbyorganization/get_users', to: 'admins#get_users_by_org', as: :admin_get_users_uxorg
     post '/usersbyorganization/set_users', to: 'admins#set_users_by_org', as: :admin_set_users_uxorg
 
     # Manage Users
