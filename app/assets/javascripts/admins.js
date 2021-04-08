@@ -86,7 +86,7 @@ $(document).on('turbolinks:load', function(){
       })
 
       //PopUp user edit organization
-      $("#edit-organization").click(function() {
+      $("button[name='edit-organization']").click(function() {
         showEditOrganization(this);
         $("#editOrganizationModal").modal('show');
       });
@@ -102,11 +102,11 @@ $(document).on('turbolinks:load', function(){
         if (organization) {
           $("#usersbyorganization_organization").val(organization);
         }
-      })
+      });
 
       $(".organization .bootstrap-select").on("click", function() {
         $(".bs-searchbox").siblings().hide()
-      })
+      });
   
       $(".organization .bs-searchbox input").on("input", function() {
         if ($(".organization .bs-searchbox input").val() == '' || $(".organization .bs-searchbox input").val().length < 3) {
@@ -114,7 +114,7 @@ $(document).on('turbolinks:load', function(){
         } else {
           $(".organization .bs-searchbox").siblings().show()
         }
-      })
+      });
       //----------------------------------------------------------------------
 
     }
@@ -188,6 +188,7 @@ $(document).on('turbolinks:load', function(){
         $(this).val(output.join('').substr(0, 14));
         
       });
+
       $("#createOrganizationNextinvoice").blur(function() {
         //$(this).attr("type", "text");
         //$(this).val(setFormattedDate($(this).val()));
@@ -211,6 +212,7 @@ $(document).on('turbolinks:load', function(){
             }).join(' / ');
           };
         };
+
         $(this).val(output);
       });
     
@@ -251,7 +253,7 @@ function showEditOrganization(target) {
   var user_organization = modal.data("organization")
 
   $("#usersbyorganization_user_uid").val(user_uid)
-  $(".organization .selectpicker").selectpicker('val', user_organization??'')
+  $(".organization .selectpicker").selectpicker("val", user_organization ? user_organization : "")
 }
 
 function organizationDeleteConfirm() {

@@ -175,7 +175,7 @@ es_MX:
       select_all_users: Seleccionar todos los Usuarios
       select_a_user: Seleccione un usuario, por favor
       invalid_update: Ocurrió un error al actualizar los usuarios de la organización. Comprueba los valores de la organización y vuelve a intentarlo.
-      successful_update: Los usuarios por organización se actualizaron exitosamente
+      successful_update: La organización se actualizo exitosamente
       table:
         authenticator: Autenticador
         created: Creado
