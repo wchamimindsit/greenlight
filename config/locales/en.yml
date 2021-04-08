@@ -173,7 +173,7 @@ en:
       select_all_users: Select all Users
       select_a_user: Please select a user
       invalid_update: There was a problem updating organization users. Please check the organization values and try again
-      successful_update: The Organization was updated successfully
+      successful_update: User organization was successfully updated
       table:
         authenticator: Authenticator
         created: Created

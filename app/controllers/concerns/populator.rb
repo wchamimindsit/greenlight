@@ -69,9 +69,9 @@ module Populator
     
       # Validacion para filtrar datos por organizacion si se tiene asignada
       if !@organization.nil?
-        Room.includes(:owner).where(users: { organization_id: @organization.id }).admins_search(@search).admins_order(@order_column, @order_direction)
+        Room.includes(:owner).where(users: { organization_id: @organization.id }).admins_search(@search.downcase).admins_order(@order_column, @order_direction)
       else
-        Room.includes(:owner => :organization).all.admins_search(@search).admins_order(@order_column, @order_direction)
+        Room.includes(:owner => :organization).all.admins_search(@search.downcase).admins_order(@order_column, @order_direction)
       end
       
     end

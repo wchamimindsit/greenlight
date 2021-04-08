@@ -83,20 +83,21 @@ class User < ApplicationRecord
     search_query = ""
     role_search_param = ""
     if role.nil?
-      search_query = "users.name LIKE :search OR email LIKE :search OR username LIKE :search" \
-                    " OR users.#{created_at_query} LIKE :search OR users.provider LIKE :search" \
+      search_query = "lower(users.name) LIKE :search OR lower(users.email) LIKE :search OR lower(username) LIKE :search" \
+                    " OR users.#{created_at_query} LIKE :search OR lower(organizations.name) LIKE :search" \
                     " OR roles.name LIKE :roles_search"
       role_search_param = "%#{string}%"
     else
-      search_query = "(users.name LIKE :search OR email LIKE :search OR username LIKE :search" \
-                    " OR users.#{created_at_query} LIKE :search OR users.provider LIKE :search)" \
+      search_query = "(lower(users.name) LIKE :search OR lower(users.email) LIKE :search OR lower(username) LIKE :search" \
+                    " OR users.#{created_at_query} LIKE :search OR lower(organizations.name) LIKE :search)" \
                     " AND roles.name = :roles_search"
       role_search_param = role.name
     end
 
     search_param = "%#{string}%"
-    joins("LEFT OUTER JOIN users_roles ON users_roles.user_id = users.id LEFT OUTER JOIN roles " \
-      "ON roles.id = users_roles.role_id").distinct
+    joins("LEFT OUTER JOIN users_roles ON users_roles.user_id = users.id " \
+      "LEFT OUTER JOIN roles ON roles.id = users_roles.role_id " \
+      "LEFT OUTER JOIN organizations ON organizations.id = users.organization_id ").distinct
       .where(search_query, search: search_param, roles_search: role_search_param)
   end
 
