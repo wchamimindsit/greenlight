@@ -168,11 +168,12 @@ en:
     usersbyorganization:
       title: Users by organization
       all_organizations: All organizations
+      without_organization: Without organization
       edit_organization: Edit organization
       select_all_users: Select all Users
       select_a_user: Please select a user
       invalid_update: There was a problem updating organization users. Please check the organization values and try again
-      successful_update: Users by Organization Updated Successfully
+      successful_update: User organization was successfully updated
       table:
         authenticator: Authenticator
         created: Created
@@ -199,6 +200,7 @@ en:
         perm_delete: Permanently Delete
         unban: Unban User
         undelete: Undelete
+        assign_organization: Assign organization
       table:
         authenticator: Authenticator
         created: Created
@@ -485,8 +487,9 @@ en:
       title: Update a Organization
       update: Update a Organization
     update_user_by_organization:
-      title: Update the users
+      title: Assign the Organization
       update: Change organization
+      select: Select Organization
     delete_organization:
       confirm: "Are you sure you want to delete %{organization}?"
       delete: "I am sure to delete this organization"

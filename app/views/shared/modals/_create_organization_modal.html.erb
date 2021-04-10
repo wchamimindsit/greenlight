@@ -36,16 +36,16 @@
               <%= f.text_field :address, id: "createOrganizationAddress", class: "form-control text-center", placeholder: t("modal.create_organization.address_placeholder"), autocomplete: :off %>
             </div>
             <div class="mb-2">
-              <%= f.text_field :phone, id: "createOrganizationPhone", type: "number", class: "form-control text-center", placeholder: t("modal.create_organization.phone_placeholder"), autocomplete: :off %>
+              <%= f.text_field :phone, id: "createOrganizationPhone", type: "number", min: "1", class: "form-control text-center", placeholder: t("modal.create_organization.phone_placeholder"), autocomplete: :off %>
             </div>
             <div class="mb-2">
               <%= f.text_field :email, id: "createOrganizationEmail", class: "form-control text-center", placeholder: t("modal.create_organization.email_placeholder"), autocomplete: :off %>
             </div>
             <div class="mb-2">
-              <%= f.text_field :maxusers, id: "createOrganizationMaxusers", type: "number", class: "form-control text-center", placeholder: ['* ', t("modal.create_organization.maxusers_placeholder")].join, autocomplete: :off, required: true %>
+              <%= f.text_field :maxusers, id: "createOrganizationMaxusers", type: "number", min: "1", class: "form-control text-center", placeholder: ['* ', t("modal.create_organization.maxusers_placeholder")].join, autocomplete: :off, required: true %>
             </div>
             <div class="mb-2">
-              <%= f.text_field :nextinvoice, id: "createOrganizationNextinvoice", class: "form-control text-center", placeholder: ['* ', t("modal.create_organization.nextinvoice_placeholder")].join, autocomplete: :off, required: true %>
+              <%= f.text_field :nextinvoice, id: "createOrganizationNextinvoice", title: "dd/mm/yyyy", class: "form-control text-center", placeholder: ['* ', t("modal.create_organization.nextinvoice_placeholder")].join, autocomplete: :off, required: true %>
             </div>
             <div class="mb-2">
               <label class="custom-switch pl-0 mt-3 mb-3 w-100 text-left d-inline-block">

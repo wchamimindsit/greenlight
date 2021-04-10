@@ -106,17 +106,15 @@ class Organization < ApplicationRecord
     User.where(organization: organization_id).update_all(deleted: true)
   end
 
-  #Update Users By Organization
-  def self.update_users_by_organization(users, organization_id)
+  #Update User By Organization
+  def self.update_users_by_organization(user_uid, organization_id)
     begin
 
-      lstUsers = User.where(id: users);
-
-      lstUsers.each do |user| 
-        user.update_attributes(organization_id: organization_id)
-      end
-
-      return lstUsers.length
+      user = User.find_by(uid: user_uid);
+      return nil if user.nil?
+      
+      user.update_attributes(organization_id: organization_id)
+      user
       
     rescue => exception
       logger.error "Failed to update the users by organization: #{exception}"

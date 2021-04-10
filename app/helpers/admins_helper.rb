@@ -71,7 +71,7 @@ module AdminsHelper
 
   def selected_organization_string
     if @organization.nil?
-      I18n.t("administrator.usersbyorganization.all_organizations")
+      I18n.t("administrator.usersbyorganization.without_organization")
     else
       @organization.name
     end
